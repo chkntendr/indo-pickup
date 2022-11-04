@@ -25,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $pickup = DB::table('data_pickup')->get();
-        return view('dashboard.home', compact('pickup'));
+        $count  = Pickup::count();
+        $pickup = Pickup::all();
+        $berat  = Pickup::sum('berat');
+        return view('dashboard.home', compact('pickup', 'count', 'berat'));
     }
 }

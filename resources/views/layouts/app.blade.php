@@ -46,8 +46,6 @@
         </div>
     </div>
     <!-- Spinner End -->
-    @extends('layouts.sidebar')
         @yield('content')
 </div>
-
 @extends('layouts.footer')

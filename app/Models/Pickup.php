@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Pickup extends Model
 {
     use HasFactory;
+
+    protected $table = "data_pickup";
+
+    public function client() {
+        return $this->belongsTo(Client::class, 'id');
+    }
 }
