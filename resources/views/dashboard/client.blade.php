@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@extends('layouts.sidebar')
-@extends('layouts.navbar')
 @section('content')
 <div class="content">
 <!-- Data Pickup -->

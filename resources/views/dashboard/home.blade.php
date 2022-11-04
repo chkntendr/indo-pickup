@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-@extends('layouts.sidebar')
-
-@extends('layouts.navbar')
 <div class="content">
+@extends('layouts.navbar')
 <!-- Rekap -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">

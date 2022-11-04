@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@extends('layouts.sidebar')
-@extends('layouts.navbar')
 @section('content')
 <div class="content">
 <!-- Data Pickup -->
@@ -35,7 +33,7 @@
                         } else {
                         ?>
                         <tr>
-                            <td colspan="3">Tidak ada barang</td>
+                            <td colspan="3" center>Tidak ada barang</td>
                         </tr>
                         <?php } ?>
                     </tbody>
