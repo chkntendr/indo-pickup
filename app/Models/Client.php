@@ -11,6 +11,7 @@ class Client extends Model
     use HasFactory;
 
     protected $table = "data_client";
+    protected $fillable = ['id', 'kode_client', 'client', 'created_at', 'updated_at'];
 
     public function pickup() {
         return $this->hasOne(Pickup::class, 'client_id');
