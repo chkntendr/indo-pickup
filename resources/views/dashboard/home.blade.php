@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @extends('layouts.sidebar')
+
 @section('content')
 <div class="content">
+
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
         <a href="#" class="navbar-brand d-flex d-lg-none me-4">
@@ -28,6 +30,7 @@
         </div>
     </nav>
     <!-- Navbar End -->
+
     <!-- Rekap -->
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
@@ -35,7 +38,7 @@
                 <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                     <i class="fa fa-envelope fa-3x text-primary"></i>
                     <div class="ms-3">
-                        <p class="mb-2">Total Pickup</p>
+                        <p class="mb-2" style="font-weight: bold;">Total Pickup</p>
                         <h6 class="mb-0">{{ $count }}</h6>
                     </div>
                 </div>
@@ -44,7 +47,7 @@
                 <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                     <i class="fa fa-weight fa-3x text-primary"></i>
                     <div class="ms-3">
-                        <p class="mb-2">Total Berat</p>
+                        <p class="mb-2" style="font-weight: bold;">Total Berat</p>
                         <h6 class="mb-0">{{ $berat }}</h6>
                     </div>
                 </div>
@@ -53,8 +56,8 @@
                 <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                     <i class="fa fa-chart-bar fa-3x text-primary"></i>
                     <div class="ms-3">
-                        <p class="mb-2">Total Berat</p>
-                        <h6 class="mb-0">65 KG</h6>
+                        <p class="mb-2" style="font-weight: bold;">Total Jumlah</p>
+                        <h6 class="mb-0">{{ $jumlah }}</h6>
                     </div>
                 </div>
             </div>
@@ -147,7 +150,7 @@
     
                     <div class="form-group">
                         <label for="client" class="control-label">Client</label>
-                        <select class="form-control" id="clientName">
+                        <select name="client" class="form-control" id="client">
                             <option value="0">- Pilih Client -</option>
                             @foreach ($client as $c)
                             <option value="{{ $c->id }}">{{ $c->client }} - {{ $c->kode_client }}</option>
@@ -176,7 +179,12 @@
     
                     <div class="form-group">
                         <label for="driver" class="control-label">Driver</label>
-                        <input type="text" class="form-control" id="driver">
+                        <select name="client" class="form-control" id="driver">
+                            <option value="0">- Pilih Client -</option>
+                            @foreach ($driver as $d)
+                            <option value="{{ $d->id }}">{{ $d->name }}</option>
+                            @endforeach
+                        </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-driver"></div>
                     </div>
                 </div>

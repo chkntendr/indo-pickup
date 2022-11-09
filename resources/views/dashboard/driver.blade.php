@@ -66,13 +66,38 @@
                             <?php } ?>
                         </tbody>
                     </table>
-                    <button class="btn btn-sm btn-primary m-2">
+                    <button class="btn btn-sm btn-primary m-2" id="btn-create-driver">
                         <i class="fas fa-plus"></i>
                         Tambah Driver
                     </button>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
+    
+    <div class="modal fade" id="modal-create" tabindex="-1" aria-labelledby="createDriver" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Driver Baru</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nama" class="control-label">Nama</label>
+                        <input type="text" class="form-control" id="nama">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button class="btn btn-primary" id="driverStore">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pickup;
 use App\Models\Client;
+use App\Models\Driver;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +34,9 @@ class HomeController extends Controller
         $count  = Pickup::count();
         $pickup = Pickup::all();
         $berat  = Pickup::sum('berat');
-        return view('dashboard.home', compact('pickup', 'count', 'berat', 'tipe', 'client'));
+        $jumlah = Pickup::sum('jumlah');
+        $driver = Driver::all();
+        return view('dashboard.home', compact('pickup', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
     }
 
     public function store(Request $request) {

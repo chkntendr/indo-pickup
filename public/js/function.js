@@ -67,6 +67,8 @@ $('body').on('click', '#btn-delete-pickup', function() {
                         title: `${ response.message }`,
                         showConfirmButton: false,
                         timer: 1500
+                    }).then((result) => {
+                        location.reload();
                     });
 
                     $(`#index_${pickup_id}`).remove();
@@ -311,4 +313,49 @@ $('#clientStore').click(function(e) {
             }
         }
     })
+})
+
+// Input Driver
+$('body').on('click', '#btn-create-driver', function() {
+    //  Open Modal
+    $('#modal-create').modal('show');
+});
+
+$('#driverStore').click(function(e) {
+    e.preventDefault();
+
+    // Define variable
+    let nama     = $('#nama').val();
+    let token    = $("meta[name='csrf-token']").attr("content");
+
+    $.ajax({
+        url: `/driver/store`,
+        type: "POST",
+        cache: false,
+        data: {
+            "nama": nama,
+            "_token": token
+        },
+
+        success:function(response) {
+            Swal.fire({
+                type: 'success',
+                icon: 'success',
+                title: `${response.message}`,
+                showConfirmButton: false,
+                timer: 1500
+            }).then((result) => {
+                location.reload()
+            })
+
+            $('#modal-create').modal('hide');
+        },
+
+        error:function(error) {
+            if (error.responseJSON.nama[0]) {
+                $('#alert-nama').removeClass('d-none');
+                $('#alert-nama').addClass('d-block')
+            }
+        }
+    });
 })

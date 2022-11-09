@@ -36,3 +36,4 @@ Route::post('/client/post', [App\Http\Controllers\ClientController::class, 'crea
 
 // Route Driver
 Route::get('/driver', [App\Http\Controllers\DriverController::class, 'index'])->name('driver');
+Route::post('/driver/store', [App\Http\Controllers\DriverController::class, 'store'])->name('driverPost');
