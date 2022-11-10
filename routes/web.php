@@ -24,6 +24,7 @@ Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])
 Route::delete('/home/hapus/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
 Route::get('/home/search-client', [App\Http\Controllers\HomeController::class, 'searchClient'])->name('searchClient');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
+Route::post('/home/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
 // Route Barang
 Route::get('/barang', [App\Http\Controllers\BarangController::class, 'index'])->name('barang');

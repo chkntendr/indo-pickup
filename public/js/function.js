@@ -364,3 +364,19 @@ $('#driverStore').click(function(e) {
         }
     });
 })
+
+function getInputValue() {
+    var keyword = document.getElementById("cari-pickup").value;
+    var token   = $("meta[name='csrf-token']").attr("content");
+    console.log(keyword)
+
+    $.ajax({
+        url: `/home/search`,
+        method: "POST",
+        cache: false,
+        data: {
+            "keyword":  keyword,
+            "_token": token
+        }
+    })
+}

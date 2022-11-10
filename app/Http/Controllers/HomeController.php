@@ -96,4 +96,12 @@ class HomeController extends Controller
     public function export() {
         
     }
+
+    public function search(Request $request) {
+        $key = $request->keyword;
+
+        $pickup = Pickup::all()->where('jumlah', 'LIKE', '%$key%')->get();
+
+        return response()->json($pickup);
+    }
 }

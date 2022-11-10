@@ -73,6 +73,11 @@
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Data Pickup Dokumen dan Kargo</h6>
+                <input type="text" class="form-control" id="cari-pickup" value="">
+                <button type="button" onclick="getInputValue()" class="btn btn-sm btn-secondary">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Cari
+                </button>
                 <div class="table-responsive">
                     <table class="table" id="table-pickups">
                         <thead>
