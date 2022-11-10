@@ -16,7 +16,10 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <span class="d-none d-lg-inline-flex">Test</span>
+                    <span class="d-none d-lg-inline-flex">
+                        <?php $name = Auth::user()->name; ?>
+                        {{ $name }}
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                     <a href="#" class="dropdown-item">My Profile</a>
@@ -92,12 +95,16 @@
                             @foreach ($pickup as $p)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $p -> tipe_id }}</td>
-                                <td>{{ $p -> client_id }}</td>
-                                <td>{{ $p -> jumlah }}</td>
-                                <td>{{ $p -> berat }}</td>
+                                <td>{{ $p -> tipe -> barang }}</td>
+                                <td>{{ $p -> client -> client }}</td>
+                                @if ($p->tipe_id == "7")
+                                    <td>{{ $p -> jumlah }} Koli</td>
+                                @else
+                                    <td>{{ $p -> jumlah }} pcs</td>
+                                @endif
+                                <td>{{ $p -> berat }} Kg</td>
                                 <td>{{ $p -> tanggal }}</td>
-                                <td>{{ $p -> driver_id }}</td>
+                                <td>{{ $p -> driver -> name }}</td>
                                 <td>
                                     <a type="button" style="color: orange"><i class="fas fa-edit"></i></a>
                                     <a id="btn-delete-pickup" data-id="{{ $p->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
@@ -131,7 +138,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Pickup Baru</h5>
-                    <button class="close" data-dismiss="modal" aria-label="Close">
+                    <button id="close-modal" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -180,7 +187,7 @@
                     <div class="form-group">
                         <label for="driver" class="control-label">Driver</label>
                         <select name="client" class="form-control" id="driver">
-                            <option value="0">- Pilih Client -</option>
+                            <option value="0">- Pilih Driver -</option>
                             @foreach ($driver as $d)
                             <option value="{{ $d->id }}">{{ $d->name }}</option>
                             @endforeach
@@ -190,7 +197,7 @@
                 </div>
     
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
                     <button class="btn btn-primary" id="store">Simpan</button>
                 </div>
             </div>

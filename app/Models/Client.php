@@ -14,7 +14,7 @@ class Client extends Model
     protected $fillable = ['id', 'kode_client', 'client', 'created_at', 'updated_at'];
 
     public function pickup() {
-        return $this->hasOne(Pickup::class, 'client_id');
+        return $this->hasOne(Pickup::class, 'id', 'client_id');
     }
 
     public $timestamps = true;

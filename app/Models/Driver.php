@@ -12,4 +12,8 @@ class Driver extends Model
     protected $fillable = [
         'id', 'name', 'created_at', 'updated_at'
     ];
+
+    public function pickup() {
+        return $this->hasOne(Pickup::class, 'id', 'driver_id');
+    }
 }

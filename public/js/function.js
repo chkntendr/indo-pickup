@@ -321,6 +321,11 @@ $('body').on('click', '#btn-create-driver', function() {
     $('#modal-create').modal('show');
 });
 
+$('body').on('click', '#close-modal', function() {
+    // Close modal
+    $('#modal-create').modal('hide');
+});
+
 $('#driverStore').click(function(e) {
     e.preventDefault();
 
@@ -329,7 +334,7 @@ $('#driverStore').click(function(e) {
     let token    = $("meta[name='csrf-token']").attr("content");
 
     $.ajax({
-        url: `/driver/store`,
+        url: `/driver/post`,
         type: "POST",
         cache: false,
         data: {
@@ -352,7 +357,7 @@ $('#driverStore').click(function(e) {
         },
 
         error:function(error) {
-            if (error.responseJSON.nama[0]) {
+            if (error.responseJSON.name[0]) {
                 $('#alert-nama').removeClass('d-none');
                 $('#alert-nama').addClass('d-block')
             }
