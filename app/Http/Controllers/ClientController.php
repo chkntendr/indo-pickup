@@ -40,4 +40,13 @@ class ClientController extends Controller
             'data'      => $client
         ]);
     }
+
+    public function delete($id) {
+        $client = Client::where('id', $id)->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => "Data berhasil dihapus!"
+        ]);
+    }
 }

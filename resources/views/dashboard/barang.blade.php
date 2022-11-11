@@ -70,7 +70,7 @@
                         <?php } ?>
                     </tbody>
                 </table>
-                <a href="/barang/add" class="btn btn-sm btn-primary m-2">
+                <a id="btn-open-create" class="btn btn-sm btn-primary m-2">
                     <i class="fas fa-plus"></i>
                     Tambah Barang
                 </a>
@@ -79,5 +79,30 @@
     </div>
 </div>
 <!-- Data Pickup -->
+<div class="modal fade" id="modal-create" tabindex="-1" aria-labelledby="createPickup" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tipe Baru</h5>
+                <button id="close-modal" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tipe" class="control-label">Tipe Barang</label>
+                    <input type="text" class="form-control" id="tipe">
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tipe"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
+                <button class="btn btn-primary" id="barangStore">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 @endsection

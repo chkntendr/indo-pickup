@@ -54,12 +54,12 @@
                         ?>
                         @foreach($data as $d)
                         <tr>
-                            <td>{{ $no++ }}</td>
+                            <td id="index">{{ $no++ }}</td>
                             <td>{{ $d -> kode_client }}</td>
                             <td>{{ $d -> client }}</td>
                             <td>
                                 <a style="color: orange"><i class="fas fa-edit"></i></a>
-                                <a style="color: red"><i class="fas fa-trash"></i></a>
+                                <a style="color: red" type="button" id="btn-delete-client" data-id="{{ $d->id }}"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach

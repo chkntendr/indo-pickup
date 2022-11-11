@@ -14,18 +14,19 @@ class BarangController extends Controller
         return view('dashboard.barang', compact('count', 'data'));
     }
 
-    public function new_form() {
-        return view('create.barang');
-    }
-
     public function create(Request $request) {
-        DB::table('tipe_barang')->insert([
-            'barang' => $request->tipe,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $barang = DB::table('tipe_barang')->insert([
+                            'barang' => $request->tipe,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
 
-        return Redirect::to('barang')->with('message', 'Data added');
+        // Return response
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Berhasil Disimpan!',
+            'data'      => $barang
+        ]);
     }
 
     public function delete($id) {

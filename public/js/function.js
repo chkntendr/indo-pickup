@@ -78,6 +78,46 @@ $('body').on('click', '#btn-delete-pickup', function() {
     })
 })
 
+// Delete Client
+$('body').on('click', '#btn-delete-client', function() {
+    let client_id = $(this).data('id');
+    let token = $("meta[name='csrf-token']").attr("content");
+
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log("Delete client");
+
+            $.ajax({
+                url: `/client/hapus/${client_id}`,
+                type: "DELETE",
+                cache: false,
+                data: {
+                    "_token": token
+                },
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        $(`#index_${client_id}`).remove();
+                    });
+                }
+            })
+        }
+    })
+})
+
+
 // Input pickup
 $('body').on('click', '#btn-create-pickup', function() {
     //  Open Modal
@@ -207,6 +247,25 @@ $('#store').click(function(e) {
         }
     })
 })
+
+// Edit Pickup
+$('body').on('click', '#btn-edit-pickup', function(e) {
+    e.preventDefault();
+    $('#btn-edit-pickup').attr("disabled", true);
+    $('#modal-create').modal('show');
+    var id = $(this).data('id');
+
+    $.ajax({
+        url: `/home/edit/${id}`,
+        type: "GET",
+        dataType: "JSON",
+        success: function (data) {
+            console.log(data)
+        }
+    });
+});
+
+
 
 // Cari client
 // $('.livesearch').select2({
@@ -364,6 +423,58 @@ $('#driverStore').click(function(e) {
         }
     });
 })
+
+// Tambah tipe barang
+$('body').on('click', '#btn-open-create', function() {
+    //  Open Modal
+    $('#modal-create').modal('show');
+});
+
+$('body').on('click', '#close-modal', function() {
+    // Close modal
+    $('#modal-create').modal('hide');
+});
+
+$('#barangStore').click(function(e) {
+    e.preventDefault();
+
+    // Define variable
+    let tipe     = $('#tipe').val();
+    let token    = $("meta[name='csrf-token']").attr("content");
+
+    $.ajax({
+        url: `/barang/post`,
+        type: "POST",
+        cache: false,
+        data: {
+            "tipe": tipe,
+            "_token": token
+        },
+
+        success:function(response) {
+            Swal.fire({
+                type: 'success',
+                icon: 'success',
+                title: `${response.message}`,
+                showConfirmButton: false,
+                timer: 1500
+            }).then((result) => {
+                location.reload()
+            })
+
+            $('#modal-create').modal('hide');
+        },
+
+        error:function(error) {
+            if (error.responseJSON.name[0]) {
+                $('#alert-tipe').removeClass('d-none');
+                $('#alert-tipe').addClass('d-block')
+            }
+        }
+    });
+})
+
+
 
 function getInputValue() {
     var keyword = document.getElementById("cari-pickup").value;

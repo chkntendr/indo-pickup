@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Pickup;
 use App\Models\Client;
 use App\Models\Driver;
+use App\Imports\ImportPickup;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +34,7 @@ class HomeController extends Controller
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $count  = Pickup::count();
-        $pickup = Pickup::all();
+        $pickup = Pickup::paginate(15);
         $berat  = Pickup::sum('berat');
         $jumlah = Pickup::sum('jumlah');
         $driver = Driver::all();
@@ -81,6 +83,12 @@ class HomeController extends Controller
         ]);
     }
 
+    public function edit($id) {
+        $pickup = Pickup::find($id);
+
+        return response()->json($pickup);
+    }
+
     public function searchClient(Request $request) {
         $data = [];
 
@@ -95,6 +103,14 @@ class HomeController extends Controller
 
     public function export() {
         
+    }
+
+    public function import(Request $request) {
+        $import = new ImportPickup;
+        $import->setStartRow(2);
+        Excel::import ($import, $request->file('file')->store('files'));
+
+        return redirect()->back();
     }
 
     public function search(Request $request) {

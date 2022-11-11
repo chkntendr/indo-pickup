@@ -76,10 +76,8 @@
                                 Tambah Driver
                             </button>                        
                         </div>
-                        <div class="mt-3 ml-0">
-                            {{$data->links()}}
-                        </div>
                     </div>
+                    {{$data->links()}}
                 </div>
             </div>
         </div>
