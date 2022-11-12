@@ -37,10 +37,35 @@ $('body').on('click', '#btn-delete-barang', function() {
     })
 })
 
-$('body').on('click', '#testDelete', function(e) {
-    e.preventDefault();
-    
-})
+$(document).ready(function() {
+    $.ajax({
+        url: `/report/show`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            console.log(res)
+        }
+    })
+}) 
+
+var ctx5 = $("#pie-chart").get(0).getContext("2d");
+        var myChart5 = new Chart(ctx5, {
+            type: "pie",
+            data: {
+                labels: ["Paket", "Dokumen", "Kargo"],
+                datasets: [{
+                    backgroundColor: [
+                        "rgba(0, 156, 255, .7)",
+                        "rgba(0, 156, 255, .6)",
+                        "rgba(0, 156, 255, .5)"
+                    ],
+                    data: [55, 49, 44]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
 
 // Delete Pickup
 $('body').on('click', '#btn-delete-pickup', function() {

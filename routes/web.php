@@ -28,6 +28,10 @@ Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
 Route::post('/home/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
+// Route Report
+Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
+Route::get('/report/show', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
+
 // Route Barang
 Route::get('/barang', [App\Http\Controllers\BarangController::class, 'index'])->name('barang');
 Route::post('/barang/post', [App\Http\Controllers\BarangController::class, 'create'])->name('createBarang');
