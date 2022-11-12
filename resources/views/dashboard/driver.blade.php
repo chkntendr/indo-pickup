@@ -34,7 +34,7 @@
 <!-- Navbar End -->
     <div class="container-fluid pt-4 px-4">
         <div class="col-12">
-            <div class="bg-light rounded h-100 p-4">
+            <div class="bg-light rounded h-80 overflow p-4">
                 <h3 class="mb-4">Data Driver</h3>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -69,28 +69,26 @@
                             <?php } ?>
                         </tbody>
                     </table>
-                    <div class="container-fluid pt-4 px-4">
-                        <div class="row g-4">
-                            <button class="btn btn-sm btn-primary m-2" id="btn-create-driver">
-                                <i class="fas fa-plus"></i>
-                                Tambah Driver
-                            </button>                        
-                        </div>
-                    </div>
-                    {{$data->links()}}
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 col-xl-6 mt-3">
+            <div class="rounded h-20 p-3">
+                <button id="btn-create-driver" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Tambah Driver
+                </button>
+            </div>
+        </div>
     </div>
+    
     
     <div class="modal fade" id="modal-create" tabindex="-1" aria-labelledby="createDriver" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Driver Baru</h5>
-                    <button id="close-modal" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" id="close-modal" class="btn-close" aria-label="Close"></button>
                 </div>
     
                 <div class="modal-body">

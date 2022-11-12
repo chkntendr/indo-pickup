@@ -11,7 +11,7 @@ class DriverController extends Controller
 {
     public function index() {
         $count      =   DB::table('data_driver')->count();
-        $data       =   Driver::paginate(5);
+        $data       =   Driver::all();
         return view('dashboard.driver', compact('data', 'count'));
     }
 

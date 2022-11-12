@@ -6,6 +6,7 @@ use App\Models\Pickup;
 use App\Models\Client;
 use App\Models\Driver;
 use App\Imports\ImportPickup;
+use App\Exports\PickupExport;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -34,11 +35,11 @@ class HomeController extends Controller
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $count  = Pickup::count();
-        $pickup = Pickup::paginate(15);
+        $pickups = Pickup::all();
         $berat  = Pickup::sum('berat');
         $jumlah = Pickup::sum('jumlah');
         $driver = Driver::all();
-        return view('dashboard.home', compact('pickup', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
+        return view('dashboard.home', compact('pickups', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
     }
 
     public function store(Request $request) {
@@ -102,15 +103,21 @@ class HomeController extends Controller
     }
 
     public function export() {
-        
+        return Excel::download(new PickupExport, 'data_pickup.xlsx');
     }
 
     public function import(Request $request) {
-        $import = new ImportPickup;
-        $import->setStartRow(2);
-        Excel::import ($import, $request->file('file')->store('files'));
+        request()->validate([
+            'file'  => 'required|mimes:xlsx,xls,csv|max:2048'
+        ]);
 
-        return redirect()->back();
+        if ($files = $request->file('file')) {
+            $import = new ImportPickup;
+            $import->setStartRow(2);
+            Excel::import ($import, $request->file('file')->store('files'));
+
+            return redirect()->back()->with('success', 'Import Berhasil!');
+        }
     }
 
     public function search(Request $request) {

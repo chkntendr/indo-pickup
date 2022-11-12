@@ -69,14 +69,18 @@
     <!-- Rekap -->
 
     <!-- Data Pickup -->
+    <button id="testDelete" class="btn btn-primary">Click</button>
     <div class="container-fluid pt-4 px-4">
         <div class="col-12">
             <div class="bg-light rounded h-60 p-4">
                 <h6 class="mb-4">Data Pickup Dokumen dan Kargo</h6>
                 <div class="table-responsive">
-                    <table class="table table-hover" id="table-pickups">
+                    <table class="table table-hover table-scrollable" id="table-pickups">
                         <thead>
                             <tr>
+                                <th>
+                                    <input class="form-check-input m-0" type="checkbox" id="check_all">
+                                </th>
                                 <th scope="col">No</th>
                                 <th scope="col">Tipe</th>
                                 <th scope="col">Client</th>
@@ -89,25 +93,27 @@
                         </thead>
                         <tbody>
                         <?php
-                            $no = 1;
-                            if ($count > 0) {
+                            if ($pickups->count()) {
                         ?>
-                            @foreach ($pickup as $p)
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td>{{ $p -> tipe -> barang }}</td>
-                                <td>{{ $p -> client -> client }}</td>
-                                @if ($p->tipe_id == "7")
-                                    <td>{{ $p -> jumlah }} Koli</td>
-                                @else
-                                    <td>{{ $p -> jumlah }} pcs</td>
-                                @endif
-                                <td>{{ $p -> berat }} Kg</td>
-                                <td>{{ $p -> tanggal }}</td>
-                                <td>{{ $p -> driver -> name }}</td>
+                            @foreach ($pickups as $key => $pickup)
+                            <tr id="tr_{{ $pickup->id }}">
                                 <td>
-                                    <a id="btn-edit-pickup" data-id="{{ $p->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
-                                    <a id="btn-delete-pickup" data-id="{{ $p->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
+                                    <input class="form-check-input m-0" id="checkbox" type="checkbox" data-id="{{ $pickup->id }}">
+                                </td>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $pickup -> tipe -> barang }}</td>
+                                <td>{{ $pickup -> client -> client }}</td>
+                                @if ($pickup->tipe_id == "7")
+                                    <td>{{ $pickup -> jumlah }} Koli</td>
+                                @else
+                                    <td>{{ $pickup -> jumlah }} pcs</td>
+                                @endif
+                                <td>{{ $pickup -> berat }} Kg</td>
+                                <td>{{ $pickup -> tanggal }}</td>
+                                <td>{{ $pickup -> driver -> name }}</td>
+                                <td>
+                                    <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
+                                    <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -125,27 +131,52 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-sm-12 col-xl-6">
-                <div class="bg-dark rounded h-20 p-4">
+                <div class="bg-light rounded h-20 p-3">
                     <button id="btn-create-pickup" class="btn btn-sm btn-primary">
                         <i class="fas fa-plus"></i>
                         Tambah Pickup
                     </button>
+                    <button id="open-upload-modal" class="btn btn-sm btn-success">
+                        <i class="fas fa-file-import"></i>
+                        Import Excel
+                    </button>
+                    <script>
+                        $('body').on('click', '#open-upload-modal', function (event) {
+                            event.preventDefault();
+                            $('#modal-upload').modal('show');
+                            $('body').on('click', '#modal-close', function() {
+                                $('#modal-upload').modal('hide');
+                            })
+                        });
+                    </script>
                     <a href="/home/export" id="btn-export-csv" class="btn btn-sm btn-secondary">
                         <i class="fas fa-file-export"></i>
                         Export Excel
                     </a>
                 </div>
             </div>
-            <div class="col-sm-12 col-xl-6">
-                <div class="bg-dark rounded h-20">
-                    <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="file" name="file" class="form-control form-control-sm">
-                        <button type="file" name="file" class="btn btn-sm btn-secondary mt-3">
-                            <i class="fas fa-file-import"></i>
-                            Import Excel
-                        </button>
-                    </form>
+            <div class="modal fade" id="modal-upload" tabindex="-1" aria-lablledby="uploadExcel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-title">Upload Data</h5>
+                            <button type="button" id="modal-close" class="btn-close" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data" id="file">
+                                    @csrf
+                                    <label for="file" class="control-label">Cari File</label>
+                                    <input type="file" name="file" id="uploadForm" class="form-control form-control-sm">
+                                    <button type="submit" class="btn btn-sm btn-primary mt-2">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Send
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -158,9 +189,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Pickup Baru</h5>
-                    <button id="close-modal" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button id="close-modal" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
     
                 <div class="modal-body">

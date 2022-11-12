@@ -88,9 +88,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Client Baru</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" id="close-modal" class="btn-close" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">

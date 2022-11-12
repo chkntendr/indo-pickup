@@ -37,6 +37,11 @@ $('body').on('click', '#btn-delete-barang', function() {
     })
 })
 
+$('body').on('click', '#testDelete', function(e) {
+    e.preventDefault();
+    
+})
+
 // Delete Pickup
 $('body').on('click', '#btn-delete-pickup', function() {
     let pickup_id = $(this).data('id');
@@ -265,7 +270,14 @@ $('body').on('click', '#btn-edit-pickup', function(e) {
     });
 });
 
-
+// Bulk delete
+$('body').on('click', '#check_all', function() {
+    if($(this).is(':checked',true)) {
+        $("#checkbox").prop('checked', true);
+    } else {
+        $("#checkbox").prop('checked', false);
+    }
+})
 
 // Cari client
 // $('.livesearch').select2({
