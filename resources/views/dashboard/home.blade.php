@@ -1,38 +1,8 @@
 @extends('layouts.app')
-@extends('layouts.sidebar')
 
 @section('content')
 <div class="content">
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-        <a href="#" class="navbar-brand d-flex d-lg-none me-4">
-            <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-        </a>
-        <a href="#" class="sidebar-toggler flex-shrink-0">
-            <i class="fa fa-bars"></i>
-        </a>
-        <div class="navbar-nav align-items-center ms-auto">
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <span class="d-none d-lg-inline-flex">
-                        <?php $name = Auth::user()->name; ?>
-                        {{ $name }}
-                    </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                    <a href="#" class="dropdown-item">My Profile</a>
-                    <a href="#" class="dropdown-item">Settings</a>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="dropdown-item">Log Out</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
-
+    @include('includes.navbar')
     <!-- Rekap -->
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
@@ -69,59 +39,59 @@
 
     <!-- Data Pickup -->
     <div class="container-fluid pt-4 px-4">
-        <div class="col-12">
-            <div class="bg-light rounded h-60 p-4">
-                <h6 class="mb-4">Data Pickup Dokumen dan Kargo</h6>
-                <div class="table-responsive">
-                    <table class="table table-hover table-scrollable" id="table-pickups">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <input class="form-check-input m-0" type="checkbox" id="check_all">
-                                </th>
-                                <th scope="col">No</th>
-                                <th scope="col">Tipe</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Jumlah</th>
-                                <th scope="col">Berat</th>
-                                <th scope="col">Tanggal</th>
-                                <th scope="col">Driver</th>
-                                <th scope="col">Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                            if ($pickups->count()) {
-                        ?>
-                            @foreach ($pickups as $key => $pickup)
-                            <tr id="tr_{{ $pickup->id }}">
-                                <td>
-                                    <input class="form-check-input m-0" id="checkbox" type="checkbox" data-id="{{ $pickup->id }}">
-                                </td>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $pickup -> tipe -> barang }}</td>
-                                <td>{{ $pickup -> client -> client }}</td>
-                                @if ($pickup->tipe_id == "7")
-                                    <td>{{ $pickup -> jumlah }} Koli</td>
-                                @else
-                                    <td>{{ $pickup -> jumlah }} pcs</td>
-                                @endif
-                                <td>{{ $pickup -> berat }} Kg</td>
-                                <td>{{ $pickup -> tanggal }}</td>
-                                <td>{{ $pickup -> driver -> name }}</td>
-                                <td>
-                                    <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
-                                    <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                            <?php } else { ?>
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-16">
+                <div class="bg-light rounded h-60 p-4">
+                    <h6 class="mb-4">Data Pickup Dokumen dan Kargo</h6>
+                    <div class="table">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td colspan="8">Tidak ada barang!</td>
+                                    <!-- <th>
+                                        <input class="form-check-input m-0" type="checkbox" id="check_all">
+                                    </th> -->
+                                    <th scope="col">Tipe</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Jumlah</th>
+                                    <th scope="col">Berat</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Driver</th>
+                                    <th scope="col">Opsi</th>
                                 </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody id="pickup-table">
+                            <?php
+                                if ($pickups->count()) {
+                            ?>
+                                @foreach ($pickups as $key => $pickup)
+                                <tr id="tr_{{ $pickup->id }}">
+                                    <!-- <td>
+                                        <input class="form-check-input m-0" id="checkbox" type="checkbox" data-id="{{ $pickup->id }}">
+                                    </td> -->
+                                    <td>{{ $pickup -> tipe -> barang }}</td>
+                                    <td>{{ $pickup -> client -> client }}</td>
+                                    @if ($pickup->tipe_id == "7")
+                                        <td>{{ $pickup -> jumlah }} Koli</td>
+                                    @else
+                                        <td>{{ $pickup -> jumlah }} pcs</td>
+                                    @endif
+                                    <td>{{ $pickup -> berat }} Kg</td>
+                                    <td>{{ $pickup -> created_at }}</td>
+                                    <td>{{ $pickup -> driver -> name }}</td>
+                                    <td>
+                                        <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
+                                        <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <?php } else { ?>
+                                    <tr>
+                                        <td colspan="8">Tidak ada barang!</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,15 +108,6 @@
                         <i class="fas fa-file-import"></i>
                         Import Excel
                     </button>
-                    <script>
-                        $('body').on('click', '#open-upload-modal', function (event) {
-                            event.preventDefault();
-                            $('#modal-upload').modal('show');
-                            $('body').on('click', '#modal-close', function() {
-                                $('#modal-upload').modal('hide');
-                            })
-                        });
-                    </script>
                     <a href="/home/export" id="btn-export-csv" class="btn btn-sm btn-secondary">
                         <i class="fas fa-file-export"></i>
                         Export Excel

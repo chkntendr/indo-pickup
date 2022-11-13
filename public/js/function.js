@@ -37,36 +37,6 @@ $('body').on('click', '#btn-delete-barang', function() {
     })
 })
 
-$(document).ready(function() {
-    $.ajax({
-        url: `/report/show`,
-        type: 'GET',
-        dataType: 'json',
-        success: function(res) {
-            console.log(res)
-        }
-    })
-}) 
-
-var ctx5 = $("#pie-chart").get(0).getContext("2d");
-        var myChart5 = new Chart(ctx5, {
-            type: "pie",
-            data: {
-                labels: ["Paket", "Dokumen", "Kargo"],
-                datasets: [{
-                    backgroundColor: [
-                        "rgba(0, 156, 255, .7)",
-                        "rgba(0, 156, 255, .6)",
-                        "rgba(0, 156, 255, .5)"
-                    ],
-                    data: [55, 49, 44]
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
-
 // Delete Pickup
 $('body').on('click', '#btn-delete-pickup', function() {
     let pickup_id = $(this).data('id');
@@ -147,6 +117,14 @@ $('body').on('click', '#btn-delete-client', function() {
     })
 })
 
+// Upload modal
+$('body').on('click', '#open-upload-modal', function (event) {
+    event.preventDefault();
+    $('#modal-upload').modal('show');
+    $('body').on('click', '#modal-close', function() {
+        $('#modal-upload').modal('hide');
+    })
+});
 
 // Input pickup
 $('body').on('click', '#btn-create-pickup', function() {
@@ -190,31 +168,36 @@ $('#store').click(function(e) {
                 showConfirmButton: false,
                 timer: 1500
             }).then((result) => {
-                location.reload()
+                location.reload();
             });
 
             // // Data Pickup
             // let pickup = `
             // <tr id="index_${response.data.id}">
-            //     <td>${response.data.tipe_id}</td>
-            //     <td>${response.data.client_id}</td>
+            //     <td></td>
+            //     <td>${response.data.tipe}</td>
+            //     <td>${response.data.client.client}</td>
             //     <td>${response.data.jumlah}</td>
             //     <td>${response.data.berat}</td>
             //     <td>${response.data.tanggal}</td>
             //     <td>${response.data.driver}</td>
+            //     <td>
+            //         <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
+            //         <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
+            //     </td>
             // </tr>
             // `;
 
             // // Append to table
-            // $('#table-pickups').prepend(pickup);
+            // $('#pickup-table').prepend(pickup);
 
-            // // Clear form
-            // $('#tipe').val();
-            // $('#client').val();
-            // $('#jumlah').val();
-            // $('#berat').val();
-            // $('#tanggal').val();
-            // $('#driver').val();
+            // Clear form
+            $('#tipe').val();
+            $('#client').val();
+            $('#jumlah').val();
+            $('#berat').val();
+            $('#tanggal').val();
+            $('#driver').val();
 
             // Close modal
             $('#modal-create').modal('hide');
