@@ -1,57 +1,88 @@
 @extends('layouts.app')
 
+@section('title', 'Driver')
 @section('content')
-<div class="content">
-    <div class="container-fluid pt-4 px-4">
-        <div class="col-12">
-            <div class="bg-light rounded h-80 overflow p-4">
-                <h3 class="mb-4">Data Driver</h3>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th>Nama</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if ($data->count()) {
-                            ?>
-                            @foreach ($data as $key=>$d)
-                            <tr id="tr_{{ $d->id }}">
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $d -> name }}</td>
-                                <td>
-                                    <a style="color: orange"><i class="fas fa-edit"></i></a>
-                                    <a style="color: red"><i class="fas fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                            <?php
-                                } else {
-                            ?>
-                            <tr>
-                                <td colspan="3" center>Tidak ada driver</td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Data Driver</h5>
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                        <div class="dataTable-top">
+                            <div class="dataTable-dropdown">
+                                <label>
+                                    <select class="dataTable-selector">
+                                        <option value="5">5</option>
+                                        <option value="10" selected="">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                    </select> entries per page</label>
+                                </div>
+                                <div class="dataTable-search">
+                                    <input class="dataTable-input" placeholder="Search..." type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dataTable-container">
+                            <table class="table dataTable dataTable-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">#</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Nama</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Opsi</a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if ($data->count()) {
+                                    ?>
+                                    @foreach ($data as $key=>$d)
+                                    <tr id="tr_{{ $d->id }}">
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $d -> name }}</td>
+                                        <td>
+                                            <a style="color: orange"><i class="bi bi-pencil-square"></i></a>
+                                            <a style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    <?php
+                                        } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="3" center>Tidak ada driver</td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="dataTable-bottom">
+                            <div class="dataTable-info">Showing 1 to 5 of {{ $key }} entries</div>
+                            <nav class="dataTable-pagination">
+                                <ul class="dataTable-pagination-list"></ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-xl-6 mt-3">
-            <div class="rounded h-20 p-3">
-                <button id="btn-create-driver" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Tambah Driver
-                </button>
-            </div>
+        <div class="col-lg-12">
+            <a id="btn-create-driver" class="btn btn-sm btn-primary m-2">
+                <i class="bi bi-plus"></i>
+                Tambah Barang
+            </a>
         </div>
     </div>
-    
-    
+
+    {{-- Modal --}}
     <div class="modal fade" id="modal-create" tabindex="-1" aria-labelledby="createDriver" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -74,5 +105,5 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection

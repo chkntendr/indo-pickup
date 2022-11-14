@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Client')
 @section('content')
 <div class="content">
 <!-- Data Client -->

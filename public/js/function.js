@@ -278,15 +278,6 @@ $('body').on('click', '#btn-edit-pickup', function(e) {
     });
 });
 
-// Bulk delete
-$('body').on('click', '#check_all', function() {
-    if($(this).is(':checked',true)) {
-        $("#checkbox").prop('checked', true);
-    } else {
-        $("#checkbox").prop('checked', false);
-    }
-})
-
 // Cari client
 // $('.livesearch').select2({
 //     placeholder: 'Select movie',
@@ -391,6 +382,66 @@ $('#clientStore').click(function(e) {
                 $('#alert-nama').html(error.responseJSON.nama[0]);
             }
         }
+    })
+})
+
+// Create User
+$('body').on('click', '#btn-create-user', function(e) {
+    e.preventDefault();
+
+    // Open Modal
+    $('#create-user').modal('show');
+
+    // Close Modal
+    $('body').on('click', '#close-modal-user', function(e) {
+        e.preventDefault();
+        $('#create-user').modal('hide');
+    })
+
+    $('body').on('click', '#user-store', function(e) {
+        e.preventDefault();
+
+        var nama     = $('#nama').val();
+        var email    = $('#email').val();
+        var password = $('#password').val();
+        var status   = $('#status').val();
+        let token    = $("meta[name='csrf-token']").attr("content");
+
+        console.log(nama, email, password, status, token)
+
+        $.ajax({
+            url: `/users/post`,
+            type: "POST",
+            cache: false,
+            data: {
+                "nama": nama,
+                "email": email,
+                "password": password,
+                "status": status,
+                "_token": token
+            },
+
+            success:function(response) {
+                // Swal.fire({
+                //     type: 'success',
+                //     icon: 'success',
+                //     title: `${response.message}`,
+                //     showConfirmButton: false,
+                //     timer: 1500,
+                // }).then((result)=>{
+                //     location.reload()
+                // });
+                console.log(data)
+            },
+
+            // error:function(error) {
+            //     if (error.responseJSON.nama[0]) {
+            //         // Show Alert
+            //         $('#alert-nama').removeClass('d-none');
+            //         $('#alert-nama').addClass('d-block', 'show');
+            //     }
+            // }
+        })
     })
 })
 

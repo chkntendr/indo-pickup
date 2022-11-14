@@ -45,3 +45,7 @@ Route::delete('/client/hapus/{id}', [App\Http\Controllers\ClientController::clas
 // Route Driver
 Route::get('/driver', [App\Http\Controllers\DriverController::class, 'index'])->name('driver');
 Route::post('/driver/post', [App\Http\Controllers\DriverController::class, 'store'])->name('driverPost');
+
+// Route Users
+Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
+Route::post('/users/post', [App\Http\Controllers\UsersController::class, 'store'])->name('userPost');

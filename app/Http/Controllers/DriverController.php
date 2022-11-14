@@ -16,15 +16,6 @@ class DriverController extends Controller
     }
 
     public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required'
-
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
         $driver = Driver::create([
             'name' => $request->nama
         ]);

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard')
 @section('content')
 <section class="section">
     <div class="row">
@@ -25,7 +26,7 @@
                             </div>
                         </div>
                         <div class="dataTable-container">
-                            <table class="table datatable dataTable-table">
+                            <table class="table dataTable dataTable-table">
                                 <thead>
                                     <tr>
                                         <th scope="col" data-sortable="">
@@ -82,16 +83,14 @@
                             </table>
                         </div>
                         <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to 5 of 5 entries</div>
-                            <nav class="dataTable-pagination">
-                                <ul class="dataTable-pagination-list"></ul>
-                            </nav>
+                            <div class="dataTable-info">Showing 1 to {{ $pickups->perPage() }} of {{ $pickups->total() }} entries</div>
+                            {{ $pickups->links('includes.pagination')}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row g-4">
+        <div class="row">
             <div class="col-sm-12 col-xl-6">
                 <div class="bg-light rounded h-20 p-3">
                     <button id="btn-create-pickup" class="btn btn-sm btn-primary">

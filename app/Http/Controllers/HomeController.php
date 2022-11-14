@@ -35,7 +35,7 @@ class HomeController extends Controller
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $count  = Pickup::count();
-        $pickups = Pickup::all();
+        $pickups = Pickup::paginate(10);
         $berat  = Pickup::sum('berat');
         $jumlah = Pickup::sum('jumlah');
         $driver = Driver::all();
