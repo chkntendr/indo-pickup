@@ -1,102 +1,96 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content">
-    @include('includes.navbar')
-    <!-- Rekap -->
-    <div class="container-fluid pt-4 px-4">
-        <div class="row g-4">
-            <div class="col-sm-6 col-xl-4">
-                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                    <i class="fa fa-envelope fa-3x text-primary"></i>
-                    <div class="ms-3">
-                        <p class="mb-2" style="font-weight: bold;">Total Pickup</p>
-                        <h6 class="mb-0">{{ $count }}</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-4">
-                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                    <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                    <div class="ms-3">
-                        <p class="mb-2" style="font-weight: bold;">Total Jumlah</p>
-                        <h6 class="mb-0">{{ $jumlah }}</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-4">
-                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                    <i class="fa fa-weight fa-3x text-primary"></i>
-                    <div class="ms-3">
-                        <p class="mb-2" style="font-weight: bold;">Total Berat</p>
-                        <h6 class="mb-0">{{ $berat }} Kg</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Rekap -->
-
-    <!-- Data Pickup -->
-    <div class="container-fluid pt-4 px-4">
-        <div class="row g-4">
-            <div class="col-sm-12 col-xl-16">
-                <div class="bg-light rounded h-60 p-4">
-                    <h6 class="mb-4">Data Pickup Dokumen dan Kargo</h6>
-                    <div class="table">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <!-- <th>
-                                        <input class="form-check-input m-0" type="checkbox" id="check_all">
-                                    </th> -->
-                                    <th scope="col">Tipe</th>
-                                    <th scope="col">Client</th>
-                                    <th scope="col">Jumlah</th>
-                                    <th scope="col">Berat</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Driver</th>
-                                    <th scope="col">Opsi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pickup-table">
-                            <?php
-                                if ($pickups->count()) {
-                            ?>
-                                @foreach ($pickups as $key => $pickup)
-                                <tr id="tr_{{ $pickup->id }}">
-                                    <!-- <td>
-                                        <input class="form-check-input m-0" id="checkbox" type="checkbox" data-id="{{ $pickup->id }}">
-                                    </td> -->
-                                    <td>{{ $pickup -> tipe -> barang }}</td>
-                                    <td>{{ $pickup -> client -> client }}</td>
-                                    @if ($pickup->tipe_id == "7")
-                                        <td>{{ $pickup -> jumlah }} Koli</td>
-                                    @else
-                                        <td>{{ $pickup -> jumlah }} pcs</td>
-                                    @endif
-                                    <td>{{ $pickup -> berat }} Kg</td>
-                                    <td>{{ $pickup -> created_at }}</td>
-                                    <td>{{ $pickup -> driver -> name }}</td>
-                                    <td>
-                                        <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
-                                        <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                <?php } else { ?>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Data Pickup</h5>
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                        <div class="dataTable-top">
+                            <div class="dataTable-dropdown">
+                                <label>
+                                    <select class="dataTable-selector">
+                                        <option value="5">5</option>
+                                        <option value="10" selected="">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                    </select> entries per page</label>
+                                </div>
+                                <div class="dataTable-search">
+                                    <input class="dataTable-input" placeholder="Search..." type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dataTable-container">
+                            <table class="table datatable dataTable-table">
+                                <thead>
                                     <tr>
-                                        <td colspan="8">Tidak ada barang!</td>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Tipe</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Client</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Jumlah</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Berat</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Tanggal</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Driver</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#" class="dataTable-sorter">Opsi</a>
+                                        </th>
                                     </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        if ($pickups->count()) {
+                                    ?>
+                                    @foreach($pickups as $key => $pickup)
+                                    <tr id="tr_{{ $pickup->id }}">
+                                        <td>{{ $pickup->tipe->barang }}</td>
+                                        <td>{{ $pickup->client->client }}</td>
+                                        @if ($pickup->tipe_id == "7")
+                                            <td>{{ $pickup->jumlah }} Koli</td>
+                                        @else
+                                            <td>{{ $pickup->jumlah }} pcs</td>
+                                        @endif
+                                        <td>{{ $pickup->berat }} Kg</td>
+                                        <td>{{ $pickup->created_at }}</td>
+                                        <td>{{ $pickup->driver->name }}</td>
+                                        <td>
+                                            <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
+                                            <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    <?php } else { ?>
+                                        <tr>
+                                            <td colspan="8">Tidak ada barang!</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="dataTable-bottom">
+                            <div class="dataTable-info">Showing 1 to 5 of 5 entries</div>
+                            <nav class="dataTable-pagination">
+                                <ul class="dataTable-pagination-list"></ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-sm-12 col-xl-6">
                 <div class="bg-light rounded h-20 p-3">
@@ -140,6 +134,10 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid pt-4 px-4">
+        
+    </div>
     <!-- Data Pickup -->
 
     {{-- Insert Modal --}}
@@ -150,7 +148,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Pickup Baru</h5>
                     <button id="close-modal" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
-    
+
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="tipe" class="control-label">Tipe</label>
@@ -162,7 +160,7 @@
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tipe"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="client" class="control-label">Client</label>
                         <select name="client" class="form-control" id="client">
@@ -173,25 +171,25 @@
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-client"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="jumlah" class="control-label">Jumlah</label>
                         <input type="text" class="form-control" id="jumlah">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-jumlah"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="berat" class="control-label">Berat</label>
                         <input type="text" class="form-control" id="berat">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-berat"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="tanggal" class="control-label">Tanggal</label>
                         <input type="date" class="form-control" id="tanggal">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tanggal"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="driver" class="control-label">Driver</label>
                         <select name="client" class="form-control" id="driver">
@@ -203,7 +201,7 @@
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-driver"></div>
                     </div>
                 </div>
-    
+
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
                     <button class="btn btn-primary" id="store">Simpan</button>
@@ -222,7 +220,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-    
+
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="tipe" class="control-label">Tipe</label>
@@ -234,7 +232,7 @@
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tipe"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="client" class="control-label">Client</label>
                         <select name="client" class="form-control" id="client">
@@ -245,25 +243,25 @@
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-client"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="jumlah" class="control-label">Jumlah</label>
                         <input type="text" class="form-control" id="edit-jumlah">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-edit-jumlah"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="berat" class="control-label">Berat</label>
                         <input type="text" class="form-control" id="berat">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-berat"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="tanggal" class="control-label">Tanggal</label>
                         <input type="date" class="form-control" id="tanggal">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tanggal"></div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="driver" class="control-label">Driver</label>
                         <select name="client" class="form-control" id="driver">
@@ -275,7 +273,7 @@
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-driver"></div>
                     </div>
                 </div>
-    
+
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
                     <button class="btn btn-primary" id="store">Simpan</button>
@@ -283,5 +281,5 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection

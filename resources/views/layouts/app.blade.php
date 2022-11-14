@@ -4,8 +4,18 @@
     @include('includes.head')
 </head>
 <body>
-    <div class="container-xxl position-relative bg-white d-flex p-0">
-            @include('includes.sidebar')
-            @yield('content')
-    </div>
-@include('includes.footer')
+    @if (Session::has('auth')) {
+        <header id="header" class="header fixed-top d-flex align-items-center">
+            @include('includes.header')
+        </header>
+        <aside id="sidebar" class="sidebar">
+                @include('includes.sidebar')
+        </aside>
+    }
+    @endif
+    <main id="main" class="main">
+        @yield('content')
+    </main>
+    @include('includes.footer')
+</body>
+</html>
