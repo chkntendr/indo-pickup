@@ -35,11 +35,19 @@ class HomeController extends Controller
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $count  = Pickup::count();
-        $pickups = Pickup::paginate(10);
+        $data   = Pickup::paginate(100);
         $berat  = Pickup::sum('berat');
         $jumlah = Pickup::sum('jumlah');
         $driver = Driver::all();
-        return view('dashboard.home', compact('pickups', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
+        return view('dashboard.home', compact('data', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
+    }
+
+    public function fetch_data(Request $request) {
+        if ($request->ajax()) {
+            $data = Pickup::paginate(10);
+
+            return view('includes.pagination_data', compact('data'))->render();
+        }
     }
 
     public function store(Request $request) {
@@ -121,10 +129,18 @@ class HomeController extends Controller
     }
 
     public function search(Request $request) {
-        $key = $request->keyword;
+        $pickups = Pickup::all();
 
-        $pickup = Pickup::all()->where('jumlah', 'LIKE', '%$key%')->get();
+        if ($request->keyword != ''){
+            $pickups = Pickup::with(['Driver' => function ($query) {
+                $query->where('name','LIKE','%'.$request->keyword.'%');
+            }])->get()->load('client', 'tipe', 'driver');
 
-        return response()->json($pickup);
-    }
+            // $pickups = Pickup::with('driver')->where('name','LIKE','%'.$request->keyword.'%')->get()->load('client', 'tipe', 'driver');
+
+            return response()->json([
+                'pickups' => $pickups
+            ]);
+        }        
+      }
 }

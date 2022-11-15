@@ -21,70 +21,16 @@
                                     </select> entries per page</label>
                                 </div>
                                 <div class="dataTable-search">
-                                    <input class="dataTable-input" placeholder="Search..." type="text">
+                                    <form action="" method="POST">
+                                        <input class="dataTable-input" placeholder="Search..." type="text" id="search">
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="dataTable-container">
-                            <table class="table dataTable dataTable-table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Tipe</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Client</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Jumlah</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Berat</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Tanggal</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Driver</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Opsi</a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                        if ($pickups->count()) {
-                                    ?>
-                                    @foreach($pickups as $key => $pickup)
-                                    <tr id="tr_{{ $pickup->id }}">
-                                        <td>{{ $pickup->tipe->barang }}</td>
-                                        <td>{{ $pickup->client->client }}</td>
-                                        @if ($pickup->tipe_id == "7")
-                                            <td>{{ $pickup->jumlah }} Koli</td>
-                                        @else
-                                            <td>{{ $pickup->jumlah }} pcs</td>
-                                        @endif
-                                        <td>{{ $pickup->berat }} Kg</td>
-                                        <td>{{ $pickup->created_at }}</td>
-                                        <td>{{ $pickup->driver->name }}</td>
-                                        <td>
-                                            <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                            <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    <?php } else { ?>
-                                        <tr>
-                                            <td colspan="8">Tidak ada barang!</td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
+                        @include('includes.pickup_pagination')
                         <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to {{ $pickups->perPage() }} of {{ $pickups->total() }} entries</div>
-                            {{ $pickups->links('includes.pagination')}}
+                            <div class="dataTable-info">Showing 1 to {{ $data->perPage() }} of {{ $data->total() }} entries</div>
+                            {{ $data->links('includes.pagination')}}
                         </div>
                     </div>
                 </div>

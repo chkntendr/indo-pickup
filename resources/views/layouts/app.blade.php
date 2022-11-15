@@ -11,11 +11,17 @@
         <aside id="sidebar" class="sidebar">
                 @include('includes.sidebar')
         </aside>
+        <main id="main" class="main">
+            @yield('content')
+        </main>
+    }
+    @else
+    
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            @yield('content')
+        </section>
     }
     @endif
-    <main id="main" class="main">
-        @yield('content')
-    </main>
 </body>
 </html>
     @include('includes.footer')

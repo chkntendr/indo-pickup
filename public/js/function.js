@@ -1,3 +1,71 @@
+// Search ajax
+$('#search').on('keyup', function(){
+    search();
+});
+
+search();
+function search(){
+    var keyword = $('#search').val();
+    var token = $("meta[name='csrf-token']").attr("content")
+
+    $.ajax({
+        url: `/home/search`,
+        type: 'POST',
+        data: {
+            "keyword": keyword,
+            "_token": token
+        }, success:function(response) {
+            table_post_row(response);
+        }
+    });
+}
+
+// Table row
+function table_post_row(response) {
+    let tableView = '';
+    const pickups = response.pickups;
+
+    if (pickups.length <= 0) {
+        tableView+= `
+           <tr>
+              <td colspan="7">No data.</td>
+           </tr>`;
+    } else {
+        for (let i = 0; i < pickups.length; i++){
+            tableView += `
+                <tr>
+                    <td>`+pickups[i].tipe.barang+`</td>
+                    <td>`+pickups[i].client.client+`</td>
+                    <td>`+pickups[i].jumlah+`</td>
+                    <td>`+pickups[i].berat+`</td>
+                    <td>`+pickups[i].created_at+`</td>
+                    <td>`+pickups[i].driver.name+`</td>
+                </tr>`;
+        }
+    }
+
+    $('tbody').html(tableView);
+}
+
+// // Pagination
+// $(document).ready(function() {
+//     $(document).on('click', '.pagination a', function(event) {
+//         event.preventDefault();
+
+//         var page = $(this).attr('href').split('page=')[1];
+//         fetch_data(page)
+//     });
+
+//     function fetch_data(page) {
+//         $.ajax({
+//             url: "/home/page?page="+page,
+//             success: function(data) {
+//                 $('#table_data').html(data);
+//             }
+//         });
+//     }
+// })
+
 // Delete Barang
 $('body').on('click', '#btn-delete-barang', function() {
     let barang_id = $(this).data('id');
@@ -12,8 +80,6 @@ $('body').on('click', '#btn-delete-barang', function() {
         confirmButtonText: 'Ya'
     }).then((result) => {
         if (result.isConfirmed) {
-            console.log("TEST")
-
             $.ajax({
                 url: `/barang/hapus/${barang_id}`,
                 type: "DELETE",

@@ -20,13 +20,13 @@ Auth::routes();
 
 // Route Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/page', [App\Http\Controllers\HomeController::class, 'fetch_data'])->name('getData');
 Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])->name('postPickup');
 Route::delete('/home/hapus/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
-Route::get('/home/search-client', [App\Http\Controllers\HomeController::class, 'searchClient'])->name('searchClient');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
-Route::post('/home/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
+Route::post('/home/search', [App\Http\Controllers\HomeController::class, 'search'])->name('searchpickup');
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
