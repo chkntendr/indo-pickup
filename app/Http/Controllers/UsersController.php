@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -16,8 +16,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::paginate(20);
-        $roles = Role::all();
-        return view('dashboard.users', compact('users', 'roles'));
+        return view('users.users', compact('users'));
     }
 
     /**
@@ -38,16 +37,17 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $temp_data = [];
+        $users = User::paginate(20);
+        $user = new User;
 
-            $temp_data = $request->nama;
-            $temp_data = $request->email;
-            $temp_data = $request->password;
-            $temp_data = $request->status;
+        $password = Hash::make($request->password);
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = $password;
 
-        $data[] = $temp_data;
-        
-        return response()->json([ $data ]);
+        $user->save();
+
+        return redirect()->to('users');
     }
 
     /**

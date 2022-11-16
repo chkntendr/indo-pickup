@@ -4,7 +4,7 @@
     @include('includes.head')
 </head>
 <body>
-    @if (Session::has('auth')) {
+    @if (Session::has('auth'))
         <header id="header" class="header fixed-top d-flex align-items-center">
             @include('includes.header')
         </header>
@@ -14,13 +14,11 @@
         <main id="main" class="main">
             @yield('content')
         </main>
-    }
     @else
     
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
             @yield('content')
         </section>
-    }
     @endif
 </body>
 </html>

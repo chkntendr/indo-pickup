@@ -30,57 +30,30 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
+    public function index() {
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $count  = Pickup::count();
-        $data   = Pickup::paginate(100);
+        $data   = Pickup::paginate(20);
         $berat  = Pickup::sum('berat');
         $jumlah = Pickup::sum('jumlah');
         $driver = Driver::all();
         return view('dashboard.home', compact('data', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
     }
 
-    public function fetch_data(Request $request) {
-        if ($request->ajax()) {
-            $data = Pickup::paginate(10);
-
-            return view('includes.pagination_data', compact('data'))->render();
-        }
-    }
-
     public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'tipe'      => 'required',
-            'client'    => 'required',
-            'jumlah'    => 'required',
-            'berat'     => 'required',
-            'tanggal'   => 'required',
-            'driver'    => 'required',
-        ]);
-
-        // Check
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
         // Create post
-        $pickup = Pickup::create([
-            'tipe_id'   => $request->tipe,
-            'client_id' => $request->client,
-            'jumlah'    => $request->jumlah,
-            'berat'     => $request->berat,
-            'tanggal'   => $request->tanggal,
-            'driver_id' => $request->driver
-        ]);
+        $pickup  = new Pickup;
+        $pickup->tipe   = $request->tipe;
+        $pickup->client = $request->client;
+        $pickup->jumlah = $request->jumlah;
+        $pickup->berat  = $request->berat;
+        $pickup->tanggal= $request->tanggal;
+        $pickup->driver = $request->driver;
 
+        $pickup->save();
         // Return response
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Berhasil Disimpan!',
-            'data'      => $pickup
-        ]);
+        return redirect()->to('home');
     }
 
     public function delete($id) {
@@ -129,18 +102,15 @@ class HomeController extends Controller
     }
 
     public function search(Request $request) {
-        $pickups = Pickup::all();
+        $keyword = $request->search;
+        $tipe   = DB::table('tipe_barang')->get();
+        $client = Client::all();
+        $berat  = Pickup::sum('berat');
+        $jumlah = Pickup::sum('jumlah');
+        $driver = Driver::all();
 
-        if ($request->keyword != ''){
-            $pickups = Pickup::with(['Driver' => function ($query) {
-                $query->where('name','LIKE','%'.$request->keyword.'%');
-            }])->get()->load('client', 'tipe', 'driver');
+        $pickup = Pickup::where('driver', 'LIKE', "%".$keyword."%")->paginate();
 
-            // $pickups = Pickup::with('driver')->where('name','LIKE','%'.$request->keyword.'%')->get()->load('client', 'tipe', 'driver');
-
-            return response()->json([
-                'pickups' => $pickups
-            ]);
-        }        
-      }
+        return view('dashboard.search', ['pickup' => $pickup, 'tipe' => $tipe, 'client' => $client, 'berat' => $berat, 'jumlah' => $jumlah, 'driver' => $driver]);
+    }
 }

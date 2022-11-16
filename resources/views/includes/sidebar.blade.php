@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li>
-                <a href="components-accordion.html">
+                <a href="{{ route('clients') }}">
                     <i class="bi bi-circle"></i><span>Atur Client</span>
                 </a>
             </li>

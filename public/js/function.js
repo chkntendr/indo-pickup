@@ -1,52 +1,3 @@
-// Search ajax
-$('#search').on('keyup', function(){
-    search();
-});
-
-search();
-function search(){
-    var keyword = $('#search').val();
-    var token = $("meta[name='csrf-token']").attr("content")
-
-    $.ajax({
-        url: `/home/search`,
-        type: 'POST',
-        data: {
-            "keyword": keyword,
-            "_token": token
-        }, success:function(response) {
-            table_post_row(response);
-        }
-    });
-}
-
-// Table row
-function table_post_row(response) {
-    let tableView = '';
-    const pickups = response.pickups;
-
-    if (pickups.length <= 0) {
-        tableView+= `
-           <tr>
-              <td colspan="7">No data.</td>
-           </tr>`;
-    } else {
-        for (let i = 0; i < pickups.length; i++){
-            tableView += `
-                <tr>
-                    <td>`+pickups[i].tipe.barang+`</td>
-                    <td>`+pickups[i].client.client+`</td>
-                    <td>`+pickups[i].jumlah+`</td>
-                    <td>`+pickups[i].berat+`</td>
-                    <td>`+pickups[i].created_at+`</td>
-                    <td>`+pickups[i].driver.name+`</td>
-                </tr>`;
-        }
-    }
-
-    $('tbody').html(tableView);
-}
-
 // // Pagination
 // $(document).ready(function() {
 //     $(document).on('click', '.pagination a', function(event) {
@@ -198,134 +149,134 @@ $('body').on('click', '#btn-create-pickup', function() {
     $('#modal-create').modal('show');
 });
 
-// Action create pickup
-$('#store').click(function(e) {
-    e.preventDefault();
+// // Action create pickup
+// $('#store').click(function(e) {
+//     e.preventDefault();
 
-    // Define variable
-    let tipe     = $('#tipe').val();
-    let client   = $('#client').val();
-    let jumlah   = $('#jumlah').val();
-    let berat    = $('#berat').val();
-    let tanggal  = $('#tanggal').val();
-    let driver   = $('#driver').val();
-    let token    = $("meta[name='csrf-token']").attr("content");
+//     // Define variable
+//     let tipe     = $('#tipe').val();
+//     let client   = $('#client').val();
+//     let jumlah   = $('#jumlah').val();
+//     let berat    = $('#berat').val();
+//     let tanggal  = $('#tanggal').val();
+//     let driver   = $('#driver').val();
+//     let token    = $("meta[name='csrf-token']").attr("content");
 
 
-    $.ajax({
-        url: `/home/post`,
-        type: "POST",
-        cache: false,
-        data: {
-            "tipe": tipe,
-            "client": client,
-            "jumlah": jumlah,
-            "berat": berat,
-            "tanggal": tanggal,
-            "driver": driver,
-            "_token": token
-        },
+//     $.ajax({
+//         url: `/home/post`,
+//         type: "POST",
+//         cache: false,
+//         data: {
+//             "tipe": tipe,
+//             "client": client,
+//             "jumlah": jumlah,
+//             "berat": berat,
+//             "tanggal": tanggal,
+//             "driver": driver,
+//             "_token": token
+//         },
 
-        success:function(response) {
-            Swal.fire({
-                type: 'success',
-                icon: 'success',
-                title: `${response.message}`,
-                showConfirmButton: false,
-                timer: 1500
-            }).then((result) => {
-                location.reload();
-            });
+//         success:function(response) {
+//             Swal.fire({
+//                 type: 'success',
+//                 icon: 'success',
+//                 title: `${response.message}`,
+//                 showConfirmButton: false,
+//                 timer: 1500
+//             }).then((result) => {
+//                 location.reload();
+//             });
 
-            // // Data Pickup
-            // let pickup = `
-            // <tr id="index_${response.data.id}">
-            //     <td></td>
-            //     <td>${response.data.tipe}</td>
-            //     <td>${response.data.client.client}</td>
-            //     <td>${response.data.jumlah}</td>
-            //     <td>${response.data.berat}</td>
-            //     <td>${response.data.tanggal}</td>
-            //     <td>${response.data.driver}</td>
-            //     <td>
-            //         <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
-            //         <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
-            //     </td>
-            // </tr>
-            // `;
+//             // // Data Pickup
+//             // let pickup = `
+//             // <tr id="index_${response.data.id}">
+//             //     <td></td>
+//             //     <td>${response.data.tipe}</td>
+//             //     <td>${response.data.client.client}</td>
+//             //     <td>${response.data.jumlah}</td>
+//             //     <td>${response.data.berat}</td>
+//             //     <td>${response.data.tanggal}</td>
+//             //     <td>${response.data.driver}</td>
+//             //     <td>
+//             //         <a id="btn-edit-pickup" data-id="{{ $pickup->id }}" type="button" style="color: orange"><i class="fas fa-edit"></i></a>
+//             //         <a id="btn-delete-pickup" data-id="{{ $pickup->id }}" type="button" style="color: red"><i class="fas fa-trash"></i></a>
+//             //     </td>
+//             // </tr>
+//             // `;
 
-            // // Append to table
-            // $('#pickup-table').prepend(pickup);
+//             // // Append to table
+//             // $('#pickup-table').prepend(pickup);
 
-            // Clear form
-            $('#tipe').val();
-            $('#client').val();
-            $('#jumlah').val();
-            $('#berat').val();
-            $('#tanggal').val();
-            $('#driver').val();
+//             // Clear form
+//             $('#tipe').val();
+//             $('#client').val();
+//             $('#jumlah').val();
+//             $('#berat').val();
+//             $('#tanggal').val();
+//             $('#driver').val();
 
-            // Close modal
-            $('#modal-create').modal('hide');
-        },
+//             // Close modal
+//             $('#modal-create').modal('hide');
+//         },
 
-        error:function(error) {
-            if (error.responseJSON.tipe[0]) {
-                // Show alert
-                $('#alert-tipe').removeClass('d-none');
-                $('#alert-tipe').addClass('d-block');
+//         error:function(error) {
+//             if (error.responseJSON.tipe[0]) {
+//                 // Show alert
+//                 $('#alert-tipe').removeClass('d-none');
+//                 $('#alert-tipe').addClass('d-block');
 
-                // Add message to alert
-                $('#alert-tipe').html(error.responseJSON.tipe[0]);
-            }
+//                 // Add message to alert
+//                 $('#alert-tipe').html(error.responseJSON.tipe[0]);
+//             }
 
-            if(error.responseJSON.client[0]) {
-                // Show alert
-                $('#alert-client').removeClass('d-none');
-                $('#alert-client').addClass('d-block');
+//             if(error.responseJSON.client[0]) {
+//                 // Show alert
+//                 $('#alert-client').removeClass('d-none');
+//                 $('#alert-client').addClass('d-block');
 
-                // Add message to alert
-                $('#alert-client').html(error.responseJSON.client[0]);
-            }
+//                 // Add message to alert
+//                 $('#alert-client').html(error.responseJSON.client[0]);
+//             }
 
-            if(error.responseJSON.jumlah[0]) {
-                // Show alert
-                $('#alert-jumlah').removeClass('d-none');
-                $('#alert-jumlah').addClass('d-block');
+//             if(error.responseJSON.jumlah[0]) {
+//                 // Show alert
+//                 $('#alert-jumlah').removeClass('d-none');
+//                 $('#alert-jumlah').addClass('d-block');
 
-                // Add message to alert
-                $('#alert-jumlah').html(error.responseJSON.jumlah[0]);
-            }
+//                 // Add message to alert
+//                 $('#alert-jumlah').html(error.responseJSON.jumlah[0]);
+//             }
 
-            if(error.responseJSON.berat[0]) {
-                // Show alert
-                $('#alert-berat').removeClass('d-none');
-                $('#alert-berat').addClass('d-block');
+//             if(error.responseJSON.berat[0]) {
+//                 // Show alert
+//                 $('#alert-berat').removeClass('d-none');
+//                 $('#alert-berat').addClass('d-block');
 
-                // Add message to alert
-                $('#alert-berat').html(error.responseJSON.berat[0]);
-            }
+//                 // Add message to alert
+//                 $('#alert-berat').html(error.responseJSON.berat[0]);
+//             }
 
-            if(error.responseJSON.tanggal[0]) {
-                // Show alert
-                $('#alert-tanggal').removeClass('d-none');
-                $('#alert-tanggal').addClass('d-block');
+//             if(error.responseJSON.tanggal[0]) {
+//                 // Show alert
+//                 $('#alert-tanggal').removeClass('d-none');
+//                 $('#alert-tanggal').addClass('d-block');
 
-                // Add message to alert
-                $('#alert-tanggal').html(error.responseJSON.tanggal[0]);
-            }
+//                 // Add message to alert
+//                 $('#alert-tanggal').html(error.responseJSON.tanggal[0]);
+//             }
 
-            if(error.responseJSON.driver[0]) {
-                // Show alert
-                $('#alert-driver').removeClass('d-none');
-                $('#alert-driver').addClass('d-block');
+//             if(error.responseJSON.driver[0]) {
+//                 // Show alert
+//                 $('#alert-driver').removeClass('d-none');
+//                 $('#alert-driver').addClass('d-block');
 
-                // Add message to alert
-                $('#alert-driver').html(error.responseJSON.driver[0]);
-            }
-        }
-    })
-})
+//                 // Add message to alert
+//                 $('#alert-driver').html(error.responseJSON.driver[0]);
+//             }
+//         }
+//     })
+// })
 
 // Edit Pickup
 $('body').on('click', '#btn-edit-pickup', function(e) {
@@ -368,88 +319,13 @@ $('body').on('click', '#btn-edit-pickup', function(e) {
 // Create Client
 $('body').on('click', '#btn-create-client', function() {
     //  Open Modal
-    $('#modal-create').modal('show');
-});
+    $('#create-client').modal('show');
 
-// Action create pickup
-$('#clientStore').click(function(e) {
-    e.preventDefault();
-
-    // Define variable
-    let kode     = $('#kode').val();
-    let nama     = $('#nama').val();
-    let token    = $("meta[name='csrf-token']").attr("content");
-
-
-    $.ajax({
-        url: `/client/post`,
-        type: "POST",
-        cache: false,
-        data: {
-            "kode": kode,
-            "nama": nama,
-            "_token": token
-        },
-
-        success:function(response) {
-            Swal.fire({
-                type: 'success',
-                icon: 'success',
-                title: `${response.message}`,
-                showConfirmButton: false,
-                timer: 1500
-            }).then((result) => {
-                location.reload()
-            });
-
-            // // Data Pickup
-            // let pickup = `
-            // <tr id="index_${response.data.id}">
-            //     <td>${response.data.tipe_id}</td>
-            //     <td>${response.data.client_id}</td>
-            //     <td>${response.data.jumlah}</td>
-            //     <td>${response.data.berat}</td>
-            //     <td>${response.data.tanggal}</td>
-            //     <td>${response.data.driver}</td>
-            // </tr>
-            // `;
-
-            // // Append to table
-            // $('#table-pickups').prepend(pickup);
-
-            // // Clear form
-            // $('#tipe').val();
-            // $('#client').val();
-            // $('#jumlah').val();
-            // $('#berat').val();
-            // $('#tanggal').val();
-            // $('#driver').val();
-
-            // Close modal
-            $('#modal-create').modal('hide');
-        },
-
-        error:function(error) {
-            if (error.responseJSON.tipe[0]) {
-                // Show alert
-                $('#alert-kode').removeClass('d-none');
-                $('#alert-kode').addClass('d-block');
-
-                // Add message to alert
-                $('#alert-kode').html(error.responseJSON.kode[0]);
-            }
-
-            if(error.responseJSON.client[0]) {
-                // Show alert
-                $('#alert-nama').removeClass('d-none');
-                $('#alert-nama').addClass('d-block');
-
-                // Add message to alert
-                $('#alert-nama').html(error.responseJSON.nama[0]);
-            }
-        }
+    // Close Modal
+    $('body').on('click', '#close-modal-client', function() {
+        $('#create-client').modal('hide');
     })
-})
+});
 
 // Create User
 $('body').on('click', '#btn-create-user', function(e) {

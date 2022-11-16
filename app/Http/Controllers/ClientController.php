@@ -10,35 +10,19 @@ use Illuminate\Support\Facades\Validator;
 class ClientController extends Controller
 {
     public function index() {
-        $count      = DB::table('data_client')->count();
-        $data       = DB::table('data_client')->get();
-        return view('dashboard.client', compact('data', 'count'));
+        $data       = Client::paginate(20);
+        return view('users.client', compact('data'));
     }
 
     public function create(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'kode'      => 'required',
-            'nama'      => 'required',
-        ]);
-
-        // Check
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
         // Create post
-        $client = Client::create([
-            'kode_client'   => $request->kode,
-            'client'        => $request->nama,
-            
-        ]);
+        $client = new Client;
+        $client->kode_client    = $request->kode_client;
+        $client->client         = $request->client;
+        
+        $client->save();
 
-        // Return response
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Berhasil Disimpan!',
-            'data'      => $client
-        ]);
+        return redirect('client');
     }
 
     public function delete($id) {

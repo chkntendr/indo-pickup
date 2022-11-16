@@ -25,9 +25,9 @@
                                         <th scope="col" data-sortable="">
                                             <a href="#" class="dataTable-sorter">Dibuat pada</a>
                                         </th>
-                                        <th scope="col" data-sortable="">
+                                        {{-- <th scope="col" data-sortable="">
                                             <a href="#" class="dataTable-sorter">Status</a>
-                                        </th>
+                                        </th> --}}
                                         <th scope="col" data-sortable="">
                                             <a href="#" class="dataTable-sorter">Opsi</a>
                                         </th>
@@ -43,7 +43,6 @@
                                             <td>{{ $u->name }}</td>
                                             <td>{{ $u->email }}</td>
                                             <td>{{ $u->created_at }}</td>
-                                            <td>{{ $u->roles->roles }}</td>
                                             <td>
                                                 <a id="btn-edit-user" data-id="{{ $u->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
                                                 <a id="btn-delete-user" data-id="{{ $u->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
@@ -83,38 +82,41 @@
                     <button id="close-modal-user" class="btn-close" data-dismiss="modal" aria-label="close"></button>
                 </div>
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nama" class="control-label">Nama</label>
-                        <input type="text" name="nama" id="nama" class="form-control" required>
-                        <div id="alert-nama" class="alert alert-danger alert-dismissable fade d-none mt-2"></div>
+                <form action="{{ route('userPost') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nama" class="control-label">Nama</label>
+                            <input type="text" name="nama" id="nama" class="form-control" required>
+                            <div id="alert-nama" class="alert alert-danger alert-dismissable fade d-none mt-2"></div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email</label>
+                            <input type="email" name="email" id="email" class="form-control">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </div>
+    
+                        {{-- <div class="form-group">
+                            <label for="nama" class="control-label">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="0">-- PILIH STATUS --</option>
+                                @foreach ($roles as $r)
+                                    <option value="{{ $r->id }}">{{ $r->roles }}</option>
+                                @endforeach
+                            </select>
+                        </div> --}}
                     </div>
-
-                    <div class="form-group">
-                        <label for="email" class="control-label">Email</label>
-                        <input type="email" name="email" id="email" class="form-control">
+    
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-secondary" id="close-modal-user">Tutup</button>
+                        <button class="btn btn-sm btn-success">Simpan</button>
                     </div>
-
-                    <div class="form-group">
-                        <label for="password" class="control-label">Password</label>
-                        <input type="password" name="password" id="password" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nama" class="control-label">Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="0">-- PILIH STATUS --</option>
-                            @foreach ($roles as $r)
-                                <option value="{{ $r->id }}">{{ $r->roles }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-secondary" id="close-modal-user">Tutup</button>
-                    <button class="btn btn-sm btn-success" id="user-store">Simpan</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

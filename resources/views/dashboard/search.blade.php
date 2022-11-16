@@ -63,9 +63,9 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        if ($data->count()) {
+                                        if ($pickup->count()) {
                                     ?>
-                                    @foreach($data as $key => $d)
+                                    @foreach($pickup as $key => $d)
                                     <tr id="tr_{{ $d->id }}">
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $d->tipe }}</td>
@@ -93,8 +93,8 @@
                             </table>
                         </div>
                         <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to {{ $data->perPage() }} of {{ $data->total() }} entries</div>
-                            {{ $data->links('includes.pagination')}}
+                            <div class="dataTable-info">Showing 1 to {{ $pickup->perPage() }} of {{ $pickup->total() }} entries</div>
+                            {{ $pickup->links('includes.pagination')}}
                         </div>
                     </div>
                 </div>
@@ -200,15 +200,16 @@
                             <input type="date" class="form-control" name="tanggal" id="tanggal">
                             <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tanggal"></div>
                         </div>
-
+    
                         <div class="form-group">
                             <label for="driver" class="control-label">Driver</label>
-                            <select name="driver" class="form-control" id="driver">
+                            <select name="client" class="form-control" name="driver">
                                 <option value="0">- Pilih Driver -</option>
                                 @foreach ($driver as $d)
                                 <option value="{{ $d->name }}">{{ $d->name }}</option>
                                 @endforeach
                             </select>
+                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-driver"></div>
                         </div>
                     </div>
 

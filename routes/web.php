@@ -20,13 +20,12 @@ Auth::routes();
 
 // Route Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home/page', [App\Http\Controllers\HomeController::class, 'fetch_data'])->name('getData');
 Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])->name('postPickup');
 Route::delete('/home/hapus/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
-Route::post('/home/search', [App\Http\Controllers\HomeController::class, 'search'])->name('searchpickup');
+Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('searchpickup');
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
@@ -38,8 +37,8 @@ Route::post('/barang/post', [App\Http\Controllers\BarangController::class, 'crea
 Route::delete('/barang/hapus/{id}', [App\Http\Controllers\BarangController::class, 'delete'])->name('deleteBarang');
 
 // Route Client
-Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('client');
-Route::post('/client/post', [App\Http\Controllers\ClientController::class, 'create'])->name('createClient');
+Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');
+Route::post('/client/post', [App\Http\Controllers\ClientController::class, 'create'])->name('clientPost');
 Route::delete('/client/hapus/{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('deleteClient');
 
 // Route Driver
