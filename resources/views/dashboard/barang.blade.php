@@ -11,41 +11,23 @@
                 <div class="card-body">
                     <h5 class="card-title">Data Barang</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                        <div class="dataTable-top">
-                            <div class="dataTable-dropdown">
-                                <label>
-                                    <select class="dataTable-selector">
-                                        <option value="5">5</option>
-                                        <option value="10" selected="">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                        <option value="25">25</option>
-                                    </select> entries per page</label>
-                                </div>
-                                <div class="dataTable-search">
-                                    <input class="dataTable-input" placeholder="Search..." type="text">
-                                </div>
-                            </div>
-                        </div>
                         <div class="dataTable-container">
                             <table class="table datatable dataTable-table">
                                 <thead>
                                     <tr>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">ID Barang</a>
+                                            <a href="#">ID Barang</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Tipe</a>
+                                            <a href="#">Tipe</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Opsi</a>
+                                            <a href="#">Opsi</a>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    if ($data->count()) {
-                                    ?>
+                                    <?php if ($data->count()) { ?>
                                     @foreach ($data as $key=>$d)
                                     <tr id="index_{{$d->id}}">
                                         <td>{{ ++$key }}</td>
@@ -67,10 +49,8 @@
                             </table>
                         </div>
                         <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to 5 of {{ $key }} entries</div>
-                            <nav class="dataTable-pagination">
-                                <ul class="dataTable-pagination-list"></ul>
-                            </nav>
+                            <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
+                            {{ $data->links('includes.pagination')}}
                         </div>
                     </div>
                 </div>

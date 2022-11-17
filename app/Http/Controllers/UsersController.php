@@ -90,8 +90,12 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
-    {
-        //
+    public function destroy($id) {
+        User::where('id', $id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berahasil dihapus'
+        ]);
     }
 }

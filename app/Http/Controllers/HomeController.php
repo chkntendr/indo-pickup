@@ -44,15 +44,15 @@ class HomeController extends Controller
     public function store(Request $request) {
         // Create post
         $pickup  = new Pickup;
-        $pickup->tipe   = $request->tipe;
-        $pickup->client = $request->client;
-        $pickup->jumlah = $request->jumlah;
-        $pickup->berat  = $request->berat;
-        $pickup->tanggal= $request->tanggal;
-        $pickup->driver = $request->driver;
-
+        $pickup->tipe       = $request->tipe;
+        $pickup->client     = $request->client;
+        $pickup->luar_kota  = $request->lk;
+        $pickup->dalam_kota = $request->dk;
+        $pickup->jumlah     = $pickup->luar_kota + $pickup->dalam_kota;
+        $pickup->berat      = $request->berat;
+        $pickup->tanggal    = $request->tanggal;
+        $pickup->driver     = $request->driver;
         $pickup->save();
-        // Return response
         return redirect()->to('home');
     }
 
@@ -65,24 +65,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function edit($id) {
-        $pickup = Pickup::find($id);
-
-        return response()->json($pickup);
-    }
-
-    public function searchClient(Request $request) {
-        $data = [];
-
-        if($request->has('q')) {
-            $search = $request->q;
-            $data   = Client::select('id', 'client')
-                    ->where('client', 'LIKE', '%$search%')
-                    ->get();
-        }
-        return response()->json($data);
-    }
-
     public function export() {
         return Excel::download(new PickupExport, 'data_pickup.xlsx');
     }
@@ -92,7 +74,7 @@ class HomeController extends Controller
             'file'  => 'required|mimes:xlsx,xls,csv|max:2048'
         ]);
 
-        if ($files = $request->file('file')) {
+        if ($files  = $request->file('file')) {
             $import = new ImportPickup;
             $import->setStartRow(2);
             Excel::import ($import, $request->file('file')->store('files'));
@@ -102,7 +84,7 @@ class HomeController extends Controller
     }
 
     public function search(Request $request) {
-        $keyword = $request->search;
+        $keyword= $request->search;
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $berat  = Pickup::sum('berat');

@@ -25,7 +25,7 @@ Route::delete('/home/hapus/{id}', [App\Http\Controllers\HomeController::class, '
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
-Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('searchpickup');
+Route::post('/searchpickup', [App\Http\Controllers\HomeController::class, 'search'])->name('searchPickup');
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
@@ -44,7 +44,10 @@ Route::delete('/client/hapus/{id}', [App\Http\Controllers\ClientController::clas
 // Route Driver
 Route::get('/driver', [App\Http\Controllers\DriverController::class, 'index'])->name('driver');
 Route::post('/driver/post', [App\Http\Controllers\DriverController::class, 'store'])->name('driverPost');
+route::post('/searchdriver', [App\Http\Controllers\DriverController::class, 'search'])->name('searchDriver');
+Route::delete('/driver/delete/{id}', [App\Http\Controllers\DriverController::class, 'destroy'])->name('driverDestroy');
 
 // Route Users
 Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
 Route::post('/users/post', [App\Http\Controllers\UsersController::class, 'store'])->name('userPost');
+Route::delete('/users/delete/{id}', [App\Http\Controllers\UsersController::class, 'destroy'])->name('userDestroy');

@@ -45,7 +45,7 @@
                                             <td>{{ $u->created_at }}</td>
                                             <td>
                                                 <a id="btn-edit-user" data-id="{{ $u->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                                <a id="btn-delete-user" data-id="{{ $u->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                                <a id="btn-delete-user" onclick="deleteUser()" data-id="{{ $u->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

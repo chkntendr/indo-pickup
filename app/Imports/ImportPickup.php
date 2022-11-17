@@ -26,12 +26,14 @@ class ImportPickup implements ToModel
     public function model(array $row)
     {
         return new Pickup([
-            'tipe' => $row[0],
-            'client' => $row[1],
-            'jumlah' => $row[2],
-            'berat' => $row[3],
-            'tanggal' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4])->format('y-m-d'),
-            'driver' => $row[5],
+            'tipe'      => $row[0],
+            'client'    => $row[1],
+            'luar_kota' => $row[2],
+            'dalam_kota'=> $row[3],
+            'jumlah'    => $row[2] + $row[3],
+            'berat'     => $row[4],
+            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5])->format('y-m-d'),
+            'driver'    => $row[6],
         ]);
     }
 }

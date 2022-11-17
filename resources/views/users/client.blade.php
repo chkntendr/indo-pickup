@@ -14,22 +14,19 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">#</a>
+                                            <a href="#">#</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Kode Klien</a>
+                                            <a href="#">Kode Klien</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Klien</a>
+                                            <a href="#">Klien</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Dibuat pada</a>
+                                            <a href="#">Dibuat pada</a>
                                         </th>
-                                        {{-- <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Status</a>
-                                        </th> --}}
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Opsi</a>
+                                            <a href="#">Opsi</a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -45,7 +42,7 @@
                                             <td>{{ $d->created_at }}</td>
                                             <td>
                                                 <a id="btn-edit-user" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                                <a id="btn-delete-user" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                                <a id="btn-delete-client" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -58,7 +55,7 @@
                             </table>
                         </div>
                         <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to {{ $data->perPage() }} of {{ $data->total() }} entries</div>
+                            <div class="dataTable-info">Showing {{ $data->count() }} to {{ $data->count() }} of {{ $data->total() }} entries</div>
                             {{ $data->links('includes.pagination')}}
                         </div>
                     </div>
@@ -94,16 +91,6 @@
                             <label for="client" class="control-label">Nama Klien</label>
                             <input type="text" name="client" id="client" class="form-control">
                         </div>
-    
-                        {{-- <div class="form-group">
-                            <label for="nama" class="control-label">Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="0">-- PILIH STATUS --</option>
-                                @foreach ($roles as $r)
-                                    <option value="{{ $r->id }}">{{ $r->roles }}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
                     </div>
     
                     <div class="modal-footer">

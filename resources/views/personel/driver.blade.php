@@ -9,19 +9,20 @@
                 <div class="card-body">
                     <h5 class="card-title">Data Driver</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                        <div class="dataTable-top">
-                            <div class="dataTable-dropdown">
-                                <label>
-                                    <select class="dataTable-selector">
-                                        <option value="5">5</option>
-                                        <option value="10" selected="">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                        <option value="25">25</option>
-                                    </select> entries per page</label>
-                                </div>
+                            <div class="dataTable-top">
+                                <a id="btn-create-driver" class="btn btn-sm btn-primary m-2">
+                                    <i class="bi bi-plus"></i>
+                                    Tambah Driver
+                                </a>
+                                
                                 <div class="dataTable-search">
-                                    <input class="dataTable-input" placeholder="Search..." type="text">
+                                    <form action="{{ route('searchDriver') }}" method="POST">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input class="form-control dataTable-input" placeholder="Cari driver" type="text" name="search">
+                                            <button class="input-group-text" id="inputGroupPrepend">Cari</button>                                            
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -49,8 +50,8 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $d -> name }}</td>
                                         <td>
-                                            <a style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                            <a style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                            <a id="btn-edit-driver" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
+                                            <a id="btn-delete-driver" onclick="deleteDriver()" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -65,7 +66,7 @@
                             </table>
                         </div>
                         <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to 5 of {{ $key }} entries</div>
+                            <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
                             <nav class="dataTable-pagination">
                                 <ul class="dataTable-pagination-list"></ul>
                             </nav>
@@ -73,12 +74,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-12">
-            <a id="btn-create-driver" class="btn btn-sm btn-primary m-2">
-                <i class="bi bi-plus"></i>
-                Tambah Barang
-            </a>
         </div>
     </div>
 

@@ -19,12 +19,14 @@ class PickupExport implements WithHeadings, FromCollection, WithMapping
     public function map($pickup): array {
         return [
             $pickup->id,
-            $pickup->tipe->barang,
-            $pickup->client->client,
+            $pickup->tipe,
+            $pickup->client,
+            $pickup->luar_kota,
+            $pickup->dalam_kota,
             $pickup->jumlah,
             $pickup->berat,
             $pickup->tanggal,
-            $pickup->driver->name
+            $pickup->driver
         ];
     }
 
@@ -36,6 +38,8 @@ class PickupExport implements WithHeadings, FromCollection, WithMapping
             '#',
             'Barang',
             'Client',
+            'Luar Kota',
+            'Dalam Kota',
             'Jumlah',
             'Berat',
             'Tanggal',

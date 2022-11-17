@@ -10,9 +10,8 @@ use Illuminate\Support\Facades\Validator;
 class DriverController extends Controller
 {
     public function index() {
-        $count      =   DB::table('data_driver')->count();
-        $data       =   Driver::all();
-        return view('dashboard.driver', compact('data', 'count'));
+        $data       =   Driver::paginate();
+        return view('personel.driver', compact('data'));
     }
 
     public function store(Request $request) {
@@ -24,6 +23,22 @@ class DriverController extends Controller
             'success' => true,
             'message' => 'Driver berhasil ditambahkan!',
             'data'    => $driver
+        ]);
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->search;
+
+        $search     = Driver::where('name', 'LIKE', '%'.$keyword.'%')->paginate();
+        return view('personel.search', compact('search'));
+    }
+
+    public function destroy($id) {
+        Driver::where('id', $id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Data berhasil dihapus!"
         ]);
     }
 }
