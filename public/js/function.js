@@ -1,3 +1,37 @@
+function deleteMultiple() {
+    $('#multiDelete').on('click', function() {
+        var button   = $(this);
+        var selected = [];
+        var token    = $("meta[name='csrf-token']").attr("content");
+
+        $('#datatable #check:checked').each(function() {
+            selected.push($(this).val());
+        });
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Data akan dihapus!',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Ya"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/home/delete/multiple/${selected}`,
+                    type: "DELETE",
+                    cache: false,
+                    data: {
+                        "_token": token
+                    },
+                    success: function(response) {
+                        console.log(response)
+                    }
+                });
+            }
+        })
+    })
+}
+
 function deleteDriver() {
     $('body').on('click', '#btn-delete-driver', function(e) {
         e.preventDefault();

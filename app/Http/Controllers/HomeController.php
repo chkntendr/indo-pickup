@@ -65,6 +65,14 @@ class HomeController extends Controller
         ]);
     }
 
+    public function deleteMutliple($id) {
+        $pickup = Pickup::whereIn('id', $id);
+
+        return response()->json([
+            'data' => $pickup
+        ]);
+    }
+
     public function export() {
         return Excel::download(new PickupExport, 'data_pickup.xlsx');
     }

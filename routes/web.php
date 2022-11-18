@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])->name('postPickup');
 Route::delete('/home/delete/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
+Route::delete('/home/delete/multiple/{id}', [App\Http\Controllers\HomeController::class, 'deleteMultiple'])->name('deleteMultiple');
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
