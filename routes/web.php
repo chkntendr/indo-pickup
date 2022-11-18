@@ -21,11 +21,11 @@ Auth::routes();
 // Route Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])->name('postPickup');
-Route::delete('/home/hapus/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
+Route::delete('/home/delete/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
-Route::post('/searchpickup', [App\Http\Controllers\HomeController::class, 'search'])->name('searchPickup');
+Route::post('/searchpickup', [App\Http\Controllers\HomeController::class, 'search'])->name('search-pickup');
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');

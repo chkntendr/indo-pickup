@@ -78,79 +78,84 @@ function deleteUser() {
     })
 }
 
-// Delete Barang
-$('body').on('click', '#btn-delete-barang', function() {
-    let barang_id = $(this).data('id');
-    let token = $("meta[name='csrf-token']").attr("content");
+function deleteBarang() {
+	$('body').on('click', function() {
+	    let barang_id = $(this).data('id');
+	    let token = $("meta[name='csrf-token']").attr("content");
 
-    Swal.fire({
-        title: 'Data akan dihapus secara permanen!',
-        text: "Lanjutkan?",
-        icon: 'warning',
-        showCancelButton: true,
-        cancelButtonText: 'Tidak',
-        confirmButtonText: 'Ya'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: `/barang/hapus/${barang_id}`,
-                type: "DELETE",
-                cache: false,
-                data: {
-                    "_token": token
-                },
-                success: function(response) {
-                    Swal.fire({
-                        type: 'success',
-                        icon: 'success',
-                        title: `${ response.message }`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+	    Swal.fire({
+	        title: 'Data akan dihapus secara permanen!',
+	        text: "Lanjutkan?",
+	        icon: 'warning',
+	        showCancelButton: true,
+	        cancelButtonText: 'Tidak',
+	        confirmButtonText: 'Ya'
+    	}).then((result) => {
+        	if (result.isConfirmed) {
+	            $.ajax({
+	                url: `/barang/hapus/${barang_id}`,
+	                type: "DELETE",
+	                cache: false,
+	                data: {
+	                    "_token": token
+	                },
+                	success: function(response) {
+	                    Swal.fire({
+	                        type: 'success',
+	                        icon: 'success',
+	                        title: `${ response.message }`,
+	                        showConfirmButton: false,
+	                        timer: 1500
+	                    });
 
-                    $(`#index_${barang_id}`).remove();
-                }
-            })
-        }
-    })
-})
+                    	$(`#index_${barang_id}`).remove();
+                	}
+            	})
+        	}
+    	})
+	})
+}
 
 // Delete Pickup
-$('body').on('click', '#btn-delete-pickup', function() {
-    let pickup_id = $(this).data('id');
-    let token = $("meta[name='csrf-token']").attr("content");
+function deletePickup() {
+    $('body').on('click', '#btn-delete-pickup', function (e) {
+        e.preventDefault();
 
-    Swal.fire({
-        title: 'Data akan dihapus secara permanen!',
-        text: "Lanjutkan?",
-        icon: 'warning',
-        showCancelButton: true,
-        cancelButtonText: 'Tidak',
-        confirmButtonText: 'Ya'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: `/home/hapus/${pickup_id}`,
-                type: "DELETE",
-                cache: false,
-                data: {
-                    "_token": token
-                },
-                success: function(response) {
-                    Swal.fire({
-                        type: 'success',
-                        icon: 'success',
-                        title: `${ response.message }`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+        let pickup_id   = $(this).data('id');
+        let token       = $("meta[name='csrf-token']").attr("content");
 
-                    $(`#tr_${pickup_id}`).remove();
-                }
-            })
-        }
+        Swal.fire({
+            title: "Data akan dihapus secara permanen!",
+            text: "Lanjutkan?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: "Tidak",
+            confirmButtonText: "Ya"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/home/delete/${pickup_id}`,
+                    type: "DELETE",
+                    cache: false,
+                    data: {
+                        "_token": token
+                    },
+                    success:function(response) {
+                        Swal.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: `${ response.message }`,
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+
+                        $(`#tr_${pickup_id}`).remove();
+                    }
+                })
+            }
+        })
     })
-})
+}
 
 // Delete Client
 $('body').on('click', '#btn-delete-client', function() {

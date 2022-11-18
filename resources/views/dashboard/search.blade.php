@@ -25,7 +25,7 @@
                                 </a>
                             </div>
                             <div class="dataTable-search">
-                                <form action="{{ route('searchpickup') }}" method="POST">
+                                <form action="{{ route('search-pickup') }}" method="POST">
                                     @csrf
                                     <div class="input-group">
                                         <input class="form-control dataTable-input" placeholder="Cari driver" type="text" name="search">

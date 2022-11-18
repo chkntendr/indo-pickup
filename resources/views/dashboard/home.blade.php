@@ -23,7 +23,7 @@
                                 Download
                             </a>
                             <div class="dataTable-search">
-                                <form action="{{ route('searchPickup') }}" method="POST">
+                                <form action="{{ route('search-pickup') }}" method="POST">
                                     @csrf
                                     <div class="input-group">
                                         <input class="form-control dataTable-input" placeholder="Cari driver" type="text" name="search">
@@ -90,7 +90,7 @@
                                     <td>{{ $d->driver }}</td>
                                     <td>
                                         <a id="btn-edit-pickup" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                        <a id="btn-delete-pickup" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                        <a id="btn-delete-pickup" onclick="deletePickup()" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
