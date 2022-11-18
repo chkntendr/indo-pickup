@@ -31,13 +31,13 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">#</a>
+                                            <a href="#">#</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Nama</a>
+                                            <a href="#">Nama</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Opsi</a>
+                                            <a href="#">Opsi</a>
                                         </th>
                                     </tr>
                                 </thead>

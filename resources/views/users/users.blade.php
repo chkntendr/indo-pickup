@@ -14,22 +14,19 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">#</a>
+                                            <a href="#">#</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Name</a>
+                                            <a href="#">Name</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Email</a>
+                                            <a href="#">Email</a>
                                         </th>
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Dibuat pada</a>
+                                            <a href="#">Dibuat pada</a>
                                         </th>
-                                        {{-- <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Status</a>
-                                        </th> --}}
                                         <th scope="col" data-sortable="">
-                                            <a href="#" class="dataTable-sorter">Opsi</a>
+                                            <a href="#">Opsi</a>
                                         </th>
                                     </tr>
                                 </thead>
