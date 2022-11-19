@@ -9,6 +9,13 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
+        <a class="nav-link {{ (request()->segment(1) == 'report') ? '' : 'collapsed'}}" href="{{ route('report') }}">
+            <i class="bi bi-journals"></i>
+            <span>Report</span>
+        </a>
+    </li><!-- End Report Nav -->
+
+    <li class="nav-item">
         <a class="nav-link {{ (request()->segment(1) == 'driver') ? '' : 'collapsed'}}" href="{{ route('driver') }}">
             <i class="bi bi-car-front-fill"></i>
             <span>Driver</span>

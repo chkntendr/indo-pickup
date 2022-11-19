@@ -8,24 +8,19 @@
         <div class="row justify-content-center">
           <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
             <div class="card mb-3">
-              <div class="card-body">
-                <div class="pt-4 pb-2">
-                  <p class="text-center small">Enter your username & password to login</p>
-                </div>
+              <div class="card-body">                
 
-                <form class="row g-3 needs-validation" novalidate action="{{ route('login') }}" method="POST">
+                <form class="row g-3 mt-2 needs-validation" novalidate action="{{ route('login') }}" method="POST">
                     @csrf
                   <div class="col-12">
-                    <label for="yourUsername" class="form-label">Username</label>
                     <div class="input-group has-validation">
-                      <input type="text" name="email" class="form-control" id="email" required>
+                      <input type="text" name="email" class="form-control" id="email" placeholder="Enter e-mail" required>
                       <div class="invalid-feedback">Please enter your email</div>
                     </div>
                   </div>
 
                   <div class="col-12">
-                    <label for="yourPassword" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="yourPassword" required>
+                    <input type="password" name="password" class="form-control" id="yourPassword" placeholder="Enter password" required>
                     <div class="invalid-feedback">Please enter your password!</div>
                   </div>
 

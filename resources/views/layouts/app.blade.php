@@ -3,7 +3,7 @@
 <head>
     @include('includes.head')
 </head>
-<body>
+<body onload="getDataPickup()">
     @if (Session::has('auth'))
         <header id="header" class="header fixed-top d-flex align-items-center">
             @include('includes.header')

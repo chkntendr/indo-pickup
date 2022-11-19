@@ -15,7 +15,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('dashboard.report');
+        return view('report.report');
     }
 
     /**
@@ -86,5 +86,14 @@ class ReportController extends Controller
     public function destroy(Report $report)
     {
         //
+    }
+
+    public function getReport() {
+        $pickup = Pickup::get();
+
+        return response()->json([
+            'data'      => $pickup,
+            'message'   => "Fungsi ok"
+        ]);
     }
 }

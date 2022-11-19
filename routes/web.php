@@ -30,6 +30,7 @@ Route::post('/searchpickup', [App\Http\Controllers\HomeController::class, 'searc
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
+Route::get('/report/data', [App\Http\Controllers\ReportController::class, 'getReport'])->name('getReport');
 Route::get('/report/show', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
 
 // Route Barang
