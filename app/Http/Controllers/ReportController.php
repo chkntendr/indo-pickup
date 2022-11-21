@@ -89,11 +89,14 @@ class ReportController extends Controller
     }
 
     public function getReport() {
-        $pickup = Pickup::get();
+    $jumlahDok = Pickup::where('tipe', 'Dokumen')->sum('Jumlah');
+    $jumlahPak = Pickup::where('tipe', 'Paket')->sum('Jumlah');
+    $jumlahKar = Pickup::where('tipe', 'Kargo')->sum('Jumlah');
 
         return response()->json([
-            'data'      => $pickup,
-            'message'   => "Fungsi ok"
+            'dokumen' => $jumlahDok,
+            'paket'   => $jumlahPak,
+            'kargo'   => $jumlahKar
         ]);
     }
 }
