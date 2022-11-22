@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\Client;
 use App\Models\Pickup;
 use Illuminate\Http\Request;
 
@@ -98,5 +99,24 @@ class ReportController extends Controller
             'paket'   => $jumlahPak,
             'kargo'   => $jumlahKar
         ]);
+    }
+
+    public function search(Request $request) {
+        $pickups = [];
+
+        if ($request->has('q')) {
+            $search     = $request->q;
+            $pickups    = Client::select("id", "kode_client", "client")
+                        ->Where('kode_client', 'LIKE', "%$search%")
+                        ->get();
+        }
+
+        return response()->json($pickups);
+    }
+
+    public function print(Request $request) {
+        $keyword = $request->keyword;
+
+        return response()->json($keyword);
     }
 }

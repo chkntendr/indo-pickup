@@ -1,3 +1,39 @@
+function showReportForm() {
+    $('#form').toggle()
+}
+
+$('.livesearch').select2({
+    placeholder: 'Pilih Client',
+    ajax: {
+        url: '/report/search',
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data) {
+            return {
+                results: $.map(data, function(item) {
+                    $.ajax({
+                        url: '/report/print',
+                        dataType: 'json',
+                        delay: 500,
+                        data: {
+                            "keyword": item.kode_client
+                        },
+                        success: function(response) {
+                            console.log(response)
+                        }
+                    })
+
+                    return {
+                        text: item.client,
+                        id: item.id
+                    }
+                }),
+            }
+        }
+    },
+    cache: false
+})
+
 function getDataPickup() {
     $.ajax({
         url: '/report/data',
@@ -7,19 +43,33 @@ function getDataPickup() {
             console.log(response)
 
             const labels = [
-                'Dokumen',
-                'Paket',
-                'Kargo'
+                '2022',
             ]
+
             const data = {
                 labels: labels,
-                datasets: [{
-                    label: [ 'Dokumen', 'Paket', 'Kargo' ],
+                datasets: [
+                {
+                    label: "Paket",
+                    backgroundColor: 'rgb(0, 90, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [ response.paket ]
+                },
+                {
+                    label: "Dokumen",
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [ response.dokumen, response.paket, response.kargo ]
-                }]
+                    data: [ response.dokumen ]
+                },
+                {
+                    label: "Kargo",
+                    backgroundColor: 'rgb(0, 100, 203)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [ response.kargo ]
+                }
+            ]
             }
+
             const config = {
                 type: 'bar',
                 data: data,

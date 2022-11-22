@@ -32,6 +32,8 @@ Route::post('/searchpickup', [App\Http\Controllers\HomeController::class, 'searc
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
 Route::get('/report/data', [App\Http\Controllers\ReportController::class, 'getReport'])->name('getReport');
 Route::get('/report/show', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
+Route::get('/report/search', [App\Http\Controllers\ReportController::class, 'search'])->name('search');
+Route::get('/report/print', [App\Http\Controllers\ReportController::class, 'print'])->name('print');
 
 // Route Barang
 Route::get('/barang', [App\Http\Controllers\BarangController::class, 'index'])->name('barang');
