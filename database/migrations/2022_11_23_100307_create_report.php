@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        
+        Schema::create('report', function (Blueprint $table) {
+            $table->id();
+            $table->string('client');
+            $table->date('tanggal');
+            $table->integer('total');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('report');
     }
 };

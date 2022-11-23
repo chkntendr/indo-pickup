@@ -33,6 +33,7 @@ Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->
 Route::get('/report/data', [App\Http\Controllers\ReportController::class, 'getReport'])->name('getReport');
 Route::get('/report/show', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
 Route::get('/report/search', [App\Http\Controllers\ReportController::class, 'search'])->name('search');
+Route::get('/create', [App\Http\Controllers\ReportController::class, 'create'])->name('createReport');
 Route::get('/report/print', [App\Http\Controllers\ReportController::class, 'print'])->name('print');
 
 // Route Barang

@@ -38,81 +38,83 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dataTable-container" id="table_data">
-                        <table class="table dataTable dataTable-table" id="datatable">
-                            <thead>
-                                <tr>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">#</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Tipe</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Client</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Luar Kota</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Dalam Kota</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Jumlah</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Berat</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Tanggal</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Driver</a>
-                                    </th>
-                                    <th scope="col" data-sortable="">
-                                        <a href="#">Opsi</a>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    if ($data->count()) {
-                                ?>
-                                @foreach($data as $key => $d)
-                                <tr id="tr_{{ $d->id }}">
-                                    <td>
-                                        {{ ++$key }}
-                                        {{-- <input class="form-check-input" id="check" type="checkbox" value="{{ $d->id }}"> --}}
-                                    </td>
-                                    <td>{{ $d->tipe }}</td>
-                                    <td>{{ $d->client }}</td>
-                                    <td>{{ $d->luar_kota }}</td>
-                                    <td>{{ $d->dalam_kota }}</td>
-                                    @if ($d->tipe_id == "7")
-                                        <td>{{ $d->jumlah }} Koli</td>
-                                    @else
-                                        <td>{{ $d->jumlah }} pcs</td>
-                                    @endif
-                                    <td>{{ $d->berat }} Kg</td>
-                                    <td>{{ $d->created_at }}</td>
-                                    <td>{{ $d->driver }}</td>
-                                    <td>
-                                        <a id="btn-edit-pickup" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                        <a id="btn-delete-pickup" onclick="deletePickup()" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                <?php } else { ?>
+                    <div id="table_data">
+                        <div class="dataTable-container">
+                            <table class="table dataTable dataTable-table" id="datatable">
+                                <thead>
                                     <tr>
-                                        <td colspan="10">Tidak ada barang!</td>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">#</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Tipe</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Client</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Luar Kota</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Dalam Kota</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Jumlah</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Berat</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Tanggal</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Driver</a>
+                                        </th>
+                                        <th scope="col" data-sortable="">
+                                            <a href="#">Opsi</a>
+                                        </th>
                                     </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
-                        {{ $data->links('includes.pagination')}}
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        if ($data->count()) {
+                                    ?>
+                                    @foreach($data as $key => $d)
+                                    <tr id="tr_{{ $d->id }}">
+                                        <td>
+                                            {{ ++$key }}
+                                            {{-- <input class="form-check-input" id="check" type="checkbox" value="{{ $d->id }}"> --}}
+                                        </td>
+                                        <td>{{ $d->tipe }}</td>
+                                        <td>{{ $d->client }}</td>
+                                        <td>{{ $d->luar_kota }}</td>
+                                        <td>{{ $d->dalam_kota }}</td>
+                                        @if ($d->tipe_id == "7")
+                                            <td>{{ $d->jumlah }} Koli</td>
+                                        @else
+                                            <td>{{ $d->jumlah }} pcs</td>
+                                        @endif
+                                        <td>{{ $d->berat }} Kg</td>
+                                        <td>{{ $d->created_at }}</td>
+                                        <td>{{ $d->driver }}</td>
+                                        <td>
+                                            <a id="btn-edit-pickup" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
+                                            <a id="btn-delete-pickup" onclick="deletePickup()" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    <?php } else { ?>
+                                        <tr>
+                                            <td colspan="10">Tidak ada barang!</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="dataTable-bottom">
+                            <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
+                            {{ $data->onEachSide(1)->links('includes.pagination')}}
+                        </div>
                     </div>
                 </div>
             </div>

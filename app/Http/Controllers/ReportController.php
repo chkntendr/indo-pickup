@@ -14,9 +14,10 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('report.report');
+    public function index() {
+        $client = Client::all();
+
+        return view('report.report', compact('client'));
     }
 
     /**
@@ -24,9 +25,18 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(Request $request) {
+        $client         = $request->client;
+        $now            = date("Y-m-d");
+        $tanggalMulai   = $request->tanggalMulai;
+        $tanggalSelesai = $request->tanggalSelesai;
+
+        $search = Pickup::where('client', 'LIKE', '%'.$client.'%')
+                        ->whereBetween('tanggal', array($tanggalMulai, $tanggalSelesai))
+                        ->orderBy('tanggal')
+                        ->get();
+
+        return view('report.print', compact('search', 'now'));
     }
 
     /**
@@ -35,8 +45,7 @@ class ReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -46,8 +55,7 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function show()
-    {
+    public function show() {
         $dokumen = Pickup::query()->where('tipe_id', '<>', '2')->get();
         $paket   = Pickup::query()->where('tipe_id', '<>', '1')->get();
         $kargo   = Pickup::query()->where('tipe_id', '<>', '3')->get();
@@ -61,8 +69,7 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function edit(Report $report)
-    {
+    public function edit(Report $report) {
         //
     }
 
@@ -73,8 +80,7 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Report $report)
-    {
+    public function update(Request $request, Report $report) {
         //
     }
 
@@ -84,8 +90,7 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Report $report)
-    {
+    public function destroy(Report $report) {
         //
     }
 
