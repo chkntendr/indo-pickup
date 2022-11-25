@@ -20,6 +20,7 @@ Auth::routes();
 
 // Route Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/pickup', [App\Http\Controllers\HomeController::class, 'getPickup'])->name('homePickup');
 Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])->name('postPickup');
 Route::delete('/home/delete/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
 Route::delete('/home/delete/multiple/{id}', [App\Http\Controllers\HomeController::class, 'deleteMultiple'])->name('deleteMultiple');

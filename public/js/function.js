@@ -47,6 +47,31 @@ function savePickup() {
     });    
 }
 
+$(function() {
+    var table = $('.yajra-datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route(/home/pickup) }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'tipe', name: 'tipe' },
+            { data: 'client', name: 'client' },
+            { data: 'luar_kota', name: 'luar_kota' },
+            { data: 'dalam_kota', name: 'dalam_kota' },
+            { data: 'jumlah', name: 'jumlah' },
+            { data: 'berat', name: 'berat' },
+            { data: 'tanggal', name: 'tanggal' },
+            { data: 'driver', name: 'driver' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
 $('.livesearch').select2({
     placeholder: 'Pilih Client',
     ajax: {

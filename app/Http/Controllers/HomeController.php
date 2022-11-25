@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Driver;
 use App\Imports\ImportPickup;
 use App\Exports\PickupExport;
+use DataTables;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
+
         $tipe   = DB::table('tipe_barang')->get();
         $client = Client::all();
         $count  = Pickup::count();
@@ -39,6 +41,23 @@ class HomeController extends Controller
         $jumlah = Pickup::sum('jumlah');
         $driver = Driver::all();
         return view('dashboard.home', compact('data', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
+    }
+
+    public function getPickup(Request $request) {
+        if ($request->ajax()) {
+            $data = Pickup::get();
+
+            return compact('data');
+            // return DataTables::of($data)
+            //                  ->addIndexColumn()
+            //                  ->addColumn('action', function($row) {
+            //                     $actionBtn = '<a href="javascript:void(0)" class="edit"><i class="bi bi-square-pencil></i></a>
+            //                                   <a href="javascript:void(0)" class="delete"><i class="bi bi-trash></i></a>';
+            //                     return $actionBtn;
+            //                  })
+            //                  ->rawColumns(['action'])
+            //                  ->make(true);
+        }
     }
 
     public function store(Request $request) {
