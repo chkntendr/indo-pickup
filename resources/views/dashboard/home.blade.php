@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 @section('title', 'Dashboard')
 @section('content')
     <section class="section">
@@ -8,11 +8,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Data Pickup</h5>
-                        <div class="dataTable-wrapper dataTable-loading no-footer searchable fixed-columns">
+                        <div class="dataTable-wrapper dataTable-loading no-footer searchable">
                         {{-- <div class="dataTable-top">
-                            <button class="btn btn-sm btn-danger" id="multiDelete" onclick="deleteMultiple()">
-                                <i class="bi bi-trash"></i>
-                            </button>
                             <button onclick="newPickup()" class="btn btn-sm btn-primary">
                                 <i class="bi bi-plus"></i>
                                 Baru
@@ -25,24 +22,14 @@
                                 <i class="bi bi-download"></i>
                                 Download
                             </a>
-                            <div class="dataTable-search">
-                                <form action="{{ route('search-pickup') }}" method="POST">
-                                    @csrf
-                                    <div class="input-group">
-                                        <input class="form-control dataTable-input" placeholder="Cari driver" type="text" name="search">
-                                        <button class="input-group-text" id="inputGroupPrepend">
-                                            <i class="bi bi-search"></i>
-                                        </button>                                            
-                                    </div>
-                                </form>
-                            </div>
                         </div> --}}
                     </div>
                     <div id="table_data">
                         <div class="dataTable-container">
-                            <table class="table table-bordered yajra-datatable">
+                            <table class="table datatable dataTable-table" id="yajra-datatable" style="width: 100%">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Tipe</th>
                                         <th>Client</th>
                                         <th>Luar Kota</th>
@@ -51,100 +38,11 @@
                                         <th>Berat</th>
                                         <th>Tanggal</th>
                                         <th>Driver</th>
-                                        <th>Opsi</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>{{ $data }}</tbody>
+                                <tbody></tbody>
                             </table>
-                            {{-- <table class="table datatable dataTable-table" id="datatable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Tipe</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Client</a>
-                                        </th>
-                                        <th scope="col" data-sortable="" width="11%">
-                                            <a href="#">Luar Kota</a>
-                                        </th>
-                                        <th scope="col" data-sortable="" width="12%">
-                                            <a href="#">Dalam Kota</a>
-                                        </th>
-                                        <th scope="col" data-sortable="" width="11%">
-                                            <a href="#">Jumlah</a>
-                                        </th>
-                                        <th scope="col" data-sortable="" width="11%">
-                                            <a href="#">Berat</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Tanggal</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Driver</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Opsi</a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr id="newPickup" style="display: none;">
-                                        <td>
-                                            <select name="tipe" id="tipe" class="form-control form-control-sm">
-                                                <option style="font-weight: bold">Pilih Tipe</option>
-                                                @foreach ($tipe as $item)
-                                                <option value="{{ $item->barang }}">{{ $item->barang }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="client" id="client" class="form-control form-control-sm">
-                                                <option style="font-weight: bold">Pilih Client</option>
-                                                @foreach ($client as $item)
-                                                    <option value="{{ $item->client }}">{{ $item->client }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td><input id="luarkota" type="text" class="form-control form-control-sm"></td>
-                                        <td><input id="dalamkota" type="text" class="update form-control form-control-sm"></td>
-                                        <td><input id="jumlah" type="text" class="form-control form-control-sm"></td>
-                                        <td><input id="berat" type="text" class="form-control form-control-sm"></td>
-                                        <td><input id="tanggal" type="date" class="form-control form-control-sm"></td>
-                                        <td>
-                                            <select id="driver" class="form-control form-control-sm">
-                                                <option style="font-weight: bold">Pilih Driver</option>
-                                                @foreach ($driver as $item)
-                                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <a type="button" onclick="savePickup()" style="color: green"><i class="bi bi-save"></i></a>
-                                        </td>
-                                    </tr>
-                                    @foreach ($data as $item)
-                                        <tr id="index_{{ $item->id }}">
-                                            <td>{{ $item->tipe }}</td>
-                                            <td>{{ $item->client }}</td>
-                                            <td>{{ $item->luar_kota }}</td>
-                                            <td>{{ $item->dalam_kota }}</td>
-                                            <td>{{ $item->jumlah }}</td>
-                                            <td>{{ $item->berat }}</td>
-                                            <td>{{ $item->created_at }}</td>
-                                            <td>{{ $item->driver }}</td>
-                                            <td>
-                                                <a id="btn-edit-pickup" data-id="" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                                <a id="deletePickup" value="{{ $item->id }}" onclick="deletePickup()" data-id="" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
-                        </div>
-                        <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
-                            {{ $data->onEachSide(1)->links('includes.pagination')}}
                         </div>
                     </div>
                     </div>
@@ -336,3 +234,34 @@
         </div>
     </section>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(function() {
+    var table = $('#yajra-datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('homePickup') }}",
+        autoWidth: true,
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'tipe', name: 'tipe' },
+            { data: 'client', name: 'client' },
+            { data: 'luar_kota', name: 'luar_kota' },
+            { data: 'dalam_kota', name: 'dalam_kota' },
+            { data: 'jumlah', name: 'jumlah' },
+            { data: 'berat', name: 'berat' },
+            { data: 'tanggal', name: 'tanggal' },
+            { data: 'driver', name: 'driver' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+</script>
