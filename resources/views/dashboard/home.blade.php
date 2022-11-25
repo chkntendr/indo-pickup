@@ -13,7 +13,7 @@
                             {{-- <button class="btn btn-sm btn-danger" id="multiDelete" onclick="deleteMultiple()">
                                 <i class="bi bi-trash"></i>
                             </button> --}}
-                            <button id="btn-create-pickup" class="btn btn-sm btn-primary">
+                            <button onclick="newPickup()" class="btn btn-sm btn-primary">
                                 <i class="bi bi-plus"></i>
                                 Baru
                             </button>
@@ -44,24 +44,21 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" data-sortable="">
-                                            <a href="#">#</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
                                             <a href="#">Tipe</a>
                                         </th>
                                         <th scope="col" data-sortable="">
                                             <a href="#">Client</a>
                                         </th>
-                                        <th scope="col" data-sortable="">
+                                        <th scope="col" data-sortable="" width="11%">
                                             <a href="#">Luar Kota</a>
                                         </th>
-                                        <th scope="col" data-sortable="">
+                                        <th scope="col" data-sortable="" width="12%">
                                             <a href="#">Dalam Kota</a>
                                         </th>
-                                        <th scope="col" data-sortable="">
+                                        <th scope="col" data-sortable="" width="11%">
                                             <a href="#">Jumlah</a>
                                         </th>
-                                        <th scope="col" data-sortable="">
+                                        <th scope="col" data-sortable="" width="11%">
                                             <a href="#">Berat</a>
                                         </th>
                                         <th scope="col" data-sortable="">
@@ -76,38 +73,56 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                        if ($data->count()) {
-                                    ?>
-                                    @foreach($data as $key => $d)
-                                    <tr id="tr_{{ $d->id }}">
+                                    <tr id="newPickup" style="display: none;">
                                         <td>
-                                            {{ ++$key }}
-                                            {{-- <input class="form-check-input" id="check" type="checkbox" value="{{ $d->id }}"> --}}
+                                            <select name="tipe" id="tipe" class="form-control form-control-sm">
+                                                <option style="font-weight: bold">Pilih Tipe</option>
+                                                @foreach ($tipe as $item)
+                                                <option value="{{ $item->barang }}">{{ $item->barang }}</option>
+                                                @endforeach
+                                            </select>
                                         </td>
-                                        <td>{{ $d->tipe }}</td>
-                                        <td>{{ $d->client }}</td>
-                                        <td>{{ $d->luar_kota }}</td>
-                                        <td>{{ $d->dalam_kota }}</td>
-                                        @if ($d->tipe_id == "7")
-                                            <td>{{ $d->jumlah }} Koli</td>
-                                        @else
-                                            <td>{{ $d->jumlah }} pcs</td>
-                                        @endif
-                                        <td>{{ $d->berat }} Kg</td>
-                                        <td>{{ $d->created_at }}</td>
-                                        <td>{{ $d->driver }}</td>
                                         <td>
-                                            <a id="btn-edit-pickup" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                            <a id="btn-delete-pickup" onclick="deletePickup()" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                            <select name="client" id="client" class="form-control form-control-sm">
+                                                <option style="font-weight: bold">Pilih Client</option>
+                                                @foreach ($client as $item)
+                                                    <option value="{{ $item->client }}">{{ $item->client }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td><input id="luarkota" type="text" class="form-control form-control-sm"></td>
+                                        <td><input id="dalamkota" type="text" class="form-control form-control-sm"></td>
+                                        <td><input id="jumlah" type="text" class="form-control form-control-sm"></td>
+                                        <td><input id="berat" type="text" class="form-control form-control-sm"></td>
+                                        <td><input id="tanggal" type="date" class="form-control form-control-sm"></td>
+                                        <td>
+                                            <select id="driver" class="form-control form-control-sm">
+                                                <option style="font-weight: bold">Pilih Driver</option>
+                                                @foreach ($driver as $item)
+                                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <a type="button" onclick="savePickup()" style="color: green"><i class="bi bi-save"></i></a>
                                         </td>
                                     </tr>
-                                    @endforeach
-                                    <?php } else { ?>
-                                        <tr>
-                                            <td colspan="10">Tidak ada barang!</td>
+                                    @foreach ($data as $item)
+                                        <tr id="index_{{ $item->id }}">
+                                            <td>{{ $item->tipe }}</td>
+                                            <td>{{ $item->client }}</td>
+                                            <td>{{ $item->luar_kota }}</td>
+                                            <td>{{ $item->dalam_kota }}</td>
+                                            <td>{{ $item->jumlah }}</td>
+                                            <td>{{ $item->berat }}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ $item->driver }}</td>
+                                            <td>
+                                                <a id="btn-edit-pickup" data-id="" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
+                                                <a id="deletePickup" value="{{ $item->id }}" onclick="deletePickup()" data-id="" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                            </td>
                                         </tr>
-                                    <?php } ?>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

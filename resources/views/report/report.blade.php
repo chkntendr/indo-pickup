@@ -44,14 +44,14 @@
             </div>
         </div> --}}
 
-        <div class="col-lg-6" id="laporan" style="display: block;">
+        <div class="col-lg-6" id="laporan">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Buat Lampiran</h5>
                     <button id="newReport" class="btn btn-sm btn-primary" onclick="showReportForm()">
                         <i class="bi bi-plus" id="iconReport"></i>
                     </button>
-                    <form action="{{ route('createReport') }}" id="form" style="display: none;">
+                    <form action="{{ route('createReport') }}" id="form" style="display: block; height: 185px;">
                         @csrf
                         <select name="client" class="form-control my-2">
                             @foreach ($client as $c)
@@ -63,9 +63,9 @@
                                 <div class="col-lg-6">
                                     <input type="date" class="form-control my-2" name="tanggalMulai">
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <input type="date" class="form-control my-2" name="tanggalSelesai">
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success btn-sm">
@@ -80,7 +80,7 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Disini buat chart lagii blokk</h5>
+                    <h5 class="card-title">Disini buat chart lagi mungkin</h5>
                     <canvas id="laporan" style="max-height: 400px; display: block; box-sizing: border-box; height: 191px; width: 382px;" width="382" height="191"></canvas>
                 </div>
             </div>

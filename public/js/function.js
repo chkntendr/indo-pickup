@@ -2,6 +2,51 @@ function showReportForm() {
     $('#form').toggle()
 }
 
+function newPickup() {
+    $('#newPickup').toggle()
+}
+
+function savePickup() {
+    var data    = {
+        'tipe': $('#tipe').val(),
+        'client': $('#client').val(),
+        'luarkota': $('#luarkota').val(),
+        'dalamkota': $('#dalamkota').val(),
+        'jumlah': $('#jumlah').val(),
+        'berat': $('#berat').val(),
+        'tanggal': $('#tanggal').val(),
+        'driver': $('#driver').val(),
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
+
+    console.log(data);
+
+    $.ajax({
+        url: '/home/post',
+        type: "POST",
+        data: data,
+        dataType: "JSON",
+        success: function(response) {
+            // console.log(response)
+            if (response.status == 200) {
+                $('#datatable tbody').append("<tr><td>" + data.tipe + "</td><td>" + data.client + "</td><td>" + data.luarkota + "</td><td>" + data.dalamkota + "</td><td>" + data.jumlah + "</td><td>" + data.berat + "</td><td>" + data.tanggal + "</td><td>" + data.driver + "</td></tr>");
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
+        }
+    });    
+}
+
 $('.livesearch').select2({
     placeholder: 'Pilih Client',
     ajax: {
@@ -199,51 +244,12 @@ function deleteUser() {
 }
 
 function deleteBarang() {
-	$('body').on('click', function() {
-	    let barang_id = $(this).data('id');
-	    let token = $("meta[name='csrf-token']").attr("content");
+    $('body').on('click', '#btn-delete-barang', function(e) {
+        e.preventDefault()
+        let barang_id = $(this).data('id');
+        let token     = $("meta[name='csrf-token']").attr("content");
 
-	    Swal.fire({
-	        title: 'Data akan dihapus secara permanen!',
-	        text: "Lanjutkan?",
-	        icon: 'warning',
-	        showCancelButton: true,
-	        cancelButtonText: 'Tidak',
-	        confirmButtonText: 'Ya'
-    	}).then((result) => {
-        	if (result.isConfirmed) {
-	            $.ajax({
-	                url: `/barang/hapus/${barang_id}`,
-	                type: "DELETE",
-	                cache: false,
-	                data: {
-	                    "_token": token
-	                },
-                	success: function(response) {
-	                    Swal.fire({
-	                        type: 'success',
-	                        icon: 'success',
-	                        title: `${ response.message }`,
-	                        showConfirmButton: false,
-	                        timer: 1500
-	                    });
-
-                    	$(`#index_${barang_id}`).remove();
-                	}
-            	})
-        	}
-    	})
-	})
-}
-
-// Delete Pickup
-function deletePickup() {
-    $('body').on('click', '#btn-delete-pickup', function (e) {
-        e.preventDefault();
-
-        let pickup_id   = $(this).data('id');
-        let token       = $("meta[name='csrf-token']").attr("content");
-
+        console.log(barang_id, token)
         Swal.fire({
             title: "Data akan dihapus secara permanen!",
             text: "Lanjutkan?",
@@ -254,13 +260,13 @@ function deletePickup() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/home/delete/${pickup_id}`,
+                    url: `/barang/hapus/${barang_id}`,
                     type: "DELETE",
                     cache: false,
                     data: {
                         "_token": token
                     },
-                    success:function(response) {
+                    success: function(response) {
                         Swal.fire({
                             type: 'success',
                             icon: 'success',
@@ -269,12 +275,54 @@ function deletePickup() {
                             timer: 1000
                         });
 
-                        $(`#tr_${pickup_id}`).remove();
+                        $(`#index_${barang_id}`).remove();
                     }
                 })
             }
         })
     })
+}
+
+// Delete Pickup
+function deletePickup() {
+    let pickup_id   = $(this).data('id');
+    let token       = $("meta[name='csrf-token']").attr("content");
+
+    console.log([
+        pickup_id,
+        token
+    ])
+
+    // Swal.fire({
+    //     title: "Data akan dihapus secara permanen!",
+    //     text: "Lanjutkan?",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     cancelButtonText: "Tidak",
+    //     confirmButtonText: "Ya"
+    // }).then((result) => {
+    //     if (result.isConfirmed) {
+    //         $.ajax({
+    //             url: `/home/delete/${pickup_id}`,
+    //             type: "DELETE",
+    //             cache: false,
+    //             data: {
+    //                 "_token": token
+    //             },
+    //             success:function(response) {
+    //                 Swal.fire({
+    //                     type: 'success',
+    //                     icon: 'success',
+    //                     title: `${ response.message }`,
+    //                     showConfirmButton: false,
+    //                     timer: 1000
+    //                 });
+
+    //                 $(`#tr_${pickup_id}`).remove();
+    //             }
+    //         })
+    //     }
+    // })
 }
 
 // Delete Client

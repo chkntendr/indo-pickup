@@ -29,14 +29,21 @@ class ReportController extends Controller
         $client         = $request->client;
         $now            = date("Y-m-d");
         $tanggalMulai   = $request->tanggalMulai;
-        $tanggalSelesai = $request->tanggalSelesai;
 
-        $search = Pickup::where('client', 'LIKE', '%'.$client.'%')
-                        ->whereBetween('tanggal', array($tanggalMulai, $tanggalSelesai))
+        $params         = ['client' => $client, 'tanggal' => $tanggalMulai];
+
+        $search = Pickup::where($params)
                         ->orderBy('tanggal')
                         ->get();
 
-        return view('report.print', compact('search', 'now'));
+        if ($search > "0") {
+            return view('report.print', compact('search', 'now', 'client'));
+        } else {
+            return response()->json([
+                'message' => "Data tidak ditemukan",
+            ]);
+        }
+
     }
 
     /**

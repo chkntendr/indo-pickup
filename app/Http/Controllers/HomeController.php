@@ -43,17 +43,24 @@ class HomeController extends Controller
 
     public function store(Request $request) {
         // Create post
+        
         $pickup  = new Pickup;
-        $pickup->tipe       = $request->tipe;
-        $pickup->client     = $request->client;
-        $pickup->luar_kota  = $request->lk;
-        $pickup->dalam_kota = $request->dk;
+        $pickup->tipe       = $request->input('tipe');
+        $pickup->client     = $request->input('client');
+        $pickup->luar_kota  = $request->input('luarkota');
+        $pickup->dalam_kota = $request->input('dalamkota');
         $pickup->jumlah     = $pickup->luar_kota + $pickup->dalam_kota;
-        $pickup->berat      = $request->berat;
-        $pickup->tanggal    = $request->tanggal;
-        $pickup->driver     = $request->driver;
+        $pickup->berat      = $request->input('berat');
+        $pickup->tanggal    = $request->input('tanggal');
+        $pickup->driver     = $request->input('driver');
+
         $pickup->save();
-        return redirect()->to('home');
+        
+        return response()->json([
+            'status'    => 200,
+            'message'   => "Data inserted",
+            'data'      => $pickup
+        ]);
     }
 
     public function delete($id) {

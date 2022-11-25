@@ -34,7 +34,7 @@
                                         <td>{{ $d -> barang }}</td>
                                         <td>
                                             <a type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                            <a type="button" id="btn-delete-barang" data-id="{{ $d->id }}" style="color: red"><i class="bi bi-trash-fill"></i></a>
+                                            <a type="button" onclick="deleteBarang()" id="btn-delete-barang" data-id="{{ $d->id }}" style="color: red"><i class="bi bi-trash-fill"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

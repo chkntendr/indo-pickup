@@ -106,7 +106,7 @@
                     </div>
                     <div class="dataTable-bottom">
                         <div class="dataTable-info">Showing 1 to {{ $pickup->count() }} of {{ $pickup->total() }} entries</div>
-                        {{ $pickup->links('includes.pagination')}}
+                        {{ $pickup->onEachSide(1)->links('includes.pagination')}}
                     </div>
                 </div>
             </div>
