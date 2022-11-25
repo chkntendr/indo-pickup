@@ -1,4 +1,4 @@
-<p align="center"><a href="https://indonusa-express.id" target="_blank"><img src="assets/img/logo-2.png" width="400" alt="Indonusa Express"></a></p>
+<p align="center"><a href="https://indonusa-express.id" target="_blank"><img src="https://indonusa-express.id/images/favicon.ico" width="400" alt="Indonusa Express"></a></p>
 
 ## Indonusa Express
 
