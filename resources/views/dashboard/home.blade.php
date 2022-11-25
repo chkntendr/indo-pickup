@@ -31,13 +31,13 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tipe</th>
+                                        <th>Driver</th>
                                         <th>Client</th>
+                                        <th>Tanggal</th>
                                         <th>Luar Kota</th>
                                         <th>Dalam Kota</th>
                                         <th>Jumlah</th>
                                         <th>Berat</th>
-                                        <th>Tanggal</th>
-                                        <th>Driver</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -244,17 +244,16 @@
         processing: true,
         serverSide: true,
         ajax: "{{ route('homePickup') }}",
-        autoWidth: true,
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'tipe', name: 'tipe' },
+            { data: 'driver', name: 'driver' },
             { data: 'client', name: 'client' },
+            { data: 'tanggal', name: 'tanggal' },
             { data: 'luar_kota', name: 'luar_kota' },
             { data: 'dalam_kota', name: 'dalam_kota' },
             { data: 'jumlah', name: 'jumlah' },
             { data: 'berat', name: 'berat' },
-            { data: 'tanggal', name: 'tanggal' },
-            { data: 'driver', name: 'driver' },
             {
                 data: 'action',
                 name: 'action',

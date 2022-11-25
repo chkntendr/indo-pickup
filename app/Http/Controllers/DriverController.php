@@ -6,12 +6,27 @@ use App\Models\Driver;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use DataTables;
 
 class DriverController extends Controller
 {
     public function index() {
-        $data       =   Driver::paginate();
-        return view('personel.driver', compact('data'));
+        return view('personel.driver');
+    }
+
+    public function get(Request $request) {
+        if ($request->ajax()) {
+            $data = Driver::latest()->get();
+
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($row) {
+                                $actionBtn = '<a onclick="editPickup()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a> <a onclick="deletePickup()" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                                return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
     }
 
     public function store(Request $request) {

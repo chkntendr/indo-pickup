@@ -44,11 +44,13 @@ Route::delete('/barang/hapus/{id}', [App\Http\Controllers\BarangController::clas
 
 // Route Client
 Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');
+Route::get('/client/data', [App\Http\Controllers\ClientController::class, 'get'])->name('dataClient');
 Route::post('/client/post', [App\Http\Controllers\ClientController::class, 'create'])->name('clientPost');
 Route::delete('/client/hapus/{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('deleteClient');
 
 // Route Driver
 Route::get('/driver', [App\Http\Controllers\DriverController::class, 'index'])->name('driver');
+Route::get('/driver/data', [App\Http\Controllers\DriverController::class, 'get'])->name('dataDriver');
 Route::post('/driver/post', [App\Http\Controllers\DriverController::class, 'store'])->name('driverPost');
 route::post('/searchdriver', [App\Http\Controllers\DriverController::class, 'search'])->name('searchDriver');
 Route::delete('/driver/delete/{id}', [App\Http\Controllers\DriverController::class, 'destroy'])->name('driverDestroy');

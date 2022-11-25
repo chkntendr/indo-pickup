@@ -10,53 +10,18 @@
                     <h5 class="card-title">Clients</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container">
-                            <table class="table datatable dataTable-table">
+                            <table class="table datatable datatable-table" id="yajra-datatable" style="width: 100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">#</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Kode Klien</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Klien</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Dibuat pada</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Opsi</a>
-                                        </th>
+                                        <th>No</th>
+                                        <th>Kode Client</th>
+                                        <th>Client</th>
+                                        <th>Dibuat</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                        if ($data->count()) {
-                                    ?>
-                                    @foreach ($data as $key=>$d)
-                                        <tr id="tr_{{ $d->id }}">
-                                            <td>{{ ++$key }}</td>
-                                            <td>{{ $d->kode_client }}</td>
-                                            <td>{{ $d->client }}</td>
-                                            <td>{{ $d->created_at }}</td>
-                                            <td>
-                                                <a id="btn-edit-user" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                                <a id="btn-delete-client" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <?php } else { ?>
-                                        <tr>
-                                            <td colspan="8">Tidak ada barang!</td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
-                        </div>
-                        <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing {{ $data->count() }} to {{ $data->count() }} of {{ $data->total() }} entries</div>
-                            {{ $data->links('includes.pagination')}}
                         </div>
                     </div>
                 </div>
@@ -103,3 +68,28 @@
     </div>
 </section>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(function() {
+        var table = $('#yajra-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('dataClient') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'kode_client', name: 'kode_client' },
+                { data: 'client', name: 'client' },
+                { data: 'created_at', name: 'tanggal' },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+        })
+    })
+</script>

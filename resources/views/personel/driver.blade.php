@@ -9,67 +9,17 @@
                 <div class="card-body">
                     <h5 class="card-title">Data Driver</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                            <div class="dataTable-top">
-                                <a id="btn-create-driver" class="btn btn-sm btn-primary m-2">
-                                    <i class="bi bi-plus"></i>
-                                    Tambah Driver
-                                </a>
-                                
-                                <div class="dataTable-search">
-                                    <form action="{{ route('searchDriver') }}" method="POST">
-                                        @csrf
-                                        <div class="input-group">
-                                            <input class="form-control dataTable-input" placeholder="Cari driver" type="text" name="search">
-                                            <button class="input-group-text" id="inputGroupPrepend">Cari</button>                                            
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         <div class="dataTable-container">
-                            <table class="table dataTable dataTable-table">
+                            <table class="table datatable datatable-table" id="yajra-datatable" style="width: 100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">#</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Nama</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Opsi</a>
-                                        </th>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                    if ($data->count()) {
-                                    ?>
-                                    @foreach ($data as $key=>$d)
-                                    <tr id="tr_{{ $d->id }}">
-                                        <td>{{ ++$key }}</td>
-                                        <td>{{ $d -> name }}</td>
-                                        <td>
-                                            <a id="btn-edit-driver" data-id="{{ $d->id }}" type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                            <a id="btn-delete-driver" onclick="deleteDriver()" data-id="{{ $d->id }}" type="button" style="color: red"><i class="bi bi-trash-fill"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    <?php
-                                        } else {
-                                    ?>
-                                    <tr>
-                                        <td colspan="3" center>Tidak ada driver</td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
-                        </div>
-                        <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
-                            <nav class="dataTable-pagination">
-                                <ul class="dataTable-pagination-list"></ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -102,3 +52,26 @@
     </div>
 </section>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(function() {
+    var table = $('#yajra-datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('dataDriver') }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'name', name: 'name' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            }
+        ]
+    })
+})
+</script>
