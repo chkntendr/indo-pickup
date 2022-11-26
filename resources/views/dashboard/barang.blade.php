@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 @section('title', 'Barang')
 @section('content')
 <div class="content">
@@ -12,55 +12,22 @@
                     <h5 class="card-title">Data Barang</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container">
-                            <table class="table datatable dataTable-table">
+                            <table class="table datatable dataTable-table" id="barangTable">
                                 <thead>
                                     <tr>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">ID Barang</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Tipe</a>
-                                        </th>
-                                        <th scope="col" data-sortable="">
-                                            <a href="#">Opsi</a>
-                                        </th>
+                                        <th>No</th>
+                                        <th>Barang</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if ($data->count()) { ?>
-                                    @foreach ($data as $key=>$d)
-                                    <tr id="index_{{$d->id}}">
-                                        <td>{{ ++$key }}</td>
-                                        <td>{{ $d -> barang }}</td>
-                                        <td>
-                                            <a type="button" style="color: orange"><i class="bi bi-pencil-square"></i></a>
-                                            <a type="button" onclick="deleteBarang()" id="btn-delete-barang" data-id="{{ $d->id }}" style="color: red"><i class="bi bi-trash-fill"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    <?php
-                                    } else {
-                                    ?>
-                                    <tr>
-                                        <td colspan="3" center>Tidak ada barang</td>
-                                    </tr>
-                                    <?php } ?>
+                                    
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="dataTable-bottom">
-                            <div class="dataTable-info">Showing 1 to {{ $data->count() }} of {{ $data->total() }} entries</div>
-                            {{ $data->links('includes.pagination')}}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-12">
-            <a id="btn-open-create" class="btn btn-sm btn-primary m-2">
-                <i class="bi bi-plus"></i>
-                Tambah Barang
-            </a>
         </div>
     </div>
 </section>
@@ -91,3 +58,26 @@
 </div>
 </div>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(function() {
+        var table = $('#barangTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('dataBarang') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'barang', name: 'barang' },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+        })
+    })
+</script>

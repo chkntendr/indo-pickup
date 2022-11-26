@@ -6,6 +6,7 @@ use Redirect;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class BarangController extends Controller
 {
@@ -13,6 +14,22 @@ class BarangController extends Controller
         $count  =   DB::table('tipe_barang')->count();
         $data   =   Barang::paginate();
         return view('dashboard.barang', compact('count', 'data'));
+    }
+
+    public function get(Request $request) {
+        if ($request->ajax()) {
+            $data = Barang::latest()->get();
+
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data) {
+                                $actionBtn = '<a onclick="editPickup()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                                <a id="btn-delete-barang" data-remote="/barang/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                                return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
     }
 
     public function create(Request $request) {

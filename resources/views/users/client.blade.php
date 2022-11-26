@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 @section('title', 'Clients')
 @section('content')
 <section class="section">
@@ -10,7 +10,7 @@
                     <h5 class="card-title">Clients</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container">
-                            <table class="table datatable datatable-table" id="yajra-datatable" style="width: 100%">
+                            <table class="table datatable datatable-table" id="clientTable" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -26,12 +26,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-12">
-            <button id="btn-create-client" class="btn btn-sm btn-primary">
-                <i class="bi bi-plus"></i>
-                Tambah Klien
-            </button>
         </div>
     </div>
 
@@ -74,10 +68,10 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
-        var table = $('#yajra-datatable').DataTable({
+        var table = $('#barangTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('dataClient') }}",
+            ajax: "{{ route('dataBarang') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'kode_client', name: 'kode_client' },

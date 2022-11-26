@@ -49,8 +49,9 @@ class HomeController extends Controller
             $data = Pickup::latest()->get();
             return Datatables::of($data)
                              ->addIndexColumn()
-                             ->addColumn('action', function($row){
-                                $actionBtn = '<a onclick="editPickup()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a> <a onclick="deletePickup()" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                             ->addColumn('action', function($data){
+                                $actionBtn = '<a id="btn-edit-pickup" data-id="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                                <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
                                 return $actionBtn;
                             })
                              ->rawColumns(['action'])
@@ -116,15 +117,6 @@ class HomeController extends Controller
     }
 
     public function search(Request $request) {
-        $keyword= $request->search;
-        $tipe   = DB::table('tipe_barang')->get();
-        $client = Client::all();
-        $berat  = Pickup::sum('berat');
-        $jumlah = Pickup::sum('jumlah');
-        $driver = Driver::all();
-
-        $pickup = Pickup::where('driver', 'LIKE', "%".$keyword."%")->paginate();
-
-        return view('dashboard.search', ['pickup' => $pickup, 'tipe' => $tipe, 'client' => $client, 'berat' => $berat, 'jumlah' => $jumlah, 'driver' => $driver]);
+        
     }
 }

@@ -26,7 +26,7 @@
                     </div>
                     <div id="table_data">
                         <div class="dataTable-container">
-                            <table class="table datatable dataTable-table" id="yajra-datatable" style="width: 100%">
+                            <table class="table datatable dataTable-table" id="pickupTable" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -159,79 +159,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- Edit Modal --}}
-        <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="editPickup" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Pickup</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="tipe" class="control-label">Tipe</label>
-                            <select name="tipe" id="tipe" class="form-control">
-                                <option value="0">- Pilih Tipe -</option>
-                                @foreach ($tipe as $t)
-                                    <option value="{{ $t->id }}">{{ $t->barang }}</option>
-                                @endforeach
-                            </select>
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tipe"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="client" class="control-label">Client</label>
-                            <select name="client" class="form-control" id="client">
-                                <option value="0">- Pilih Client -</option>
-                                @foreach ($client as $c)
-                                    <option value="{{ $c->id }}">{{ $c->client }} - {{ $c->kode_client }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-client"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="jumlah" class="control-label">Jumlah</label>
-                            <input type="text" class="form-control" id="edit-jumlah">
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-edit-jumlah"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="berat" class="control-label">Berat</label>
-                            <input type="text" class="form-control" id="berat">
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-berat"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tanggal" class="control-label">Tanggal</label>
-                            <input type="date" class="form-control" id="tanggal">
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-tanggal"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="driver" class="control-label">Driver</label>
-                            <select name="client" class="form-control" id="driver">
-                                <option value="0">- Pilih Driver -</option>
-                                @foreach ($driver as $d)
-                                    <option value="{{ $d->id }}">{{ $d->name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-driver"></div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
-                        <button class="btn btn-primary" id="store">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
@@ -240,7 +167,7 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
-    var table = $('#yajra-datatable').DataTable({
+    var table = $('#pickupTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('homePickup') }}",

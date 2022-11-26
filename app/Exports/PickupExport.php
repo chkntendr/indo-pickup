@@ -20,13 +20,13 @@ class PickupExport implements WithHeadings, FromCollection, WithMapping
         return [
             $pickup->id,
             $pickup->tipe,
+            $pickup->driver,
             $pickup->client,
+            $pickup->tanggal,
             $pickup->luar_kota,
             $pickup->dalam_kota,
             $pickup->jumlah,
-            $pickup->berat,
-            $pickup->tanggal,
-            $pickup->driver
+            $pickup->berat
         ];
     }
 
@@ -37,13 +37,13 @@ class PickupExport implements WithHeadings, FromCollection, WithMapping
         return [
             '#',
             'Barang',
+            'Driver',
             'Client',
+            'Tanggal',
             'Luar Kota',
             'Dalam Kota',
             'Jumlah',
-            'Berat',
-            'Tanggal',
-            'Driver'
+            'Berat'
         ];
     }
 }

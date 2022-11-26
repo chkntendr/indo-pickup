@@ -10,7 +10,7 @@
                     <h5 class="card-title">Data Driver</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container">
-                            <table class="table datatable datatable-table" id="yajra-datatable" style="width: 100%">
+                            <table class="table datatable datatable-table" id="driverTable" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -58,7 +58,7 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
-    var table = $('#yajra-datatable').DataTable({
+    var table = $('#driverTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('dataDriver') }}",

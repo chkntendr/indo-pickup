@@ -129,40 +129,6 @@ function getDataPickup() {
     })
 }
 
-function deleteMultiple() {
-    $('#multiDelete').on('click', function() {
-        var button   = $(this);
-        var selected = [];
-        var token    = $("meta[name='csrf-token']").attr("content");
-
-        $('#datatable #check:checked').each(function() {
-            selected.push($(this).val());
-        });
-
-        Swal.fire({
-            icon: 'warning',
-            title: 'Data akan dihapus!',
-            showDenyButton: false,
-            showCancelButton: true,
-            confirmButtonText: "Ya"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `/home/delete/multiple/${selected}`,
-                    type: "DELETE",
-                    cache: false,
-                    data: {
-                        "_token": token
-                    },
-                    success: function(response) {
-                        console.log(response)
-                    }
-                });
-            }
-        })
-    })
-}
-
 function deleteDriver() {
     $('body').on('click', '#btn-delete-driver', function(e) {
         e.preventDefault();
@@ -283,7 +249,160 @@ function deleteBarang() {
     })
 }
 
+// Delete Client
+$('body').on('click', '#btn-delete-client[data-remote]', function (e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var url = $(this).data('remote');
+    
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#clientTable').DataTable().draw(false)
+            })
+        }
+    })
+})
+
+// Delete Driver
+$('body').on('click', '#btn-delete-driver[data-remote]', function (e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var url = $(this).data('remote');
+    
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#driverTable').DataTable().draw(false)
+            })
+        }
+    })
+})
+
+// Edit Pickup
+$('body').on('click', '#btn-edit-pickup[data-id]', function (e) {
+    var id = $(this).data('id');
+
+    $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            }
+        });
+    
+        var editor = new $.fn.dataTable.Editor({
+            ajax: "{{ route('homePickup') }}",
+            table: "#pickupTable",
+            display: "bootstrap",
+            fields: [
+                {label: "id:", name: "id"},
+                {label: "name:", name: "name"},
+            ]
+        });
+    
+        $('#pickupTable').on('click', 'tbody td:not(:first-child)', function (e) {
+            editor.inline(this);
+        });
+    })
+})
+
 // Delete Pickup
+$('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var url = $(this).data('remote');
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#pickupTable').DataTable().draw(false)
+            })
+        }
+    })
+})
+
 function deletePickup() {
     let pickup_id   = $(this).data('id');
     let token       = $("meta[name='csrf-token']").attr("content");
@@ -325,45 +444,6 @@ function deletePickup() {
     // })
 }
 
-// Delete Client
-$('body').on('click', '#btn-delete-client', function() {
-    let client_id = $(this).data('id');
-    let token = $("meta[name='csrf-token']").attr("content");
-
-    Swal.fire({
-        title: "Data akan dihapus secara permanen!",
-        text: "Lanjutkan?",
-        icon: 'warning',
-        showCancelButton: true,
-        cancelButtonText: "Tidak",
-        confirmButtonText: "Ya"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            console.log("Delete client");
-
-            $.ajax({
-                url: `/client/hapus/${client_id}`,
-                type: "DELETE",
-                cache: false,
-                data: {
-                    "_token": token
-                },
-                success: function(response) {
-                    Swal.fire({
-                        type: 'success',
-                        icon: 'success',
-                        title: `${ response.message }`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-
-                    $(`#tr_${client_id}`).remove();
-                }
-            })
-        }
-    })
-})
-
 // Upload modal
 $('body').on('click', '#open-upload-modal', function (event) {
     event.preventDefault();
@@ -371,29 +451,6 @@ $('body').on('click', '#open-upload-modal', function (event) {
     $('body').on('click', '#modal-close', function() {
         $('#modal-upload').modal('hide');
     })
-});
-
-// Input pickup
-$('body').on('click', '#btn-create-pickup', function() {
-    //  Open Modal
-    $('#modal-create').modal('show');
-});
-
-// Edit Pickup
-$('body').on('click', '#btn-edit-pickup', function(e) {
-    e.preventDefault();
-    $('#btn-edit-pickup').attr("disabled", true);
-    $('#modal-create').modal('show');
-    var id = $(this).data('id');
-
-    $.ajax({
-        url: `/home/edit/${id}`,
-        type: "GET",
-        dataType: "JSON",
-        success: function (data) {
-            console.log(data)
-        }
-    });
 });
 
 // Create Client

@@ -27,7 +27,6 @@ Route::delete('/home/delete/multiple/{id}', [App\Http\Controllers\HomeController
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
 Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
 Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
-Route::post('/searchpickup', [App\Http\Controllers\HomeController::class, 'search'])->name('search-pickup');
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
@@ -39,20 +38,20 @@ Route::get('/report/print', [App\Http\Controllers\ReportController::class, 'prin
 
 // Route Barang
 Route::get('/barang', [App\Http\Controllers\BarangController::class, 'index'])->name('barang');
+Route::get('/barang/data', [App\Http\Controllers\BarangController::class, 'get'])->name('dataBarang');
 Route::post('/barang/post', [App\Http\Controllers\BarangController::class, 'create'])->name('createBarang');
-Route::delete('/barang/hapus/{id}', [App\Http\Controllers\BarangController::class, 'delete'])->name('deleteBarang');
+Route::delete('/barang/delete/{id}', [App\Http\Controllers\BarangController::class, 'delete'])->name('deleteBarang');
 
 // Route Client
 Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');
 Route::get('/client/data', [App\Http\Controllers\ClientController::class, 'get'])->name('dataClient');
 Route::post('/client/post', [App\Http\Controllers\ClientController::class, 'create'])->name('clientPost');
-Route::delete('/client/hapus/{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('deleteClient');
+Route::delete('/client/delete/{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('deleteClient');
 
 // Route Driver
 Route::get('/driver', [App\Http\Controllers\DriverController::class, 'index'])->name('driver');
 Route::get('/driver/data', [App\Http\Controllers\DriverController::class, 'get'])->name('dataDriver');
 Route::post('/driver/post', [App\Http\Controllers\DriverController::class, 'store'])->name('driverPost');
-route::post('/searchdriver', [App\Http\Controllers\DriverController::class, 'search'])->name('searchDriver');
 Route::delete('/driver/delete/{id}', [App\Http\Controllers\DriverController::class, 'destroy'])->name('driverDestroy');
 
 // Route Users
