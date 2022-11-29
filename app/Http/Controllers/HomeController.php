@@ -67,7 +67,7 @@ class HomeController extends Controller
         $pickup->tipe       = $request->input('tipe');
         $pickup->client     = $request->input('client');
         $pickup->luar_kota  = $request->input('luar_kota');
-        $pickup->dalam_kota = $request->input('dalam_kota');
+        $pickup->dalam_kota = $request->input('domestik');
         $pickup->jumlah     = $request->input('jumlah');
         $pickup->berat      = $request->input('berat');
         $pickup->tanggal    = $request->input('tanggal');

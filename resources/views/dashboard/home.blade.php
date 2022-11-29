@@ -18,7 +18,7 @@
         </a>
     </div>
     <div class="row" style="display: none" id="inputForm">
-        <div class="col-lg-12">
+        <div class="col-lg-7">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Tambah baru</h3>
@@ -31,16 +31,12 @@
                                         <th>Driver</th>
                                         <th>Client</th>
                                         <th>Tanggal</th>
-                                        <th>Luar Kota</th>
-                                        <th>Dalam Kota</th>
-                                        <th>Jumlah</th>
-                                        <th>Berat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <form action="" class="form-group">
                                         <td>
-                                            <select id="tipe" class="form-control form-control-sm"></select>
+                                            <select onclick="detail()" id="tipe" class="form-control form-control-sm"></select>
                                         </td>
                                         <td>
                                             <select id="driver" class="form-control form-control-sm"></select>
@@ -50,18 +46,6 @@
                                         </td>
                                         <td>
                                             <input type="date" name="" id="tanggal" class="form-control form-control-sm">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="" id="luar_kota" class="form-control form-control-sm">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="" id="dalam_kota" class="form-control form-control-sm">
-                                        </td>
-                                        <td>
-                                            <input type="text" value="" id="jumlah" readonly="readonly" class="form-control form-control-sm">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="" id="berat" class="form-control form-control-sm">
                                         </td>
                                     </form>
                                 </tbody>
@@ -73,6 +57,62 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5" id="kargo" style="display: none">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Detail</h5>
+                    <div class="dataTable-container">
+                        <table class="table datatale dataTable-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 75%">Luar Kota</th>
+                                    <th>Domestik</th>
+                                    <th>Jumlah</th>
+                                    <th>Berat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="luar_kota" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="domestik" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="jumlah" readonly class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="berat" class="form-control form-control-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5" id="dokumen" style="display: none">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Detail</h5>
+                    <div class="dataTable-container">
+                        <table class="table datatale dataTable-table">
+                            <thead>
+                                <tr>
+                                    <th>SP 1</th>
+                                    <th>SP 2</th>
+                                    <th>SP 3</th>
+                                    <th>Jumlah</th>
+                                    <th>Berat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="sp1" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="sp2" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="sp3" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="jumlah" readonly class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="berat" class="form-control form-control-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -97,7 +137,7 @@
                                         <th>Client</th>
                                         <th>Tanggal</th>
                                         <th>Luar Kota</th>
-                                        <th>Dalam Kota</th>
+                                        <th>Domestik</th>
                                         <th>Jumlah</th>
                                         <th>Berat</th>
                                         <th>Opsi</th>
@@ -149,9 +189,9 @@
     $('document').ready(function () {
         $('input').keyup(function () {
         var luar_kota = parseInt($('#luar_kota').val());
-        var dalam_kota = parseInt($('#dalam_kota').val());
+        var domestik = parseInt($('#domestik').val());
 
-        var jumlah = luar_kota + dalam_kota
+        var jumlah = luar_kota + domestik
 
         $('#jumlah').val(jumlah)
         })

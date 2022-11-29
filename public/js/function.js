@@ -110,6 +110,19 @@ function clientSave() {
     })
 }
 
+// Toggle detail
+$('#tipe').on('select2:select', function (e) {
+    var data = e.params.data.id
+    
+    if (data === "Kargo") {
+        $('#kargo').show()
+        $('#dokumen').hide()
+    } else {
+        $('#kargo').hide()
+        $('#dokumen').show()
+    }
+});
+
 // Simpan pickup
 function simpan() {
     var table = $('#pickupTable').DataTable();
@@ -119,7 +132,7 @@ function simpan() {
         'client': $('#client').val(),
         'tanggal': $('#tanggal').val(),
         'luar_kota': $('#luar_kota').val(),
-        'dalam_kota': $('#dalam_kota').val(),
+        'domestik': $('#domestik').val(),
         'jumlah': $('#jumlah').val(),
         'berat': $('#berat').val(),
     }

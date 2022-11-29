@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('data_pickup', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tipe_id');
+            $table->string('tipe');
+            $table->string('client');
+            $table->string('driver');
             $table->integer('jumlah');
             $table->integer('berat');
             $table->date('tanggal');
-            $table->integer('driver_id');
             $table->timestamps();
         });
     }
