@@ -4,22 +4,47 @@
 @section('content')
 <section class="section">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Data Driver</h5>
-                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                        <div class="dataTable-container">
-                            <table class="table datatable datatable-table" id="driverTable" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                    <div class="dataTable-container">
+                        <table class="table datatable datatable-table" id="driverTable" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th style="width: 3%">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Driver Baru</h5>
+                    <div class="dataTable-container">
+                        <table class="table datatable datatable-table">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="driverInput" class="form-control form-control-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-sm" onclick="driverSave()">
+                                <i class="bi bi-save"></i>
+                                Simpan
+                            </button>
                         </div>
                     </div>
                 </div>

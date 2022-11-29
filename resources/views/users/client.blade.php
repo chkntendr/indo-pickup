@@ -7,6 +7,37 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <h5 class="card-title">Client Baru</h5>
+                    <div class="dataTable-container">
+                        <table class="table datatable datatable-table" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Kode Client</th>
+                                    <th>Client</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="kode_client" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="clientInput" class="form-control form-control-sm"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-sm" onclick="clientSave()">
+                                <i class="bi bi-save"></i>
+                                Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
                     <h5 class="card-title">Clients</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container">

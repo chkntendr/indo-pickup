@@ -24,7 +24,7 @@ class BarangController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function($data) {
                                 $actionBtn = '<a onclick="editPickup()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                                <a id="btn-delete-barang" data-remote="/barang/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                                <a type="button" id="btn-delete-barang" data-remote="/barang/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
                                 return $actionBtn;
                             })
                             ->rawColumns(['action'])
@@ -41,8 +41,8 @@ class BarangController extends Controller
 
         // Return response
         return response()->json([
-            'success'   => true,
-            'message'   => 'Data Berhasil Disimpan!',
+            'status'    => 200,
+            'message'   => "Data inserted",
             'data'      => $barang
         ]);
     }

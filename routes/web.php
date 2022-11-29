@@ -58,5 +58,6 @@ Route::delete('/driver/delete/{id}', [App\Http\Controllers\DriverController::cla
 
 // Route Users
 Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
+Route::get('/users/data', [App\Http\Controllers\UsersController::class, 'get'])->name('dataUsers');
 Route::post('/users/post', [App\Http\Controllers\UsersController::class, 'store'])->name('userPost');
 Route::delete('/users/delete/{id}', [App\Http\Controllers\UsersController::class, 'destroy'])->name('userDestroy');

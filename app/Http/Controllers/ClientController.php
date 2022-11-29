@@ -47,10 +47,15 @@ class ClientController extends Controller
         $client = new Client;
         $client->kode_client    = $request->kode_client;
         $client->client         = $request->client;
-        
+        $client->created_at     = \Carbon\Carbon::now(); # new \Datetime()
+        $client->updated_at     = \Carbon\Carbon::now(); # new \Datetime()
         $client->save();
 
-        return redirect('client');
+        return response()->json([
+            'status'    => 200,
+            'message'   => "Data inserted",
+            'data'      => $client
+        ]);
     }
 
     public function delete($id) {

@@ -5,9 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use DataTables;
 
 class UsersController extends Controller
 {
+    public function get(Request $request) {
+        if ($request->ajax()) {
+            $data = User::latest()->get();
+
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data) {
+                                $actionBtn = '<a onclick="editUser()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                                <a id="btn-delete-user" data-remote="/user/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                                return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -32,13 +32,15 @@ class DriverController extends Controller
 
     public function store(Request $request) {
         $driver = Driver::create([
-            'name' => $request->nama
+            'name' => $request->nama,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Driver berhasil ditambahkan!',
-            'data'    => $driver
+            'status'    => 200,
+            'message'   => "Data inserted",
+            'data'      => $driver
         ]);
     }
 

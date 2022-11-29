@@ -71,10 +71,6 @@
                                     <i class="bi bi-save"></i>
                                     Simpan
                                 </button>
-                                <button class="btn btn-danger btn-sm my-2" onclick="clear()">
-                                    <i class="bi bi-eraser"></i>
-                                    Hapus
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -104,7 +100,7 @@
                                         <th>Dalam Kota</th>
                                         <th>Jumlah</th>
                                         <th>Berat</th>
-                                        <th>Action</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

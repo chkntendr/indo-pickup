@@ -76,6 +76,41 @@ $('document').ready(function () {
     })
 })
 
+// Simpan client
+function clientSave() {
+    var table   = $('#clientTable').DataTable();
+    var data    = {
+        'kode_client': $('#kode_client').val(),
+        'client': $('#clientInput').val()
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
+
+    $.ajax({
+        url: '/client/post',
+        type: 'POST',
+        data: data,
+        dataType: 'JSON',
+        success: function(response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                table.draw()
+            }
+        }
+    })
+}
+
+// Simpan pickup
 function simpan() {
     var table = $('#pickupTable').DataTable();
     var data = {
@@ -97,6 +132,77 @@ function simpan() {
 
     $.ajax({
         url: '/home/post',
+        type: 'POST',
+        data: data,
+        dataType: "JSON",
+        success: function(response) {
+            if(response.status == 200) {
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                table.draw();
+            }
+        }
+    });
+}
+
+// Simpan driver
+function driverSave() {
+    var table = $('#driverTable').DataTable();
+    var data = {
+        'nama': $('#driverInput').val()
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
+
+    $.ajax({
+        url: '/driver/post',
+        type: 'POST',
+        data: data,
+        dataType: "JSON",
+        success: function(response) {
+            if(response.status == 200) {
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                table.draw();
+            }
+        }
+    });
+}
+
+// Simpan User
+function userSave() {
+    console.log("TEST")
+}
+
+// Simpan barang
+function barangSave() {
+    var table = $('#barangTable').DataTable();
+    var data = {
+        'tipe': $('#tipeInput').val()
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
+
+    $.ajax({
+        url: '/barang/post',
         type: 'POST',
         data: data,
         dataType: "JSON",
@@ -257,45 +363,48 @@ function deleteUser() {
     })
 }
 
-function deleteBarang() {
-    $('body').on('click', '#btn-delete-barang', function(e) {
-        e.preventDefault()
-        let barang_id = $(this).data('id');
-        let token     = $("meta[name='csrf-token']").attr("content");
+// Delete Barang
+$('body').on('click', '#btn-delete-barang[data-remote]', function (e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-        console.log(barang_id, token)
-        Swal.fire({
-            title: "Data akan dihapus secara permanen!",
-            text: "Lanjutkan?",
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText: "Tidak",
-            confirmButtonText: "Ya"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `/barang/hapus/${barang_id}`,
-                    type: "DELETE",
-                    cache: false,
-                    data: {
-                        "_token": token
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            type: 'success',
-                            icon: 'success',
-                            title: `${ response.message }`,
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-
-                        $(`#index_${barang_id}`).remove();
-                    }
-                })
-            }
-        })
+    var url = $(this).data('remote');
+    
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#barangTable').DataTable().draw(false)
+            })
+        }
     })
-}
+})
 
 // Delete Client
 $('body').on('click', '#btn-delete-client[data-remote]', function (e) {
@@ -392,16 +501,6 @@ $('body').on('click', '#btn-edit-pickup[data-id]', function (e) {
             headers: {
                 'X-CSRF-TOKEN': '{{csrf_token()}}'
             }
-        });
-    
-        var editor = new $.fn.dataTable.Editor({
-            ajax: "{{ route('homePickup') }}",
-            table: "#pickupTable",
-            display: "bootstrap",
-            fields: [
-                {label: "id:", name: "id"},
-                {label: "name:", name: "name"},
-            ]
         });
     
         $('#pickupTable').on('click', 'tbody td:not(:first-child)', function (e) {
