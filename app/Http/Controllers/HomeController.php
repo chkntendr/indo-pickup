@@ -48,30 +48,32 @@ class HomeController extends Controller
 
             $data = Pickup::latest()->get();
             return Datatables::of($data)
-                             ->addIndexColumn()
-                             ->addColumn('action', function($data){
-                                $actionBtn = '<a id="btn-edit-pickup" data-id="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                                <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
-                                return $actionBtn;
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data){
+                            $actionBtn = '<a id="btn-edit-pickup" data-id="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                            <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+
+                            return $actionBtn;
                             })
-                             ->rawColumns(['action'])
-                             ->make(true);
+                            ->rawColumns(['action'])
+                            ->make(true);
         }
     }
 
     public function store(Request $request) {
         // Create post
         
-        $pickup  = new Pickup;
+        $pickup = new Pickup;
         $pickup->tipe       = $request->input('tipe');
         $pickup->client     = $request->input('client');
-        $pickup->luar_kota  = $request->input('luarkota');
-        $pickup->dalam_kota = $request->input('dalamkota');
-        $pickup->jumlah     = $pickup->luar_kota + $pickup->dalam_kota;
+        $pickup->luar_kota  = $request->input('luar_kota');
+        $pickup->dalam_kota = $request->input('dalam_kota');
+        $pickup->jumlah     = $request->input('jumlah');
         $pickup->berat      = $request->input('berat');
         $pickup->tanggal    = $request->input('tanggal');
         $pickup->driver     = $request->input('driver');
-
+        $pickup->created_at = \Carbon\Carbon::now(); # new \Datetime()
+        $pickup->updated_at = \Carbon\Carbon::now(); # new \Datetime()
         $pickup->save();
         
         return response()->json([
@@ -87,14 +89,6 @@ class HomeController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Data berhasil dihapus!"
-        ]);
-    }
-
-    public function deleteMutliple($id) {
-        $pickup = Pickup::whereIn('id', $id);
-
-        return response()->json([
-            'data' => $pickup
         ]);
     }
 

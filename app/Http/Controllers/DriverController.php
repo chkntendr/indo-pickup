@@ -57,4 +57,16 @@ class DriverController extends Controller
             'message' => "Data berhasil dihapus!"
         ]);
     }
+
+    public function select2(Request $request) {
+        $data = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data   = Driver::select("id","name")
+            		->where('name','LIKE',"%$search%")
+            		->get();
+        }
+        return response()->json($data);
+    }
 }

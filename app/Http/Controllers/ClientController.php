@@ -30,6 +30,18 @@ class ClientController extends Controller
         }
     }
 
+    public function select2(Request $request) {
+        $data = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data   = Client::select("id","client")
+            		->where('client','LIKE',"%$search%")
+            		->get();
+        }
+        return response()->json($data);
+    }
+
     public function create(Request $request) {
         // Create post
         $client = new Client;

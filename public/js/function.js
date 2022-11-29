@@ -1,40 +1,107 @@
-function showReportForm() {
-    $('#form').toggle()
-}
+// Select Client
+$('document').ready(function () {
+    $('#client').select2({
+        placeholder: "Pilih Client",
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/client/select2',
+            dataType: 'JSON',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results:  $.map(data, function (item) {
+                        return {
+                            text: item.client,
+                            id: item.client
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+})
 
-function newPickup() {
-    $('#newPickup').toggle()
-}
+// Select Driver
+$('document').ready(function () {
+    $('#driver').select2({
+        placeholder: "Pilih Driver",
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/driver/select2',
+            dataType: 'JSON',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results:  $.map(data, function (item) {
+                        return {
+                            text: item.name,
+                            id: item.name
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+})
 
-function savePickup() {
-    var data    = {
+// Select Barang
+$('document').ready(function () {
+    $('#tipe').select2({
+        placeholder: "Pilih Tipe",
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/barang/select2',
+            dataType: 'JSON',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results:  $.map(data, function (item) {
+                        return {
+                            text: item.barang,
+                            id: item.barang
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+})
+
+function simpan() {
+    var table = $('#pickupTable').DataTable();
+    var data = {
         'tipe': $('#tipe').val(),
+        'driver': $('#driver').val(),
         'client': $('#client').val(),
-        'luarkota': $('#luarkota').val(),
-        'dalamkota': $('#dalamkota').val(),
+        'tanggal': $('#tanggal').val(),
+        'luar_kota': $('#luar_kota').val(),
+        'dalam_kota': $('#dalam_kota').val(),
         'jumlah': $('#jumlah').val(),
         'berat': $('#berat').val(),
-        'tanggal': $('#tanggal').val(),
-        'driver': $('#driver').val(),
     }
-
+    
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
         }
     });
 
-    console.log(data);
-
     $.ajax({
         url: '/home/post',
-        type: "POST",
+        type: 'POST',
         data: data,
         dataType: "JSON",
         success: function(response) {
-            // console.log(response)
-            if (response.status == 200) {
-                $('#datatable tbody').append("<tr><td>" + data.tipe + "</td><td>" + data.client + "</td><td>" + data.luarkota + "</td><td>" + data.dalamkota + "</td><td>" + data.jumlah + "</td><td>" + data.berat + "</td><td>" + data.tanggal + "</td><td>" + data.driver + "</td></tr>");
+            if(response.status == 200) {
                 Swal.fire({
                     type: 'success',
                     icon: 'success',
@@ -42,42 +109,23 @@ function savePickup() {
                     showConfirmButton: false,
                     timer: 1500
                 });
-            };
-        }
-    });    
-}
-
-$('.livesearch').select2({
-    placeholder: 'Pilih Client',
-    ajax: {
-        url: '/report/search',
-        dataType: 'json',
-        delay: 250,
-        processResults: function (data) {
-            return {
-                results: $.map(data, function(item) {
-                    $.ajax({
-                        url: '/report/print',
-                        dataType: 'json',
-                        delay: 500,
-                        data: {
-                            "keyword": item.kode_client
-                        },
-                        success: function(response) {
-                            console.log(response)
-                        }
-                    })
-
-                    return {
-                        text: item.client,
-                        id: item.id
-                    }
-                }),
+                table.draw();
             }
         }
-    },
-    cache: false
-})
+    });
+}
+
+function inputForm() {
+    $('#inputForm').toggle()
+}
+
+function showReportForm() {
+    $('#form').toggle()
+}
+
+function newPickup() {
+    $('#newPickup').toggle()
+}
 
 function getDataPickup() {
     $.ajax({
@@ -88,7 +136,7 @@ function getDataPickup() {
             console.log(response)
 
             const labels = [
-                '2022',
+                new Date().getFullYear(),
             ]
 
             const data = {

@@ -55,7 +55,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $search }}</td>
+                                    <td>{{ $search[0]->tanggal }}</td>
                                     <td>{{ $search->sum('jumlah') }}</td>
                                 </tr>
                             </tbody>

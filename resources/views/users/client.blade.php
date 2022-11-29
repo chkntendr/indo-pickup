@@ -68,10 +68,10 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
-        var table = $('#barangTable').DataTable({
+        var table = $('#clientTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('dataBarang') }}",
+            ajax: "{{ route('dataClient') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'kode_client', name: 'kode_client' },

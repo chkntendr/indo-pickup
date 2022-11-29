@@ -55,4 +55,16 @@ class BarangController extends Controller
             'message' => 'Barang berhasil dihapus!'
         ]);
     }
+
+    public function select2(Request $request) {
+        $data = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data   = Barang::select("id","barang")
+            		->where('barang','LIKE',"%$search%")
+            		->get();
+        }
+        return response()->json($data);
+    }
 }
