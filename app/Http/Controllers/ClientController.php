@@ -35,8 +35,8 @@ class ClientController extends Controller
 
         if($request->has('q')){
             $search = $request->q;
-            $data   = Client::select("id","client")
-            		->where('client','LIKE',"%$search%")
+            $data   = Client::select("id", "kode_client", "client")
+            		->where('kode_client','LIKE',"%$search%")
             		->get();
         }
         return response()->json($data);

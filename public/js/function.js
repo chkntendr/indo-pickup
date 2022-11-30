@@ -24,6 +24,31 @@ $('document').ready(function () {
     })
 })
 
+// Select tujuan
+$('document').ready(function() {
+    $('#tujuan').select2({
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/home/tujuan',
+            dataType: 'JSON',
+            delay: 250,
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.tujuan,
+                            id: item.tujuan
+                        }
+                    })
+                }
+            },
+            cache: true
+        }
+    })
+})
+
 // Select Driver
 $('document').ready(function () {
     $('#driver').select2({
@@ -125,16 +150,34 @@ $('#tipe').on('select2:select', function (e) {
 
 // Simpan pickup
 function simpan() {
-    var table = $('#pickupTable').DataTable();
+    var tableKargo      = $('#pickupTable').DataTable();
+    var tableDokumen    = $('#dokumenTable').DataTable();
+    var checkTipe       = $('#tipe').val();
+    var jumlahKargo     = $('#jumlah').val();
+    var jumlahDokumen   = $('#jumlahDokumen').val();
+    var beratKargo      = $('#beratKargo').val();
+    var beratDokumen    = $('#beratDokumen').val();
+
+    if (checkTipe === "Dokumen") {
+        var total = jumlahDokumen
+        var berat = beratDokumen
+    } else {
+        var total = jumlahKargo
+        var berat = beratKargo
+    }
+
     var data = {
         'tipe': $('#tipe').val(),
         'driver': $('#driver').val(),
         'client': $('#client').val(),
         'tanggal': $('#tanggal').val(),
-        'luar_kota': $('#luar_kota').val(),
-        'domestik': $('#domestik').val(),
-        'jumlah': $('#jumlah').val(),
-        'berat': $('#berat').val(),
+        'tujuan': $('#tujuan').val(),
+        'sp1': $('#sp1').val(),
+        'sp2': $('#sp2').val(),
+        'sp3': $('#sp3').val(),
+        'jumlah': total,
+        'description': $('#description').val(),
+        'berat': berat,
     }
     
     $.ajaxSetup({
@@ -142,6 +185,8 @@ function simpan() {
             'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
         }
     });
+
+    console.log(data)
 
     $.ajax({
         url: '/home/post',
@@ -157,7 +202,8 @@ function simpan() {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                table.draw();
+                tableKargo.draw();
+                tableDokumen.draw();
             }
         }
     });

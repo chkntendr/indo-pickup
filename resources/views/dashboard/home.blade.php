@@ -69,18 +69,18 @@
                         <table class="table datatale dataTable-table">
                             <thead>
                                 <tr>
-                                    <th style="width: 75%">Luar Kota</th>
-                                    <th>Domestik</th>
+                                    <th>Tujuan</th>
+                                    <th>Keterangan</th>
                                     <th>Jumlah</th>
                                     <th>Berat</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="text" id="luar_kota" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="domestik" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="jumlah" readonly class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="berat" class="form-control form-control-sm"></td>
+                                    <td><select type="text" id="tujuan" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="description" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="jumlah" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="beratKargo" class="form-control form-control-sm"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -108,8 +108,8 @@
                                     <td><input type="text" id="sp1" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="sp2" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="sp3" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="jumlah" readonly class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="berat" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="jumlahDokumen" readonly class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="beratDokumen" class="form-control form-control-sm"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -123,28 +123,60 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Data Pickup</h5>
-                    <div class="dataTable-wrapper dataTable-loading no-footer searchable">
-                        
-                    </div>
-                    <div id="table_data">
-                        <div class="dataTable-container">
-                            <table class="table datatable dataTable-table" id="pickupTable" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tipe</th>
-                                        <th>Driver</th>
-                                        <th>Client</th>
-                                        <th>Tanggal</th>
-                                        <th>Luar Kota</th>
-                                        <th>Domestik</th>
-                                        <th>Jumlah</th>
-                                        <th>Berat</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                    <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Dokumen</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">Kargo</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2" id="borderedTabContent">
+                        <div class="tab-pane fade active show" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
+                            <div id="table_data">
+                                <div class="dataTable-container">
+                                    <table class="table datatable dataTable-table" id="dokumenTable" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tipe</th>
+                                                <th>Driver</th>
+                                                <th>Client</th>
+                                                <th>Tanggal</th>
+                                                <th>SP 1</th>
+                                                <th>SP 2</th>
+                                                <th>SP 3</th>
+                                                <th>Jumlah</th>
+                                                <th>Berat</th>
+                                                <th>Opsi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div id="table_data">
+                                <div class="dataTable-container">
+                                    <table class="table datatable dataTable-table" id="pickupTable" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tipe</th>
+                                                <th>Driver</th>
+                                                <th>Client</th>
+                                                <th>Tanggal</th>
+                                                <th>Tujuan</th>
+                                                <th>Jumlah</th>
+                                                <th>Berat</th>
+                                                <th>Opsi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,32 +220,54 @@
 <script>
     $('document').ready(function () {
         $('input').keyup(function () {
-        var luar_kota = parseInt($('#luar_kota').val());
-        var domestik = parseInt($('#domestik').val());
+        var sp1 = parseInt($('#sp1').val());
+        var sp2 = parseInt($('#sp2').val());
+        var sp3 = parseInt($('#sp3').val());
 
-        var jumlah = luar_kota + domestik
+        var jumlahDokumen = sp1 + sp2 + sp3
 
-        $('#jumlah').val(jumlah)
+        $('#jumlahDokumen').val(jumlahDokumen)
         })
-    });
-
-    function clear() {
-        $('#luar_kota').val().clear()
-    }
+    })
 
     $(function() {
         var table = $('#pickupTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('homePickup') }}",
+            ajax: "{{ route('homeKargo') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'tipe', name: 'tipe' },
                 { data: 'driver', name: 'driver' },
                 { data: 'client', name: 'client' },
                 { data: 'tanggal', name: 'tanggal' },
-                { data: 'luar_kota', name: 'luar_kota' },
-                { data: 'dalam_kota', name: 'dalam_kota' },
+                { data: 'tujuan', name: 'tujuan' },
+                { data: 'jumlah', name: 'jumlah' },
+                { data: 'berat', name: 'berat' },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+        })
+    })
+
+    $(function() {
+        var table = $('#dokumenTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('homeDokumen') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'tipe', name: 'tipe' },
+                { data: 'driver', name: 'driver' },
+                { data: 'client', name: 'client' },
+                { data: 'tanggal', name: 'tanggal' },
+                { data: 'sp1', name: 'sp1' },
+                { data: 'sp2', name: 'sp2' },
+                { data: 'sp3', name: 'sp3' },
                 { data: 'jumlah', name: 'jumlah' },
                 { data: 'berat', name: 'berat' },
                 {

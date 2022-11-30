@@ -20,7 +20,9 @@ Auth::routes();
 
 // Route Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home/pickup', [App\Http\Controllers\HomeController::class, 'getPickup'])->name('homePickup');
+Route::get('/home/kargo', [App\Http\Controllers\HomeController::class, 'getKargo'])->name('homeKargo');
+Route::get('/home/dokumen', [App\Http\Controllers\HomeController::class, 'getDokumen'])->name('homeDokumen');
+Route::get('/home/tujuan', [App\Http\Controllers\HomeController::class, 'getTujuan'])->name('homeTujuan');
 Route::post('/home/post', [App\Http\Controllers\HomeController::class, 'store'])->name('postPickup');
 Route::delete('/home/delete/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('deletePickup');
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('editPickup');
