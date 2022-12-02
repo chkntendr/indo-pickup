@@ -86,6 +86,14 @@ function barangSave() {
                     timer: 1500
                 });
                 table.draw();
+            } else {
+                Swal.fire({
+                    type: 'failed',
+                    icon: 'danger',
+                    title: "Failed to input data",
+                    showConfirmButton: false,
+                    time: 1500
+                })
             }
         }
     });
@@ -133,7 +141,6 @@ function simpanPickup() {
     var beratKargo      = $('#beratKargo').val()
     var jumlahDokumen   = $('#jumlahDokumen').val()
     var jumlahKargo     = $('#jumlahKargo').val()
-    var token           = $("meta[name='csrf-token']").attr("content");
 
     if (checkTipe === "Dokumen") {
         var total = jumlahDokumen
@@ -156,31 +163,33 @@ function simpanPickup() {
         'description': $('#description').val(),
         'berat': berat,
     }
-    console.log(data)
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
 
     $.ajax({
         url: '/home/post',
         type: 'POST',
-        dataType: 'json',
-        data: {
-            "data": data,
-            "_token": token
-        },
+        data: data,
+        dataType: "JSON",
         success: function(response) {
-            if (response.status == 200) {
+            console.log(response)
+            if(response.status == 200) {
                 Swal.fire({
                     type: 'success',
                     icon: 'success',
-                    title: `${response.message}`,
+                    title: `${ response.message }`,
                     showConfirmButton: false,
                     timer: 1500
-                })
-                tableDokumen.draw(),
-                tableKargo.draw()
+                });
+                tableKargo.draw();
+                tableDokumen.draw();
             }
-        },
-        cache: true
-    })
+        }
+    });
 }
 
 // Select Driver

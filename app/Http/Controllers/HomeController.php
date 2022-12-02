@@ -92,21 +92,27 @@ class HomeController extends Controller
     public function store(Request $request) {
         // Create post
         $pickup = new Pickup;
-        $pickup->tipe       = $request->input('tipe');
-        $pickup->client     = $request->input('client');
-        $pickup->tanggal    = $request->input('tanggal');
-        $pickup->sp1        = $request->input('sp1')->default(null);
-        $pickup->sp2        = $request->input('sp2')->default(null);
-        $pickup->sp3        = $request->input('sp3')->default(null);
-        $pickup->dalam_kota = $request->input('dk')->default(null);
-        $pickup->luar_kota  = $request->input('lk')->default(null);
-        $pickup->jumlah     = $request->input('jumlah');
-        $pickup->description= $request->input('description')->default(null);
-        $pickup->berat      = $request->input('berat');
-        $pickup->driver     = $request->input('driver');
+        $pickup->tipe       = $request->tipe;
+        $pickup->client     = $request->client;
+        $pickup->tanggal    = $request->tanggal;
+        $pickup->sp1        = $request->sp1;
+        $pickup->sp2        = $request->sp2;
+        $pickup->sp3        = $request->sp3;
+        $pickup->luar_kota  = $request->lk;
+        $pickup->dalam_kota = $request->dk;
+        $pickup->jumlah     = $request->jumlah;
+        $pickup->description= $request->description;
+        $pickup->berat      = $request->berat;
+        $pickup->driver     = $request->driver;
+        $pickup->created_at = \Carbon\Carbon::now(); # new \Datetime()
+        $pickup->updated_at = \Carbon\Carbon::now(); # new \Datetime()
+        $pickup->save();
 
         return response()->json([
+            'status' => 200,
+            'message' => "Data ok",
             'data' => $pickup
+            
         ]);
     }
 
