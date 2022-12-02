@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('data_pickup', function (Blueprint $table) {
-            $table->string('luar_kota')->nullable()->after('driver');
+            $table->string('luar_kota')->nullable()->after('client');
             $table->string('dalam_kota')->nullable()->after('luar_kota');
         });
     }

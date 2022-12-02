@@ -91,27 +91,22 @@ class HomeController extends Controller
 
     public function store(Request $request) {
         // Create post
-        
         $pickup = new Pickup;
         $pickup->tipe       = $request->input('tipe');
         $pickup->client     = $request->input('client');
-        $pickup->tujuan     = $request->input('tujuan');
-        $pickup->sp1        = $request->input('sp1');
-        $pickup->sp2        = $request->input('sp2');
-        $pickup->sp3        = $request->input('sp3');
-        $pickup->description= $request->input('description');
-        $pickup->jumlah     = $request->input('jumlah');
-        $pickup->berat      = $request->input('berat');
         $pickup->tanggal    = $request->input('tanggal');
+        $pickup->sp1        = $request->input('sp1')->default(null);
+        $pickup->sp2        = $request->input('sp2')->default(null);
+        $pickup->sp3        = $request->input('sp3')->default(null);
+        $pickup->dalam_kota = $request->input('dk')->default(null);
+        $pickup->luar_kota  = $request->input('lk')->default(null);
+        $pickup->jumlah     = $request->input('jumlah');
+        $pickup->description= $request->input('description')->default(null);
+        $pickup->berat      = $request->input('berat');
         $pickup->driver     = $request->input('driver');
-        $pickup->created_at = \Carbon\Carbon::now(); # new \Datetime()
-        $pickup->updated_at = \Carbon\Carbon::now(); # new \Datetime()
-        $pickup->save();
-        
+
         return response()->json([
-            'status'    => 200,
-            'message'   => "Data inserted",
-            'data'      => $pickup
+            'data' => $pickup
         ]);
     }
 

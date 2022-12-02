@@ -51,7 +51,7 @@
                                 </tbody>
                             </table>
                             <div class="form-group">
-                                <button class="btn btn-success btn-sm" onclick="simpan()">
+                                <button onclick="simpanPickup()" class="btn btn-success btn-sm" type="button">
                                     <i class="bi bi-save"></i>
                                     Simpan
                                 </button>
@@ -69,17 +69,19 @@
                         <table class="table datatale dataTable-table">
                             <thead>
                                 <tr>
-                                    <th>Tujuan</th>
-                                    <th>Keterangan</th>
+                                    <th>Dalam</th>
+                                    <th>Luar</th>
                                     <th>Jumlah</th>
+                                    <th>Keterangan</th>
                                     <th>Berat</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><select type="text" id="tujuan" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="dk" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="lk" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="jumlahKargo" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="description" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="jumlah" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="beratKargo" class="form-control form-control-sm"></td>
                                 </tr>
                             </tbody>
@@ -167,7 +169,8 @@
                                                 <th>Driver</th>
                                                 <th>Client</th>
                                                 <th>Tanggal</th>
-                                                <th>Tujuan</th>
+                                                <th>Dalam</th>
+                                                <th>Luar</th>
                                                 <th>Jumlah</th>
                                                 <th>Berat</th>
                                                 <th>Opsi</th>
@@ -229,6 +232,17 @@
         $('#jumlahDokumen').val(jumlahDokumen)
         })
     })
+    
+    $('document').ready(function () {
+        $('input').keyup(function () {
+        var lk = parseInt($('#lk').val());
+        var dk = parseInt($('#dk').val());
+
+        var jumlahKargo = lk + dk
+
+        $('#jumlahKargo').val(jumlahKargo)
+        })
+    })
 
     $(function() {
         var table = $('#pickupTable').DataTable({
@@ -241,7 +255,8 @@
                 { data: 'driver', name: 'driver' },
                 { data: 'client', name: 'client' },
                 { data: 'tanggal', name: 'tanggal' },
-                { data: 'tujuan', name: 'tujuan' },
+                { data: 'dalam_kota', name: 'dalam_kota' },
+                { data: 'luar_kota', name: 'luar_kota' },
                 { data: 'jumlah', name: 'jumlah' },
                 { data: 'berat', name: 'berat' },
                 {
