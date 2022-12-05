@@ -530,6 +530,7 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
                 }
             }).always(function (data) {
                 $('#pickupTable').DataTable().draw(false)
+                $('#dokumenTable').DataTable().draw(false)
             })
         }
     })

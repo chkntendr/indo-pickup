@@ -110,7 +110,7 @@ class HomeController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => "Data ok",
+            'message' => "Berhasil dibuat!",
             'data' => $pickup
             
         ]);

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('data_pickup', function (Blueprint $table) {
             $table->string('luar_kota')->nullable()->after('client');
             $table->string('dalam_kota')->nullable()->after('luar_kota');
+            $table->string('description')->nullable()->after('dalam_kota');
         });
     }
 
