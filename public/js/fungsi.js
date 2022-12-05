@@ -133,6 +133,11 @@ function driverSave() {
 }
 
 // Simpan Pickup
+$(document).on('keypress',function(e) {
+    if(e.which == 13) {
+        simpanPickup()
+    }
+});
 function simpanPickup() {
     var checkTipe       = $('#tipe').val()
     var tableKargo      = $('#pickupTable').DataTable()
@@ -503,6 +508,7 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
         }
     });
     var url = $(this).data('remote');
+    console.log(url)
     Swal.fire({
         title: "Data akan dihapus secara permanen!",
         text: "Lanjutkan?",
@@ -534,4 +540,103 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
             })
         }
     })
+})
+
+/**
+ * Edit function
+ */
+
+// Edit pickup
+$('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
+    e.preventDefault();
+    var url = $(this).data('remote');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    console.log(url)
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        cache: false,
+        dataType: 'json',
+        success: function(response) {
+            console.log(response)
+            $('#editPickup').modal('show')
+            $('#driver-modal').val(response.data[0].driver)
+            $('#pickup_id').val(response.data[0].id);
+            $('#tipe-modal').val(response.data[0].tipe);
+            $('#client-modal').val(response.data[0].client)
+            $('#tanggal-modal').val(response.data[0].tanggal)
+            $('#jumlah-modal').val(response.data[0].jumlah)
+            if (response.data[0].tipe == "Dokumen") {
+                $('#dokumenSP').show()
+                $('#kargoLKDK').hide()
+                $('#sp1-modal').val(response.data[0].sp1)
+                $('#sp2-modal').val(response.data[0].sp2)
+                $('#sp3-modal').val(response.data[0].sp3)
+            } else {
+                $('#dokumenSP').hide()
+                $('#kargoLKDK').show()
+                $('#description-modal').val(response.data[0].description)
+                $('#lk-modal').val(response.data[0].luar_kota)
+                $('#dk-modal').val(response.data[0].dalam_kota)
+            }
+            $('#berat-modal').val(response.data[0].berat)
+        }
+    })    
+})
+
+$('body').on('click', '#editSave', function(e) {
+    e.preventDefault();
+    var tableKargo      = $('#pickupTable').DataTable()
+    var tableDokumen    = $('#dokumenTable').DataTable()
+    let id      = $('#pickup_id').val();
+    let tipe    = $('#tipe-modal').val();
+
+    var dokumen = {
+        'tipe'      : $('#tipe-modal').val(),
+        'client'    : $('#client-modal').val(),
+        'tanggal'   : $('#tanggal-modal').val(),
+        'driver'    : $('#driver-modal').val(),
+        'sp1'       : $('#sp1-modal').val(),
+        'sp2'       : $('#sp2-modal').val(),
+        'sp3'       : $('#sp3-modal').val(),
+        'jumlah'    : $('#jumlah-modal').val(),
+        'berat'     : $('#berat-modal').val()
+    }
+    var kargo = {
+        'tipe'      : $('#tipe-modal').val(),
+        'lk'       : $('#lk-modal').val(),
+        'dk'       : $('#dk-modal').val(),
+        'jumlah'    : $('#jumlah-modal').val(),
+        'berat'     : $('#berat-modal').val()
+    }
+
+    if (tipe == "Dokumen") {
+        $.ajax({
+            url: `/home/pickup/update/${id}`,
+            type: 'PUT',
+            dataType: 'json',
+            cache: false,
+            data: dokumen,
+            success: function(response) {
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                $('#editPickup').modal('hide')
+                tableDokumen.draw()
+                tableKargo.draw()
+            }
+        })
+    } else {
+        console.log(jumlah, berat, kargo, "Run ajax cargo")
+    }
 })

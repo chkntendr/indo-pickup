@@ -212,6 +212,71 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Dokumen --}}
+    <div class="modal fade" id="editPickup" tabindex="-1" aria-labelledby="createDriver" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+                    <button type="button" id="close-modal" class="btn-close" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <input type="text" id="pickup_id" readonly hidden>
+                    <input type="text" id="tipe-modal" readonly hidden>
+                    <input type="text" id="client-modal" readonly hidden>
+                    <input type="text" id="driver-modal" readonly hidden>
+                    <div class="form-group">
+                        <label for="tanggal" class="control-label">Tanggal</label>
+                        <input type="date" id="tanggal-modal" class="form-control form-control-sm">
+                    </div>
+
+                    <div id="dokumenSP" style="display: none;">
+                        <div class="form-group">
+                            <label for="tanggal" class="control-label">SP 1</label>
+                            <input type="text" id="sp1-modal" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal" class="control-label">SP 2</label>
+                            <input type="text" id="sp2-modal" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal" class="control-label">SP 3</label>
+                            <input type="text" id="sp3-modal" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div id="kargoLKDK" style="display: none;">
+                        <div class="form-group">
+                            <label for="description-modal" class="control-label">Keterangan</label>
+                            <textarea name="" id="description-modal" cols="30" rows="10" class="form-control form-control-sm"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="lk-modal" class="control-label">Luar Kota</label>
+                            <input type="text" id="lk-modal" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="dk-modal" class="control-label">Dalam Kota</label>
+                            <input type="text" id="dk-modal" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tanggal" class="control-label">Jumlah</label>
+                        <input type="text" id="jumlah-modal" class="form-control form-control-sm">
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal" class="control-label">Berat</label>
+                        <input type="text" id="berat-modal" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
+                    <button class="btn btn-primary" id="editSave">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Data Pickup -->
 </section>

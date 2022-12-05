@@ -55,6 +55,16 @@ class HomeController extends Controller
         return response()->json($data);
     }
 
+    public function show($id) {
+        $pickup = Pickup::where('id', $id)->get();
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Detail',
+            'data'      => $pickup
+        ]);
+    }
+
     public function getKargo(Request $request) {
         if ($request->ajax()) {
 
@@ -62,7 +72,7 @@ class HomeController extends Controller
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
-                            $actionBtn = '<a id="btn-edit-pickup" data-id="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                            $actionBtn = '<a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
                             <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
 
                             return $actionBtn;
@@ -79,7 +89,7 @@ class HomeController extends Controller
             return DataTables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data) {
-                                $actionBtn = '<a id="btn-edit-pickup" data-id="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                                $actionBtn = '<a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
                                 <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
 
                                 return $actionBtn;
@@ -143,7 +153,28 @@ class HomeController extends Controller
         }
     }
 
-    public function search(Request $request) {
-        
+    public function editSave($id, Request $request) {
+        $pickup = Pickup::find($id);
+
+        $pickup->tipe       = $request->tipe;
+        $pickup->client     = $request->client;
+        $pickup->tanggal    = $request->tanggal;
+        $pickup->sp1        = $request->sp1;
+        $pickup->sp2        = $request->sp2;
+        $pickup->sp3        = $request->sp3;
+        $pickup->luar_kota  = $request->lk;
+        $pickup->dalam_kota = $request->dk;
+        $pickup->jumlah     = $request->jumlah;
+        $pickup->description= $request->description;
+        $pickup->berat      = $request->berat;
+        $pickup->driver     = $request->driver;
+        $pickup->updated_at = \Carbon\Carbon::now(); # new \Datetime()
+        $pickup->save();
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data berhasil diperbaharui!',
+            'data'      => $pickup
+        ]);
     }
 }
