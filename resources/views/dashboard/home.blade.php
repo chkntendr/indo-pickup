@@ -5,17 +5,60 @@
 <section class="section">
     <div class="my-2">
         <button onclick="inputForm()" class="btn btn-sm btn-primary">
-            <i class="bi bi-plus"></i>
+            <i class="bi bi-file-earmark-plus"></i>
             Baru
         </button>
-        <button id="open-upload-modal" class="btn btn-sm btn-success">
-            <i class="bi bi-upload"></i>
-            Upload
+        <button id="open-more-tab" class="btn btn-sm btn-warning">
+            <i class="bi bi-three-dots-vertical"></i>
+            Lainnya
         </button>
-        <a href="/home/export" id="btn-export-csv" class="btn btn-sm btn-secondary">
-            <i class="bi bi-download"></i>
-            Download
-        </a>
+    </div>
+    <div class="row" style="display: none" id="moreTab">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Upload</h3>
+                    <div class="container">
+                        <input class="form-control" type="file" id="formFile">
+                        <button class="btn btn-sm btn-success my-2">
+                            <i class="bi bi-cloud-upload"></i>
+                            Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Export</h3>
+                    <div class="container">
+                        <div class="form-group">
+                            <form action="" class="row g-3">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control form-control-sm" placeholder="Client" id="clientFloat">
+                                        <label for="clientFloat">Client</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="date" name="" id="" class="form-control form-control-sm">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="date" name="" id="" class="form-control form-control-sm">
+                                </div>
+                            </form>
+                            <button class="btn btn-sm btn-primary">
+                                <i class="bi bi-cloud-download"></i>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row" style="display: none" id="inputForm">
         <div class="col-lg-7">
@@ -36,7 +79,21 @@
                                 <tbody>
                                     <form action="" class="form-group">
                                         <td>
-                                            <select onclick="detail()" id="tipe" class="form-control form-control-sm"></select>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                  <input class="form-check-input" type="radio" name="gridRadios" id="dokumenCheck" value="Dokumen">
+                                                  <label class="form-check-label" for="gridRadios1">
+                                                    Dokumen
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input class="form-check-input" type="radio" name="gridRadios" id="kargoCheck" value="Kargo" checked>
+                                                  <label class="form-check-label" for="gridRadios2">
+                                                    Kargo
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            {{-- <select onclick="detail()" id="tipe" class="form-control form-control-sm"></select> --}}
                                         </td>
                                         <td>
                                             <select id="driver" class="form-control form-control-sm"></select>
@@ -186,34 +243,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="modal fade" id="modal-upload" tabindex="-1" aria-lablledby="uploadExcel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal-title">Upload Data</h5>
-                        <button type="button" id="modal-close" class="btn-close" aria-label="Close"></button>
-                    </div>
 
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data" id="file">
-                                @csrf
-                                <label for="file" class="control-label">Cari File</label>
-                                <input type="file" name="file" id="uploadForm" class="form-control form-control-sm">
-                                <button type="submit" class="btn btn-sm btn-primary mt-2">
-                                    <i class="bi bi-send"></i>
-                                    Send
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal Dokumen --}}
+    {{-- Modal Edit --}}
     <div class="modal fade" id="editPickup" tabindex="-1" aria-labelledby="createDriver" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

@@ -6,6 +6,7 @@ use App\Models\Report;
 use App\Models\Client;
 use App\Models\Pickup;
 use Illuminate\Http\Request;
+use DataTables;
 
 class ReportController extends Controller
 {
@@ -101,16 +102,23 @@ class ReportController extends Controller
         //
     }
 
-    public function getReport() {
-    $jumlahDok = Pickup::where('tipe', 'Dokumen')->sum('Jumlah');
-    $jumlahPak = Pickup::where('tipe', 'Paket')->sum('Jumlah');
-    $jumlahKar = Pickup::where('tipe', 'Kargo')->sum('Jumlah');
+    public function getReport(Request $request) {
+        if($request->ajax()) {
+            $search = "Bank Syariah Mandiri";
+            $client = Client::select('client');
+            $data = Pickup::select('client', 'jumlah')->where('client', 'LIKE', "%$search%")->get();
 
-        return response()->json([
-            'dokumen' => $jumlahDok,
-            'paket'   => $jumlahPak,
-            'kargo'   => $jumlahKar
-        ]);
+            return DataTables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data){
+                            $actionBtn = '<a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                            <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+
+                            return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
     }
 
     public function search(Request $request) {

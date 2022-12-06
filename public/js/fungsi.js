@@ -1,24 +1,21 @@
 // Upload modal
-$('body').on('click', '#open-upload-modal', function (event) {
+$('body').on('click', '#open-more-tab', function (event) {
     event.preventDefault();
-    $('#modal-upload').modal('show');
-    $('body').on('click', '#modal-close', function() {
-        $('#modal-upload').modal('hide');
-    })
+    $('#moreTab').toggle();
 });
 
 // Toggle detail
-$('#tipe').on('select2:select', function (e) {
-    var data = e.params.data.id
+// $('#tipe').on('select2:select', function (e) {
+//     var data = e.params.data.id
     
-    if (data === "Kargo") {
-        $('#kargo').show()
-        $('#dokumen').hide()
-    } else {
-        $('#kargo').hide()
-        $('#dokumen').show()
-    }
-});
+//     if (data === "Kargo") {
+//         $('#kargo').show()
+//         $('#dokumen').hide()
+//     } else {
+//         $('#kargo').hide()
+//         $('#dokumen').show()
+//     }
+// });
 
 // Input Form
 function inputForm() {
@@ -298,57 +295,6 @@ $('document').ready(function () {
     })
 })
 
-// Chart
-function getDataPickup() {
-    $.ajax({
-        url: '/report/data',
-        type: 'GET',
-        cache: false,
-        success: function(response) {
-            console.log(response)
-
-            const labels = [
-                new Date().getFullYear(),
-            ]
-
-            const data = {
-                labels: labels,
-                datasets: [
-                {
-                    label: "Paket",
-                    backgroundColor: 'rgb(0, 90, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [ response.paket ]
-                },
-                {
-                    label: "Dokumen",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [ response.dokumen ]
-                },
-                {
-                    label: "Kargo",
-                    backgroundColor: 'rgb(0, 100, 203)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [ response.kargo ]
-                }
-            ]
-            }
-
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {}
-            };
-        
-            new Chart(
-                document.getElementById('laporan'),
-                config
-            )
-        }
-    })
-}
-
 /**
  * @Delete function
  */
@@ -571,6 +517,9 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
 
 // Edit pickup
 $('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
+    $('body').on('click', '#close-modal', function(e) {
+        $('#editPickup').modal('hide')
+    })
     e.preventDefault();
     var url = $(this).data('remote');
 

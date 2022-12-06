@@ -4,87 +4,51 @@
 @section('content')
 <section class="section">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Grafik Global</h5>
-                    <canvas id="laporan" style="max-height: 400px; display: block; box-sizing: border-box; height: 191px; width: 382px;" width="382" height="191"></canvas>
-                </div>
-            </div>
-        </div>
-
-        {{-- <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <select name="livesearch" class="livesearch form-control">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Download Lampiran</h5>
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Tipe</th>
-                                <th>Client</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-sm btn-success">
-                        <i class="bi bi-download"></i>
-                        Download
-                    </button>
-                </div>
-            </div>
-        </div> --}}
-
-        <div class="col-lg-6" id="laporan">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Buat Lampiran</h5>
-                    <button id="newReport" class="btn btn-sm btn-primary" onclick="showReportForm()">
-                        <i class="bi bi-plus" id="iconReport"></i>
-                    </button>
-                    <form action="{{ route('createReport') }}" id="form" style="display: block; height: 185px;">
-                        @csrf
-                        <select name="client" class="form-control my-2">
-                            @foreach ($client as $c)
-                                <option value="{{ $c->client }}">{{ $c->client }}</option>
-                            @endforeach
-                        </select>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <input type="date" class="form-control my-2" name="tanggalMulai">
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <input type="date" class="form-control my-2" name="tanggalSelesai">
-                                </div> --}}
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <i class="bi bi-printer"></i>
-                            Cetak
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Disini buat chart lagi mungkin</h5>
-                    <canvas id="laporan" style="max-height: 400px; display: block; box-sizing: border-box; height: 191px; width: 382px;" width="382" height="191"></canvas>
+                    <h5 class="card-title">Laporan Pickup</h5>
+                    <div class="dataTable-container">
+                        <table class="table datatable dataTable-table" id="reportTable" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Client</th>
+                                    <th>Jumlah</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(function() {
+        var table = $('#reportTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('getReport') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'client', name: 'client' },
+                { data: 'jumlah', name: 'jumlah' },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+                
+            ]
+        })
+    })
+</script>
