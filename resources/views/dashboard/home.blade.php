@@ -81,18 +81,18 @@
                                         <td>
                                             <div class="col-sm-10">
                                                 <div class="form-check">
-                                                  <input class="form-check-input" type="radio" name="gridRadios" id="dokumenCheck" value="Dokumen">
-                                                  <label class="form-check-label" for="gridRadios1">
-                                                    Dokumen
-                                                  </label>
-                                                </div>
-                                                <div class="form-check">
-                                                  <input class="form-check-input" type="radio" name="gridRadios" id="kargoCheck" value="Kargo" checked>
-                                                  <label class="form-check-label" for="gridRadios2">
-                                                    Kargo
-                                                  </label>
-                                                </div>
-                                              </div>
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="dokumenCheck" value="Dokumen">
+                                                    <label class="form-check-label" for="gridRadios1">
+                                                      Dokumen
+                                                    </label>
+                                                  </div>
+                                                  <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="kargoCheck" value="Kargo">
+                                                    <label class="form-check-label" for="gridRadios1">
+                                                      Kargo
+                                                    </label>
+                                                  </div>
+                                            </div>
                                             {{-- <select onclick="detail()" id="tipe" class="form-control form-control-sm"></select> --}}
                                         </td>
                                         <td>

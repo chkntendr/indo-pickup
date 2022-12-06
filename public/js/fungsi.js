@@ -5,6 +5,19 @@ $('body').on('click', '#open-more-tab', function (event) {
 });
 
 // Toggle detail
+$(function() {
+    $('body').on('click', '#dokumenCheck', function(e) {
+        $('#kargo').hide()
+        $('#dokumen').show()
+        $('#dokumenCheck').is(':checked')
+        $('#kargoCheck').is('disabled')
+    })
+    $('body').on('click', '#kargoCheck', function(e) {
+        $('#kargo').show()
+        $('#dokumen').hide()
+        $(this).is(':checked')
+    })
+})
 // $('#tipe').on('select2:select', function (e) {
 //     var data = e.params.data.id
     
@@ -145,7 +158,7 @@ $(document).on('keypress',function(e) {
     }
 });
 function simpanPickup() {
-    var checkTipe       = $('#tipe').val()
+    var checkTipe       = $('input[name="gridRadios"]:checked').val();
     var tableKargo      = $('#pickupTable').DataTable()
     var tableDokumen    = $('#dokumenTable').DataTable()
     var beratDokumen    = $('#beratDokumen').val()
@@ -161,7 +174,7 @@ function simpanPickup() {
         var berat = beratKargo
     }
     var data = {
-        'tipe':     $('#tipe').val(),
+        'tipe':     $('input[name="gridRadios"]:checked').val(),
         'driver':   $('#driver').val(),
         'client':   $('#client').val(),
         'tanggal':  $('#tanggal').val(),
@@ -174,6 +187,8 @@ function simpanPickup() {
         'description': $('#description').val(),
         'berat': berat,
     }
+
+    console.log(data)
 
     $.ajaxSetup({
         headers: {
