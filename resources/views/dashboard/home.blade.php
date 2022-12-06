@@ -45,7 +45,7 @@
                                             <select id="client" class="form-control form-control-sm"></select>
                                         </td>
                                         <td>
-                                            <input type="date" name="" id="tanggal" class="form-control form-control-sm">
+                                            <input type="date" id="tanggal" class="form-control form-control-sm">
                                         </td>
                                     </form>
                                 </tbody>
@@ -144,7 +144,7 @@
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
                                                 <th>Client</th>
-                                                <th>Tanggal</th>
+                                                <th>Tanggal Doc</th>
                                                 <th>SP 1</th>
                                                 <th>SP 2</th>
                                                 <th>SP 3</th>
@@ -168,7 +168,7 @@
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
                                                 <th>Client</th>
-                                                <th>Tanggal</th>
+                                                <th>Tanggal Pickup</th>
                                                 <th>Dalam</th>
                                                 <th>Luar</th>
                                                 <th>Jumlah</th>

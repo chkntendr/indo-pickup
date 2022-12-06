@@ -1,3 +1,12 @@
+// Upload modal
+$('body').on('click', '#open-upload-modal', function (event) {
+    event.preventDefault();
+    $('#modal-upload').modal('show');
+    $('body').on('click', '#modal-close', function() {
+        $('#modal-upload').modal('hide');
+    })
+});
+
 // Toggle detail
 $('#tipe').on('select2:select', function (e) {
     var data = e.params.data.id
@@ -193,6 +202,20 @@ function simpanPickup() {
                 tableKargo.draw();
                 tableDokumen.draw();
             }
+            $('#tipe').select2('val', '');
+            $('#driver').select2('val', '');
+            $('#client').select2('val', '');
+            $('#tanggal').val('');
+            $('#sp1').val('');
+            $('#sp2').val('');
+            $('#sp3').val('');
+            $('#dk').val('');
+            $('#lk').val('');
+            $('#description').val('');
+            $('#jumlahKargo').val('');
+            $('#jumlahDokumen').val('');
+            $('#beratKargo').val('');
+            $('#beratDokumen').val('');
         }
     });
 }
