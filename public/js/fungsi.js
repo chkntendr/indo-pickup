@@ -1,9 +1,3 @@
-// Upload modal
-$('body').on('click', '#open-more-tab', function (event) {
-    event.preventDefault();
-    $('#moreTab').toggle();
-});
-
 // Toggle detail
 $(function() {
     $('body').on('click', '#dokumenCheck', function(e) {
@@ -18,22 +12,18 @@ $(function() {
         $(this).is(':checked')
     })
 })
-// $('#tipe').on('select2:select', function (e) {
-//     var data = e.params.data.id
-    
-//     if (data === "Kargo") {
-//         $('#kargo').show()
-//         $('#dokumen').hide()
-//     } else {
-//         $('#kargo').hide()
-//         $('#dokumen').show()
-//     }
-// });
 
 // Input Form
 function inputForm() {
     $('#inputForm').toggle()
+    $('#moreTab').hide()
 }
+
+function moreTab() {
+    $('#moreTab').toggle()
+    $('#inputForm').hide()
+}
+
 /**
  * Store function
  */

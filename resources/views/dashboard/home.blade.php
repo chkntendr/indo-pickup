@@ -8,7 +8,7 @@
             <i class="bi bi-file-earmark-plus"></i>
             Baru
         </button>
-        <button id="open-more-tab" class="btn btn-sm btn-warning">
+        <button onclick="moreTab()" class="btn btn-sm btn-warning">
             <i class="bi bi-three-dots-vertical"></i>
             Lainnya
         </button>
