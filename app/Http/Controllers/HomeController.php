@@ -149,7 +149,11 @@ class HomeController extends Controller
             $import->setStartRow(2);
             Excel::import ($import, $request->file('file')->store('files'));
 
-            return redirect()->back()->with('success', 'Import Berhasil!');
+            return response()->json([
+                'status'    => 200,
+                'message'   => 'Data berhasil di upload',
+                'data'      => $import
+            ]);
         }
     }
 

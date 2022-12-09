@@ -30,10 +30,14 @@ class ImportPickup implements ToModel
             'client'    => $row[1],
             'luar_kota' => $row[2],
             'dalam_kota'=> $row[3],
-            'jumlah'    => $row[2] + $row[3],
-            'berat'     => $row[4],
-            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5])->format('y-m-d'),
-            'driver'    => $row[6],
+            'sp1'       => $row[4],
+            'sp2'       => $row[5],
+            'sp3'       => $row[6],
+            'jumlah'    => $row[2] + $row[3] + $row[4] + $row[5] + $row[6],
+            'berat'     => $row[7],
+            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format('y-m-d'),
+            'driver'    => $row[9],
+            'description' => $row[10]
         ]);
     }
 }

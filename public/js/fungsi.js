@@ -25,8 +25,42 @@ function moreTab() {
 }
 
 /**
- * Store function
+ * @Store function
  */
+
+// Upload
+$('document').ready(function (e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    $('#form-upload-excel').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this)
+
+        $.ajax({
+            url: "{{ route('import') }}",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            proccessData: false,
+            success: function(response) {
+                if (response.status == 200) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            }
+        })
+    })
+})
 
 // Simpan User
 function userSave() {

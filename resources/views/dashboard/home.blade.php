@@ -19,11 +19,14 @@
                 <div class="card-body">
                     <h3 class="card-title">Upload</h3>
                     <div class="container">
-                        <input class="form-control" type="file" id="formFile">
-                        <button class="btn btn-sm btn-success my-2">
-                            <i class="bi bi-cloud-upload"></i>
-                            Upload
-                        </button>
+                        <form action="{{ route('import') }}" enctype="multipart/form-data" method="POST" id="form-upload-excel">
+                            @csrf
+                            <input class="form-control" type="file" id="formFile" name="file">
+                            <button type="submit" class="btn btn-sm btn-success my-2">
+                                <i class="bi bi-cloud-upload"></i>
+                                Upload
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
