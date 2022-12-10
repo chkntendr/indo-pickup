@@ -35,9 +35,10 @@ Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
-Route::get('/report/data', [App\Http\Controllers\ReportController::class, 'getReport'])->name('getReport');
+Route::get('/report/dokumen', [App\Http\Controllers\ReportController::class, 'getReportDokumen'])->name('getDokumen');
+Route::get('/report/kargo', [App\Http\Controllers\ReportController::class, 'getReportKargo'])->name('getKargo');
 Route::get('/report/show', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
-Route::get('/report/search', [App\Http\Controllers\ReportController::class, 'search'])->name('search');
+Route::get('/report/select2', [App\Http\Controllers\ReportController::class, 'select2'])->name('reportSelect');
 Route::get('/create', [App\Http\Controllers\ReportController::class, 'create'])->name('createReport');
 Route::get('/report/print', [App\Http\Controllers\ReportController::class, 'print'])->name('print');
 

@@ -102,17 +102,17 @@ class ReportController extends Controller
         //
     }
 
-    public function getReport(Request $request) {
+    public function getReportDokumen(Request $request) {
         if($request->ajax()) {
             $search = "Bank Syariah Mandiri";
-            $client = Client::select('client');
-            $data = Pickup::select('client', 'jumlah')->where('client', 'LIKE', "%$search%")->get();
+            $data = Pickup::select('tipe', 'client', 'tanggal', 'jumlah')
+                        ->where('tipe', 'Dokumen')
+                        ->get();
 
             return DataTables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
-                            $actionBtn = '<a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                            <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+                            $actionBtn = '<a id="btn-detail-report" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-search"></a>';
 
                             return $actionBtn;
                             })
@@ -121,17 +121,34 @@ class ReportController extends Controller
         }
     }
 
-    public function search(Request $request) {
-        $pickups = [];
+    public function getReportKargo(Request $request) {
+        if($request->ajax()) {
+            $data = Pickup::select('tipe', 'client', 'tanggal', 'jumlah', 'description')
+                        ->where('tipe', 'Kargo')
+                        ->get();
+
+            return DataTables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data) {
+                                $actionBtn = '<a id="btn-detail-report" data-remote="/report/'.$data->id.'" type="button" class="edit bi bi-search"></a>';
+
+                            return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
+    }
+
+    public function select2(Request $request) {
+        $data = [];
 
         if ($request->has('q')) {
-            $search     = $request->q;
-            $pickups    = Client::select("id", "kode_client", "client")
-                        ->Where('kode_client', 'LIKE', "%$search%")
-                        ->get();
+            $search = $request->q;
+            $data   = Client::select('id', 'kode_client', 'client')
+                            ->where('kode_client', 'LIKE', "%$search%")
+                            ->get();
         }
-
-        return response()->json($pickups);
+        return response()->json($data);
     }
 
     public function print(Request $request) {

@@ -62,6 +62,32 @@ $('document').ready(function (e) {
     })
 })
 
+// Create report
+$('document').ready(function(e) {
+    $('#reportClient').select2({
+        placeholder: "Pilih Client",
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/report/select2',
+            dataType: 'JSON',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results:  $.map(data, function (item) {
+                        return {
+                            text: item.client,
+                            id: item.client
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+})
+
 // Simpan User
 function userSave() {
     console.log("TEST")

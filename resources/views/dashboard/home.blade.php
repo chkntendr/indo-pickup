@@ -96,7 +96,6 @@
                                                     </label>
                                                   </div>
                                             </div>
-                                            {{-- <select onclick="detail()" id="tipe" class="form-control form-control-sm"></select> --}}
                                         </td>
                                         <td>
                                             <select id="driver" class="form-control form-control-sm"></select>

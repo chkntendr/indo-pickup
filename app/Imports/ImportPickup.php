@@ -4,24 +4,15 @@ namespace App\Imports;
 
 use App\Models\Pickup;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportPickup implements ToModel
+class ImportPickup implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-
-    private $setStartRow = 2;
-   
-    public function setStartRow($setStartRow){
-        $this->setStartRow = $setStartRow;
-    }
-
-    public function startRow() : int{
-        return $setStartRow;
-    }
 
     public function model(array $row)
     {
