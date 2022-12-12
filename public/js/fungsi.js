@@ -1,3 +1,16 @@
+// Toggle modal manifest
+$('body').on('click', '#btn-manifest-upload[data-remote]', function(e) {
+    e.preventDefault()
+    $('#uploadManifest').show();
+    $('body').on('click', '#close-modal', function(e) {
+        $('#uploadManifest').hide();
+    })
+
+    var id = $(this).data('remote');
+
+    $('#testID').val(id);
+})
+
 // Toggle detail
 $(function() {
     $('body').on('click', '#dokumenCheck', function(e) {
@@ -59,32 +72,6 @@ $('document').ready(function (e) {
                 }
             }
         })
-    })
-})
-
-// Create report
-$('document').ready(function(e) {
-    $('#reportClient').select2({
-        placeholder: "Pilih Client",
-        ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/report/select2',
-            dataType: 'JSON',
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results:  $.map(data, function (item) {
-                        return {
-                            text: item.client,
-                            id: item.client
-                        }
-                    })
-                };
-            },
-            cache: true
-        }
     })
 })
 
@@ -202,11 +189,6 @@ function driverSave() {
 }
 
 // Simpan Pickup
-$(document).on('keypress',function(e) {
-    if(e.which == 13) {
-        simpanPickup()
-    }
-});
 function simpanPickup() {
     var checkTipe       = $('input[name="gridRadios"]:checked').val();
     var tableKargo      = $('#pickupTable').DataTable()
@@ -647,9 +629,12 @@ $('body').on('click', '#editSave', function(e) {
     }
     var kargo = {
         'tipe'      : $('#tipe-modal').val(),
+        'client'    : $('#client-modal').val(),
         'lk'       : $('#lk-modal').val(),
         'dk'       : $('#dk-modal').val(),
+        'tanggal'   : $('#tanggal-modal').val(),
         'jumlah'    : $('#jumlah-modal').val(),
+        'driver'    : $('#driver-modal').val(),
         'berat'     : $('#berat-modal').val()
     }
 
@@ -674,6 +659,25 @@ $('body').on('click', '#editSave', function(e) {
             }
         })
     } else {
-        console.log(jumlah, berat, kargo, "Run ajax cargo")
+        $.ajax({
+            url: `/home/pickup/update/${id}`,
+            type: 'PUT',
+            dataType: 'json',
+            cache: false,
+            data: kargo,
+            success: function(response) {
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                $('#editPickup').modal('hide')
+                tableDokumen.draw()
+                tableKargo.draw()
+            }
+        })
+        console.log(kargo, "Run ajax cargo")
     }
 })

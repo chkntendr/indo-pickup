@@ -35,8 +35,6 @@ Route::post('/home/import', [App\Http\Controllers\HomeController::class, 'import
 
 // Route Report
 Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
-Route::get('/report/dokumen', [App\Http\Controllers\ReportController::class, 'getReportDokumen'])->name('getDokumen');
-Route::get('/report/kargo', [App\Http\Controllers\ReportController::class, 'getReportKargo'])->name('getKargo');
 Route::get('/report/show', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
 Route::get('/report/select2', [App\Http\Controllers\ReportController::class, 'select2'])->name('reportSelect');
 Route::get('/create', [App\Http\Controllers\ReportController::class, 'create'])->name('createReport');
@@ -48,6 +46,11 @@ Route::get('/barang/data', [App\Http\Controllers\BarangController::class, 'get']
 Route::get('/barang/select2', [App\Http\Controllers\BarangController::class, 'select2'])->name('selectBarang');
 Route::post('/barang/post', [App\Http\Controllers\BarangController::class, 'create'])->name('createBarang');
 Route::delete('/barang/delete/{id}', [App\Http\Controllers\BarangController::class, 'delete'])->name('deleteBarang');
+
+// Route Manifest
+Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, 'store'])->name('manifest');
+Route::get('/manifest/data', [App\Http\Controllers\ManifestController::class, 'show'])->name('manifestData');
+Route::post('/manifest/upload/{id}', [App\Http\Controllers\ManifestController::class, 'upload'])->name('importManifest');
 
 // Route Client
 Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');

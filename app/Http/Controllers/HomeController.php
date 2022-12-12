@@ -72,7 +72,9 @@ class HomeController extends Controller
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
-                            $actionBtn = '<a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                            $actionBtn = '
+                            <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail bi bi-search"></a>
+                            <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
                             <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
 
                             return $actionBtn;
@@ -89,7 +91,9 @@ class HomeController extends Controller
             return DataTables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data) {
-                                $actionBtn = '<a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                                $actionBtn = '
+                                <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail bi bi-search"></a>
+                                <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
                                 <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
 
                                 return $actionBtn;
@@ -146,7 +150,6 @@ class HomeController extends Controller
 
         if ($files  = $request->file('file')) {
             $import = new ImportPickup;
-            $import->setStartRow(2);
             Excel::import ($import, $request->file('file')->store('files'));
 
             return response()->json([

@@ -6,7 +6,7 @@ use App\Models\Pickup;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportPickup implements ToModel, WithHeadingRow
+class ImportPickup implements ToModel
 {
     /**
     * @param array $row
