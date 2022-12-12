@@ -108,6 +108,7 @@ class HomeController extends Controller
         $pickup = new Pickup;
         $pickup->tipe       = $request->tipe;
         $pickup->client     = $request->client;
+        $pickup->tanggal_pic= $request->tanggal_pic;
         $pickup->tanggal    = $request->tanggal;
         $pickup->sp1        = $request->sp1;
         $pickup->sp2        = $request->sp2;

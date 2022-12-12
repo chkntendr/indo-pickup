@@ -76,7 +76,8 @@
                                         <th>Tipe</th>
                                         <th>Driver</th>
                                         <th>Client</th>
-                                        <th>Tanggal</th>
+                                        <th>Tanggal Doc</th>
+                                        <th>Tanggal Pickup</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,6 +106,9 @@
                                         </td>
                                         <td>
                                             <input type="date" id="tanggal" class="form-control form-control-sm">
+                                        </td>
+                                        <td>
+                                            <input type="date" id="tanggal_pic" class="form-control form-control-sm">
                                         </td>
                                     </form>
                                 </tbody>
@@ -204,6 +208,7 @@
                                                 <th>Driver</th>
                                                 <th>Client</th>
                                                 <th>Tanggal Doc</th>
+                                                <th>Tanggal Pickup</th>
                                                 <th>SP 1</th>
                                                 <th>SP 2</th>
                                                 <th>SP 3</th>
@@ -378,6 +383,7 @@
                 { data: 'driver', name: 'driver' },
                 { data: 'client', name: 'client' },
                 { data: 'tanggal', name: 'tanggal' },
+                { data: 'tanggal_pic', name: 'tanggal_pic'},
                 { data: 'sp1', name: 'sp1' },
                 { data: 'sp2', name: 'sp2' },
                 { data: 'sp3', name: 'sp3' },

@@ -209,6 +209,7 @@ function simpanPickup() {
         'tipe':     $('input[name="gridRadios"]:checked').val(),
         'driver':   $('#driver').val(),
         'client':   $('#client').val(),
+        'tanggal_pic': $('#tanggal_pic').val(),
         'tanggal':  $('#tanggal').val(),
         'sp1':      $('#sp1').val(),
         'sp2':      $('#sp2').val(),
@@ -250,6 +251,7 @@ function simpanPickup() {
             $('#driver').select2('val', '');
             $('#client').select2('val', '');
             $('#tanggal').val('');
+            $('#tanggal_pickup').val('');
             $('#sp1').val('');
             $('#sp2').val('');
             $('#sp3').val('');

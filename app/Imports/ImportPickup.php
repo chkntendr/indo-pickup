@@ -4,15 +4,23 @@ namespace App\Imports;
 
 use App\Models\Pickup;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class ImportPickup implements ToModel
+class ImportPickup implements ToModel, WithStartRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+
+    /**
+     * @return int
+     */
+    public function startRow(): int
+    {
+        return 2;
+    }
 
     public function model(array $row)
     {
@@ -26,9 +34,10 @@ class ImportPickup implements ToModel
             'sp3'       => $row[6],
             'jumlah'    => $row[2] + $row[3] + $row[4] + $row[5] + $row[6],
             'berat'     => $row[7],
-            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format('y-m-d'),
-            'driver'    => $row[9],
-            'description' => $row[10]
+            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9])->format('y-m-d'),
+            'tanggal_pic' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format('y-m-d'),
+            'driver'    => $row[10],
+            'description' => $row[11]
         ]);
     }
 }

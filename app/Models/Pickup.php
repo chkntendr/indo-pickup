@@ -10,5 +10,5 @@ class Pickup extends Model
     use HasFactory;
 
     protected $table = "data_pickup";
-    protected $fillable = ['id', 'tipe', 'client', 'luar_kota', 'dalam_kota', 'sp1', 'sp2', 'sp3', 'jumlah', 'berat', 'tanggal', 'driver', 'created_at', 'updated_at', 'description'];
+    protected $fillable = ['id', 'tipe', 'client', 'luar_kota', 'dalam_kota', 'sp1', 'sp2', 'sp3', 'jumlah', 'berat', 'tanggal', 'tanggal_pic', 'driver', 'created_at', 'updated_at', 'description'];
 }
