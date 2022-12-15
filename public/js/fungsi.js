@@ -40,44 +40,42 @@ function moreTab() {
 /**
  * @Store function
  */
-
-// Upload
-$('document').ready(function (e) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
-
-    $('#form-upload-excel').submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this)
-
-        $.ajax({
-            url: "{{ route('import') }}",
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            proccessData: false,
-            success: function(response) {
-                if (response.status == 200) {
-                    Swal.fire({
-                        type: 'success',
-                        icon: 'success',
-                        title: `${ response.message }`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            }
-        })
-    })
-})
-
 // Simpan User
 function userSave() {
-    console.log("TEST")
+    var table = $('#userTable').DataTable();
+    var name = $('#name').val();
+    var email = $('#email').val();
+    var password = $('#password').val();
+    console.log(name, email, password)
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
+
+    $.ajax({
+        url: '/users/post',
+        type: 'POST',
+        data: {
+            "name": name,
+            "email": email,
+            "password": password
+        },
+        dataType: 'JSON',
+        success: function(response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                table.draw()
+            }
+        }
+    })
 }
 
 // Simpan client
@@ -347,46 +345,47 @@ $('document').ready(function () {
 /**
  * @Delete function
  */
-
- function deleteUser() {
-    $('body').on('click', '#btn-delete-user', function(e) {
-        e.preventDefault();
-
-        let user_id = $(this).data('id');
-        let token   = $("meta[name='csrf-token']").attr("content");
-
-        Swal.fire({
-            title: 'Data akan dihapus secara permanen!',
-            text: 'Lanjutkan?',
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Tidak',
-            confirmButtonText: 'Ya'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `/users/delete/${user_id}`,
-                    type: 'DELETE',
-                    cache: false,
-                    data: {
-                        "_token": token
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            type: 'success',
-                            icon: 'success',
-                            title: `${response.message}`,
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-
-                        $(`#tr_${user_id}`).remove();
-                    }
-                })
-            }
-        })
+// Delete user
+$('body').on('click', '#btn-delete-user[data-remote]', function (e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var url = $(this).data('remote');
+    console.log(url)
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#userTable').DataTable().draw(false)
+            })
+        }
     })
-}
+})
 
 // Delete Barang
 $('body').on('click', '#btn-delete-barang[data-remote]', function (e) {

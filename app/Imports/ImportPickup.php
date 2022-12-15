@@ -17,13 +17,11 @@ class ImportPickup implements ToModel, WithStartRow
     /**
      * @return int
      */
-    public function startRow(): int
-    {
+    public function startRow(): int {
         return 2;
     }
 
-    public function model(array $row)
-    {
+    public function model(array $row) {
         return new Pickup([
             'tipe'      => $row[0],
             'client'    => $row[1],
@@ -34,8 +32,8 @@ class ImportPickup implements ToModel, WithStartRow
             'sp3'       => $row[6],
             'jumlah'    => $row[2] + $row[3] + $row[4] + $row[5] + $row[6],
             'berat'     => $row[7],
-            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9])->format('y-m-d'),
             'tanggal_pic' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format('y-m-d'),
+            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9])->format('y-m-d'),
             'driver'    => $row[10],
             'description' => $row[11]
         ]);

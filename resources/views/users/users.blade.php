@@ -15,15 +15,13 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Password</th>
-                                    <th>Roles</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="text" class="form-control form-control-sm"></td>
-                                    <td><input type="email" class="form-control form-control-sm"></td>
-                                    <td><input type="password" class="form-control form-control-sm"></td>
-                                    <td><input type="text" class="form-control form-control-sm"></td>
+                                    <td><input id="name" type="text" class="form-control form-control-sm"></td>
+                                    <td><input id="email" type="email" class="form-control form-control-sm"></td>
+                                    <td><input id="password" type="password" class="form-control form-control-sm"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -56,12 +54,6 @@
                             </thead>
                             <tbody></tbody>
                         </table>
-                        <div class="form-group">
-                            <button class="btn btn-success btn-sm" onclick="userSave()">
-                                <i class="bi bi-save"></i>
-                                Simpan
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

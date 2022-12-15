@@ -17,7 +17,7 @@ class UsersController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function($data) {
                                 $actionBtn = '<a onclick="editUser()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                                <a id="btn-delete-user" data-remote="/user/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                                <a id="btn-delete-user" data-remote="/users/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
                                 return $actionBtn;
                             })
                             ->rawColumns(['action'])
@@ -52,19 +52,21 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $users = User::paginate(20);
+    public function store(Request $request) {
         $user = new User;
 
         $password = Hash::make($request->password);
-        $user->name = $request->nama;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $password;
 
         $user->save();
 
-        return redirect()->to('users');
+        return response()->json([
+            'status' => 200,
+            'message' => 'User ditambahkan!',
+            'data'  => $user
+        ]);
     }
 
     /**
