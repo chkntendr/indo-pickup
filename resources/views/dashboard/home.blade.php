@@ -21,7 +21,7 @@
                     <div class="container">
                         <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input class="form-control" type="file" id="formFile" name="file">
+                            <input class="form-control" type="file" name="file">
                             <button type="submit" class="btn btn-sm btn-success my-2">
                                 <i class="bi bi-cloud-upload"></i>
                                 Upload

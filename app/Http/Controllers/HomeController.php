@@ -153,11 +153,7 @@ class HomeController extends Controller
             $import = new ImportPickup;
             Excel::import ($import, $request->file('file')->store('files'));
 
-            return response()->json([
-                'status'    => 200,
-                'message'   => 'Data berhasil di upload',
-                'data'      => $import
-            ]);
+            return redirect('/home')->with('success', '$url');
         }
     }
 

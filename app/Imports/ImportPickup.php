@@ -16,7 +16,7 @@ class ImportPickup implements ToModel, WithStartRow
 
     /**
      * @return int
-     */
+    */
     public function startRow(): int {
         return 2;
     }

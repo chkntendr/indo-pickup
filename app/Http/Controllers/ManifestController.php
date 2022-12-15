@@ -44,7 +44,11 @@ class ManifestController extends Controller
         $manifest->m_id = $id;
         $manifest->save();
 
-        return redirect('/report');
+        return response()->json([
+            'status' => 200,
+            'message'=> 'Manifest berhasil dibuat!',
+            'data'   => $manifest
+        ]);
     }
 
     /**
@@ -63,7 +67,7 @@ class ManifestController extends Controller
                             $actionBtn = '
                             <a id="btn-manifest-upload" data-remote="'.$data->id.'" type="button" class="detail bi bi-search"></a>
                             <a id="btn-edit-pickup" data-remote="/manifest/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                            <a type="button" id="btn-delete-pickup" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+                            <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
 
                             return $actionBtn;
                             })
@@ -101,9 +105,13 @@ class ManifestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        Manifest::where('id', $id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berahasil dihapus'
+        ]);
     }
 
     public function upload(Request $request) {

@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-success btn-sm" href="{{ route('manifest') }}">
+            <a class="btn btn-success btn-sm" onclick="createManifest()">
                 <i class="bi bi-plus-circle-dotted"></i>
                 Manifest baru
             </a>
@@ -58,7 +58,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <div class="modal-body">
-              <form action="{{ route('/manifest/upload/{data-remote}') }}" method="post" enctype="multipart/form-data">
+              <form action="{{ route('importManifest') }}" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" id="file" class="form-control form-control-sm">
                 <input type="text" id="testID">  
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" id="close-modal">Close</button>

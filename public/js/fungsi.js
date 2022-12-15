@@ -40,6 +40,33 @@ function moreTab() {
 /**
  * @Store function
  */
+// Create manifest
+function createManifest() {
+    var table = $('#manifestTable').DataTable();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    });
+
+    $.ajax({
+        url: '/manifest/store',
+        type: 'get',
+        success: function(response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                table.draw()
+            }
+        }
+    })
+}
+
 // Simpan User
 function userSave() {
     var table = $('#userTable').DataTable();
@@ -345,6 +372,47 @@ $('document').ready(function () {
 /**
  * @Delete function
  */
+// Delete manifest
+$('body').on('click', '#btn-delete-manifest[data-remote]', function(e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var url = $(this).data('remote');
+
+    Swal.fire({
+        title: "Data akan dihapus secara permanen!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#manifestTable').DataTable().draw(false)
+            })
+        }
+    })
+})
+
 // Delete user
 $('body').on('click', '#btn-delete-user[data-remote]', function (e) {
     e.preventDefault();

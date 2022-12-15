@@ -30,10 +30,8 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $users = User::paginate(20);
-        return view('users.users', compact('users'));
+    public function index() {
+        return view('users.users');
     }
 
     /**
