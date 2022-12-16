@@ -65,8 +65,8 @@ class ManifestController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
                             $actionBtn = '
-                            <a id="btn-manifest-upload" data-remote="'.$data->id.'" type="button" class="detail bi bi-search"></a>
-                            <a id="btn-edit-pickup" data-remote="/manifest/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                            <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail bi bi-search"></a>
+                            <a id="btn-edit-pickup" data-remote="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
                             <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
 
                             return $actionBtn;
@@ -94,9 +94,20 @@ class ManifestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $manifest = Manifest::find($id);
+        $barcode = preg_replace( "/\r|\n/", "", $request->barcode);
+        $total = strlen($barcode) / 16;
+        $manifest->uploaded_at = \Carbon\Carbon::now();
+        $manifest->barcode = $request->barcode;
+        $manifest->total = $total;
+        $manifest->save();
+
+        return response()->json([
+            'status' => 200,
+            'message'=> 'Barcode ditambahkan',
+            'data'   => $manifest
+        ]);
     }
 
     /**

@@ -3,24 +3,8 @@
 @section('title', 'Report')
 @section('content')
 <section class="section">
-    {{-- <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Upload Manifest</h5>
-                    <form action="" enctype="multipart/form-data">
-                        <input type="file" name="file" id="file" class="form-control form-control-sm my-2">
-                        <button type="submit" id="btnSubmit" class="btn btn-success btn-sm">
-                            <i class="bi bi-upload"></i>
-                            Upload
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg" id="manifest_table_col">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Manifest</h5>
@@ -47,6 +31,23 @@
                 Manifest baru
             </a>
         </div>
+
+        <div class="col-lg-5" style="display: none;" id="add_barcode_tab">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Barcode</h5>
+                    <form>
+                        <input type="text" readonly id="mnf-id">
+                        <label for="barcode_manifest"></label>
+                        <textarea class="form-control form-control-sm" name="" id="barcode_manifest" cols="20" rows="7"></textarea>
+                    </form>
+                    <button id="save-barcode" onclick="saveBarcode()" class="btn btn-success btn-sm">
+                        <i class="bi bi-save"></i>
+                        Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -58,11 +59,11 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <div class="modal-body">
-              <form action="{{ route('importManifest') }}" method="post" enctype="multipart/form-data">
+              <form enctype="multipart/form-data" id="manifest-upload-form">
                 <input type="file" name="file" id="file" class="form-control form-control-sm">
                 <input type="text" id="testID">  
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" id="close-modal">Close</button>
-                <button type="button" id="upload-manifest" class="btn btn-success btn-sm">
+                <button type="submit" id="upload-manifest" class="btn btn-success btn-sm">
                     <i class="bi bi-upload"></i>
                     Upload
                 </button>

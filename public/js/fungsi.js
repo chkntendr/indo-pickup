@@ -1,15 +1,35 @@
-// Toggle modal manifest
-$('body').on('click', '#btn-manifest-upload[data-remote]', function(e) {
-    e.preventDefault()
-    $('#uploadManifest').show();
-    $('body').on('click', '#close-modal', function(e) {
-        $('#uploadManifest').hide();
+// Add barcode
+$('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
+    e.preventDefault();
+    $('#add_barcode_tab').toggle();
+    var id = $(this).data('remote');
+    $('#mnf-id').val(id)
+})
+
+function saveBarcode() {
+    var barcode = $('#barcode_manifest').val();
+    var table   = $('#manifestTable').DataTable();
+    var id      = $('#mnf-id').val();
+
+    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
     })
 
-    var id = $(this).data('remote');
-
-    $('#testID').val(id);
-})
+    $.ajax({
+        url: `/manifest/update/${id}`,
+        type: 'PUT',
+        data: {
+            "barcode": barcode
+        },
+        success: function(response) {
+            $('#add_barcode_tab').toggle();
+            table.draw();
+        }
+    })
+}
 
 // Toggle detail
 $(function() {
