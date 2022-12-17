@@ -15,7 +15,7 @@
     </div>
     <div class="row" style="display: none" id="moreTab">
         <div class="col-lg-7">
-            <div class="card">
+            <div class="card" style="height: 190px">
                 <div class="card-body">
                     <h3 class="card-title">Upload</h3>
                     <div class="container">
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="row" style="display: none" id="inputForm">
-        <div class="col-lg-7">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Tambah baru</h3>
@@ -76,7 +76,7 @@
                                         <th>Tipe</th>
                                         <th>Driver</th>
                                         <th>Client</th>
-                                        <th>Tanggal Doc</th>
+                                        <th id="tanggal_tipe">Tanggal Doc</th>
                                         <th>Tanggal Pickup</th>
                                     </tr>
                                 </thead>
@@ -96,6 +96,7 @@
                                                       Kargo
                                                     </label>
                                                   </div>
+                                                </div>
                                             </div>
                                         </td>
                                         <td>
@@ -120,11 +121,11 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>                
                 </div>
             </div>
         </div>
-        <div class="col-lg-5" id="kargo" style="display: none">
+        <div class="col-lg-4" id="kargo" style="display: none">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Detail</h5>
@@ -135,7 +136,6 @@
                                     <th>Dalam</th>
                                     <th>Luar</th>
                                     <th>Jumlah</th>
-                                    <th>Keterangan</th>
                                     <th>Berat</th>
                                 </tr>
                             </thead>
@@ -144,16 +144,17 @@
                                     <td><input type="text" id="dk" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="lk" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="jumlahKargo" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="description" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="beratKargo" class="form-control form-control-sm"></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <label for="description" style="font-weight: bold;">Keterangan</label>
+                        <textarea class="form-control form-control-sm" id="description" cols="30" rows="10"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-5" id="dokumen" style="display: none">
+        <div class="col-lg-4" id="dokumen" style="display: none">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Detail</h5>

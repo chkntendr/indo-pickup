@@ -18,6 +18,7 @@
                                         <th>Tanggal</th>
                                         <th>Jumlah</th>
                                         <th>Opsi</th>
+                                        <th>Proses</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -37,7 +38,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Barcode</h5>
                     <form>
-                        <input type="text" readonly id="mnf-id">
+                        <input type="text" readonly id="mnf-id" hidden>
                         <label for="barcode_manifest"></label>
                         <textarea class="form-control form-control-sm" name="" id="barcode_manifest" cols="20" rows="7"></textarea>
                     </form>
@@ -95,6 +96,12 @@
                     orderable: true,
                     searchable: true
                 },
+                {
+                    data: 'proses',
+                    name: 'proses',
+                    orderable: true,
+                    searchable: true,
+                }
             ]
         })
     })

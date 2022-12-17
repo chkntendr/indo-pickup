@@ -1,3 +1,40 @@
+// Invoice
+$('body').on('click', '#prosesInv[data-remote]', function(e) {
+    e.preventDefault();
+    var id = $(this).data('remote');
+    var table = $('#manifestTable').DataTable();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    })
+
+    $.ajax({
+        url: `/manifest/invoice/${id}`,
+        type: 'put',
+        data: { "is_processed": 1 },
+        success: function(response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                table.draw()
+            }
+            if (response.status == 403) {
+                Swal.fire({
+                    icon: 'error',
+                    title: `${ response.message }`,
+                    showConfirmButton: true,
+                })
+            }
+        }
+    })
+})
+
 // Add barcode
 $('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
     e.preventDefault();
@@ -25,8 +62,16 @@ function saveBarcode() {
             "barcode": barcode
         },
         success: function(response) {
-            $('#add_barcode_tab').toggle();
-            table.draw();
+            if (response.status == 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                $('#add_barcode_tab').toggle();
+                table.draw();
+            }
         }
     })
 }
@@ -36,11 +81,13 @@ $(function() {
     $('body').on('click', '#dokumenCheck', function(e) {
         $('#kargo').hide()
         $('#dokumen').show()
+        $('#tanggal_tipe').text('Tanggal Doc')
         $('#dokumenCheck').is(':checked')
         $('#kargoCheck').is('disabled')
     })
     $('body').on('click', '#kargoCheck', function(e) {
         $('#kargo').show()
+        $('#tanggal_tipe').text('Tanggal Request')
         $('#dokumen').hide()
         $(this).is(':checked')
     })

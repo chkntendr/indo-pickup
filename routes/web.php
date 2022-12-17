@@ -52,6 +52,8 @@ Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, '
 Route::get('/manifest/data', [App\Http\Controllers\ManifestController::class, 'show'])->name('manifestData');
 Route::put('/manifest/update/{id}', [App\Http\Controllers\ManifestController::class, 'update'])->name('updateBarcode');
 Route::delete('/manifest/delete/{id}', [App\Http\Controllers\ManifestController::class, 'destroy'])->name('deleteManifest');
+Route::put('/manifest/invoice/{id}', [App\Http\Controllers\ManifestController::class, 'invoice'])->name('invoice');
+Route::get('/manifest/invoiceload', [App\Http\Controllers\ManifestController::class, 'loadInvoice'])->name('loadInvoice');
 
 // Route Client
 Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');

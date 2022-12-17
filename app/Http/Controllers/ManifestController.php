@@ -63,15 +63,29 @@ class ManifestController extends Controller
             $data = Manifest::latest()->get();
             return Datatables::of($data)
                             ->addIndexColumn()
-                            ->addColumn('action', function($data){
-                            $actionBtn = '
-                            <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail bi bi-search"></a>
-                            <a id="btn-edit-pickup" data-remote="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                            <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+                            ->addColumn('proses', function($data) {
+                                if ($data->is_processed == false) {
+                                    $processBtn = '
+                                    <a class="btn btn-sm btn-warning" id="prosesInv" data-remote="'.$data->id.'">
+                                    <i id="prosesIcon" class="bi bi-receipt"></i>
+                                    Invoice
+                                    </a>';
+                                    return $processBtn;
+                                } else {
+                                    $processBtn = '<i class="bi bi-check-square-fill"></i>';
+                                    return $processBtn;
+                                }
 
-                            return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->addColumn('action', function($data) {
+                                $actionBtn = '
+                                <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail bi bi-search"></a>
+                                <a id="btn-edit-pickup" data-remote="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
+                                <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+
+                                return $actionBtn;
+                            })
+                            ->rawColumns(['action', 'proses'])
                             ->make(true);
         }
     }
@@ -106,7 +120,6 @@ class ManifestController extends Controller
         return response()->json([
             'status' => 200,
             'message'=> 'Barcode ditambahkan',
-            'data'   => $manifest
         ]);
     }
 
@@ -140,5 +153,34 @@ class ManifestController extends Controller
                 'data'      => $import
             ]);
         }
+    }
+
+    public function invoice(Request $request, $id) {
+        $done = $request->is_processed;
+        $cek_resi = Manifest::where('id', $id)->count('total');
+        if ($cek_resi > 0) {
+            Manifest::where('id', $id)
+                            ->update([
+                                'is_processed' => $done
+                            ]);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Manifest OK',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 403,
+                'message'=> 'Belum ada resi!',
+            ]);
+        }
+        // $invoice = Manifest::where('id', $id)->select('id', 'is_processed')->get();
+    }
+
+    public function loadInvoice() {
+        $invoice = Manifest::get();
+
+        return response()->json([
+            'data' => $invoice
+        ]);
     }
 }
