@@ -79,9 +79,9 @@ class ManifestController extends Controller
                             })
                             ->addColumn('action', function($data) {
                                 $actionBtn = '
-                                <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail bi bi-search"></a>
-                                <a id="btn-edit-pickup" data-remote="'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                                <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+                                <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail ri-barcode-line" style="color: black"></a>
+                                <a id="btn-edit-pickup" data-remote="'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
                                 return $actionBtn;
                             })
