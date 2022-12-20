@@ -204,7 +204,7 @@
                                     <table class="table datatable dataTable-table" id="dokumenTable" style="width: 100%">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                <th width="5%">No</th>
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
                                                 <th>Client</th>
@@ -213,9 +213,9 @@
                                                 <th>SP 1</th>
                                                 <th>SP 2</th>
                                                 <th>SP 3</th>
-                                                <th>Jumlah</th>
+                                                <th width="3%">Jumlah</th>
                                                 <th>Berat</th>
-                                                <th>Opsi</th>
+                                                <th width="8%">Opsi</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>

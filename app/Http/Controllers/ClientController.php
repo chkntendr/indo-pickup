@@ -21,8 +21,8 @@ class ClientController extends Controller
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data) {
-                                $actionBtn = '<a onclick="editPickup()" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                                <a id="btn-delete-client" data-remote="/client/delete/'.$data->id.'" type="button" style="color: red" class="delete bi bi-trash"></a>';
+                                $actionBtn = '<a onclick="editPickup()" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a id="btn-delete-client" data-remote="/client/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
                                 return $actionBtn;
                             })
                             ->rawColumns(['action'])

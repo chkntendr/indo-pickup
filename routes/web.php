@@ -49,6 +49,7 @@ Route::delete('/barang/delete/{id}', [App\Http\Controllers\BarangController::cla
 
 // Route Manifest
 Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, 'store'])->name('manifest');
+Route::get('/manifest/barcode/{id}', [App\Http\Controllers\ManifestController::class, 'getBarcode'])->name('getBarcode');
 Route::get('/manifest/data', [App\Http\Controllers\ManifestController::class, 'show'])->name('manifestData');
 Route::put('/manifest/update/{id}', [App\Http\Controllers\ManifestController::class, 'update'])->name('updateBarcode');
 Route::delete('/manifest/delete/{id}', [App\Http\Controllers\ManifestController::class, 'destroy'])->name('deleteManifest');

@@ -78,12 +78,20 @@ class ManifestController extends Controller
 
                             })
                             ->addColumn('action', function($data) {
-                                $actionBtn = '
-                                <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail ri-barcode-line" style="color: black"></a>
-                                <a id="btn-edit-pickup" data-remote="'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                if ($data->total == null) {
+                                    $actionBtn = '
+                                    <a id="btn-manifest-barcode" data-remote="'.$data->id.'" type="button" class="detail ri-barcode-line" style="color: black"></a>
+                                    <a id="btn-edit-barcode" data-remote="'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                    <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
-                                return $actionBtn;
+                                    return $actionBtn;
+                                } else {
+                                    $actionBtn = '
+                                    <a id="btn-edit-barcode" data-remote="'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                    <a type="button" id="btn-delete-manifest" data-remote="/manifest/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+
+                                    return $actionBtn;
+                                }
                             })
                             ->rawColumns(['action', 'proses'])
                             ->make(true);
@@ -119,7 +127,7 @@ class ManifestController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message'=> 'Barcode ditambahkan',
+            'message'=> 'Data berhasil diperbarui',
         ]);
     }
 
@@ -174,6 +182,16 @@ class ManifestController extends Controller
             ]);
         }
         // $invoice = Manifest::where('id', $id)->select('id', 'is_processed')->get();
+    }
+
+    public function getBarcode($id) {
+        $barcode = Manifest::where('id', $id)->select('m_id', 'barcode')->get();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data fetched!',
+            'data' => $barcode
+        ]);
     }
 
     public function loadInvoice() {

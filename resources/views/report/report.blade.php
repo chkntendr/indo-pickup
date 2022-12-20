@@ -43,13 +43,42 @@
                 <div class="card-body">
                     <h5 class="card-title">Barcode</h5>
                     <form>
-                        <input type="text" readonly id="mnf-id" hidden>
-                        <label for="barcode_manifest"></label>
-                        <textarea class="form-control form-control-sm" name="" id="barcode_manifest" cols="20" rows="7"></textarea>
+                        <div class="form-group">
+                            <label for="manifest-id">ID Manifest</label>
+                            <input type="text" readonly class="form-control form-control-sm" id="manifest-id">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" readonly id="mnf-id" hidden>
+                            <label for="barcode_manifest">Tambah barcode</label>
+                            <textarea class="form-control form-control-sm" name="" id="barcode_manifest" cols="20" rows="7"></textarea>
+                        </div>
                     </form>
                     <button id="save-barcode" onclick="saveBarcode()" class="btn btn-success btn-sm">
                         <i class="bi bi-save"></i>
                         Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5" style="display: none;" id="edit_barcode_tab">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Barcode</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="manifest-id-edit">ID Manifest</label>
+                            <input type="text" readonly class="form-control form-control-sm" id="manifest-id-edit">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" readonly id="mnf-id" hidden>
+                            <label for="barcode_manifest_edit">Edit barcode</label>
+                            <textarea class="form-control form-control-sm" name="" id="barcode_manifest_edit" cols="20" rows="7"></textarea>
+                        </div>
+                    </form>
+                    <button id="save-barcode" onclick="updateBarcode()" class="btn btn-success btn-sm">
+                        <i class="ri-save-3-line"></i>
+                        Perbarui
                     </button>
                 </div>
             </div>

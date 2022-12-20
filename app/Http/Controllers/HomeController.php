@@ -73,9 +73,9 @@ class HomeController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
                             $actionBtn = '
-                            <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail bi bi-search"></a>
-                            <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit bi bi-pencil-square" style="color: orange"></a>
-                            <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete bi bi-trash"></a>';
+                            <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail ri-search-line"></a>
+                            <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                            <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
                             return $actionBtn;
                             })

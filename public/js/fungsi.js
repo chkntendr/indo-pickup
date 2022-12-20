@@ -39,8 +39,24 @@ $('body').on('click', '#prosesInv[data-remote]', function(e) {
 $('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
     e.preventDefault();
     $('#add_barcode_tab').toggle();
+    $('#edit_barcode_tab').hide();
     var id = $(this).data('remote');
     $('#mnf-id').val(id)
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    })
+
+    $.ajax({
+        url: `/manifest/barcode/${id}`,
+        type: 'GET',
+        success: function(response) {
+            $('#barcode-manifest').val('')
+            $('#manifest-id').val(response.data[0].m_id)
+        }
+    })
 })
 
 function saveBarcode() {
@@ -72,6 +88,49 @@ function saveBarcode() {
                 $('#add_barcode_tab').toggle();
                 table.draw();
             }
+        }
+    })
+}
+
+function updateBarcode() {
+    var barcode = $('#barcode_manifest_edit').val();
+    var table   = $('#manifestTable').DataTable();
+    var id      = $('#mnf-id').val();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    })
+
+    Swal.fire({
+        title: "Data akan di update!",
+        text: "Lanjutkan?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: `/manifest/update/${id}`,
+                type: 'PUT',
+                data: {
+                    "barcode": barcode
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${ response.message }`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $('#edit_barcode_tab').toggle();
+                        table.draw();
+                    }
+                }
+            })
         }
     })
 }
@@ -695,8 +754,33 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
 })
 
 /**
- * Edit function
+ * @Edit function
  */
+
+// Edit barcode
+$('body').on('click', '#btn-edit-barcode[data-remote]', function(e) {
+    e.preventDefault();
+    $('#edit_barcode_tab').toggle();
+    $('#add_barcode_tab').hide();
+    var id = $(this).data('remote');
+    $('#mnf-id').val(id)
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    })
+
+    $.ajax({
+        url: `/manifest/barcode/${id}`,
+        type: 'GET',
+        cache: false,
+        success: function(response) {
+            $('#barcode_manifest_edit').val(response.data[0].barcode)
+            $('#manifest-id-edit').val(response.data[0].m_id)
+        }
+    })
+})
 
 // Edit pickup
 $('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
