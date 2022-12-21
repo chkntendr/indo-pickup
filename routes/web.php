@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {
     if (Session::has('auth')) {
-        if (Auth::user()->roles == "Finance") {
-            return redirect('/report');
-        } else {
-            return redirect('/home');
-        }
+        return redirect('/home');
     } else {
         return view('auth.login');
     }

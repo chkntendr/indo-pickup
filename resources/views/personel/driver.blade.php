@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Data Driver</h5>
+                    <h5 class="card-title">Drivers</h5>
                     <div class="dataTable-container">
                         <table class="table datatable datatable-table" id="driverTable" style="width: 100%">
                             <thead>

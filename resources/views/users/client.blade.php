@@ -4,7 +4,32 @@
 @section('content')
 <section class="section">
     <div class="row">
-        <div class="col-lg-12">
+        
+    </div>
+    <div class="row">
+        <div class="col-lg">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Clients</h5>
+                    <div class="dataTable-container">
+                        <table class="table datatable datatable-table" id="clientTable" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Kode Client</th>
+                                    <th>Client</th>
+                                    <th>Dibuat</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Client Baru</h5>
@@ -28,31 +53,6 @@
                                 <i class="bi bi-save"></i>
                                 Simpan
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Clients</h5>
-                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                        <div class="dataTable-container">
-                            <table class="table datatable datatable-table" id="clientTable" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Kode Client</th>
-                                        <th>Client</th>
-                                        <th>Dibuat</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

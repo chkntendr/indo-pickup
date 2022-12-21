@@ -143,9 +143,14 @@ class HomeController extends Controller
 
         if ($files  = $request->file('file')) {
             $import = new ImportPickup;
-            Excel::import ($import, $request->file('file')->store('files'));
+            $upload = Excel::import ($import, $request->file('file')->store('files'));
 
-            return redirect('/home')->with('success', '$url');
+            // return redirect('/home')->with('success', '$url');
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil di import!',
+                'data' => $upload
+            ]);
         }
     }
 

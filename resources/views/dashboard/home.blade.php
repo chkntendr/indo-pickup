@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Upload</h3>
                     <div class="container">
-                        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                        <form enctype="multipart/form-data" id="upload-excel-to-database">
                             @csrf
                             <input class="form-control" type="file" name="file">
                             <button type="submit" class="btn btn-sm btn-success my-2">

@@ -167,6 +167,59 @@ function moreTab() {
  * @Store function
  */
 
+// Upload excel
+$(document).ready(function(e) {
+    var dokumenTable = $('#dokumenTable').DataTable();
+    var kargoTable = $('#pickupTable').DataTable();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    
+    $('#upload-excel-to-database').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var completed = function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil diupload!',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+        var loading = function() {
+            Swal.fire({
+                title: 'Please Wait!',
+                html: 'Loading ...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            })
+        }
+
+        $.ajax({
+            url: "/home/import",
+            type: "POST",
+            data: formData,
+            beforeSend: function() {
+                loading();
+            },
+            complete: function(response) {
+                swal.close()
+                completed()
+                dokumenTable.draw()
+                kargoTable.draw()
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        })
+    })
+})
+
 // Save role
 function roleSave() {
     var table = $('#roleTable').DataTable();

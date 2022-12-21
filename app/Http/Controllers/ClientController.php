@@ -53,7 +53,7 @@ class ClientController extends Controller
 
         return response()->json([
             'status'    => 200,
-            'message'   => "Data inserted",
+            'message'   => "Client ditambahkan!",
             'data'      => $client
         ]);
     }
