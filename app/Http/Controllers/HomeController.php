@@ -32,15 +32,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-
-        $tipe   = DB::table('tipe_barang')->get();
-        $client = Client::all();
-        $count  = Pickup::count();
-        $data   = Pickup::paginate(20);
-        $berat  = Pickup::sum('berat');
-        $jumlah = Pickup::sum('jumlah');
-        $driver = Driver::all();
-        return view('dashboard.home', compact('data', 'count', 'berat', 'tipe', 'client', 'jumlah', 'driver'));
+        return view('dashboard.home');
     }
 
     public function getTujuan(Request $request) {

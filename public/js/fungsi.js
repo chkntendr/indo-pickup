@@ -166,9 +166,43 @@ function moreTab() {
 /**
  * @Store function
  */
+
+// Save role
+function roleSave() {
+    var table = $('#roleTable').DataTable();
+    var role = $('#role').val();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    })
+
+    $.ajax({
+        url: '/roles/store',
+        type: 'post',
+        chache: false,
+        data: {
+            "role": role
+        },
+        success: function(response) {
+            console.log(response)
+            if (response.status == 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `${ response.message }`,
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+                table.draw()
+            }
+        }
+    })
+}
+
 // Create manifest
 function createManifest() {
-    var table = $('#manifestTable').DataTable();
+    var table = $('#manifestTable').DataTable();    
 
     $.ajaxSetup({
         headers: {
@@ -199,6 +233,7 @@ function userSave() {
     var name = $('#name').val();
     var email = $('#email').val();
     var password = $('#password').val();
+    var role = $('#role-select').val();
     console.log(name, email, password)
 
     $.ajaxSetup({
@@ -213,7 +248,8 @@ function userSave() {
         data: {
             "name": name,
             "email": email,
-            "password": password
+            "password": password,
+            "role": role
         },
         dataType: 'JSON',
         success: function(response) {
@@ -417,6 +453,31 @@ function simpanPickup() {
     });
 }
 
+// Select Role
+$('document').ready(function () {
+    $('#role-select').select2({
+        placeholde: "Pilih Role",
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/roles/select2',
+            dataType: 'JSON',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            text: item.role,
+                            id: item.role
+                        }
+                    })
+                }
+            }
+        }
+    })
+})
+
 // Select Driver
 $('document').ready(function () {
     $('#driver').select2({
@@ -498,6 +559,47 @@ $('document').ready(function () {
 /**
  * @Delete function
  */
+// Delete role
+$('body').on('click', '#btn-delete-role[data-remote]', function(e) {
+    e.preventDefault();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    var url = $(this).data('remote');
+
+    Swal.fire({
+        title: 'Role akan dihapus',
+        text: 'Lanjutkan?',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Tidak',
+        confirmButtonText: 'Ya'
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                dataType: "json",
+                data: {
+                    method: '_DELETE', submit: true
+                },
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: `${ response.message }`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+            }).always(function (data) {
+                $('#roleTable').DataTable().draw(false)
+            })
+        }
+    })
+})
+
 // Delete manifest
 $('body').on('click', '#btn-delete-manifest[data-remote]', function(e) {
     e.preventDefault();

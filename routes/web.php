@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {
     if (Session::has('auth')) {
-        return redirect('/home');
+        if (Auth::user()->roles == "Finance") {
+            return redirect('/report');
+        } else {
+            return redirect('/home');
+        }
     } else {
         return view('auth.login');
     }
@@ -75,3 +79,10 @@ Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->na
 Route::get('/users/data', [App\Http\Controllers\UsersController::class, 'get'])->name('dataUsers');
 Route::post('/users/post', [App\Http\Controllers\UsersController::class, 'store'])->name('userPost');
 Route::delete('/users/delete/{id}', [App\Http\Controllers\UsersController::class, 'destroy'])->name('userDestroy');
+
+// Route Roles
+Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index'])->name('roles');
+Route::get('/roles/data', [App\Http\Controllers\RoleController::class, 'get'])->name('dataRole');
+Route::get('/roles/select2', [App\Http\Controllers\RoleController::class, 'select2'])->name('selectRole');
+Route::post('/roles/store', [App\Http\Controllers\RoleController::class, 'store'])->name('storeRole');
+Route::delete('/roles/delete/{id}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('destroyRole');

@@ -4,50 +4,18 @@
 @section('content')
 <section class="section">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">User baru</h5>
-                    <div class="dataTable-container">
-                        <table class="table datatable dataTable-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Password</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input id="name" type="text" class="form-control form-control-sm"></td>
-                                    <td><input id="email" type="email" class="form-control form-control-sm"></td>
-                                    <td><input id="password" type="password" class="form-control form-control-sm"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="form-group">
-                            <button class="btn btn-success btn-sm" onclick="userSave()">
-                                <i class="bi bi-save"></i>
-                                Simpan
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Users</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable datatable-table" id="userTable">
+                        <table class="table datatable datatable-table" width="100%" id="userTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Nama</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th>Created</th>
                                     <th>Opsi</th>
                                 </tr>
@@ -55,6 +23,37 @@
                             <tbody></tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User baru</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Username</label>
+                            <input type="text" id="name" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select id="role-select" class="form-control form-control-sm"></select>
+                        </div>
+                        <div class="form-group my-2">
+                            <button class="btn btn-success btn-sm" onclick="userSave()">
+                                <i class="bi bi-save"></i>
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -75,6 +74,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'name', name: 'name' },
                 { data: 'email', name: 'email' },
+                { data: 'roles', name: 'role' },
                 { data: 'created_at', name: 'tanggal' },
                 {
                     data: 'action',

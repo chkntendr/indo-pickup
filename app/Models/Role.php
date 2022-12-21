@@ -10,14 +10,10 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $table = "roles";
+    protected $table = "role";
     protected $fillable = [
-        'roles',
+        'role',
         'created_at',
         'updated_at',
     ];
-
-    public function role() {
-        return $this->hasOne(User::class, 'id', 'roles_id');
-    }
 }

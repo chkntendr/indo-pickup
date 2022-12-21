@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use DataTables;
 
 class RoleController extends Controller
 {
@@ -12,9 +13,8 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        return view ('users.role');
     }
 
     /**
@@ -33,9 +33,18 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $role = new Role;
+        $role->role = $request->role;
+        $role->created_at = \Carbon\Carbon::now(); # new \Datetime()
+        $role->updated_at = \Carbon\Carbon::now(); # new \Datetime()
+        $role->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Role added!',
+            'data' => $role
+        ]);
     }
 
     /**
@@ -78,8 +87,43 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
-    {
-        //
+    public function destroy($id) {
+        Role::where('id', $id)->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Role dihapus!'
+        ]);
+    }
+
+    public function get(Request $request) {
+        if ($request->ajax()) {
+            $data = Role::latest()->get();
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data) {
+                                $actionBtn = '
+                                <a id="btn-detail-role" data-remote="/roles/detail/'.$data->id.'" type="button" class="detail ri-search-line"></a>
+                                <a id="btn-edit-role" data-remote="/roles/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a type="button" id="btn-delete-role" data-remote="/roles/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+
+                                return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
+    }
+
+    public function select2(Request $request) {
+        $data = [];
+
+        if($request->has('q')) {
+            $search = $request->q;
+            $data = Role::select('id', 'role')
+                        ->where('role', 'LIKE', "%$search%")
+                        ->get();
+        }
+
+        return response()->json($data);
     }
 }
