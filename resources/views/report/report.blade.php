@@ -32,10 +32,17 @@
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->roles == "Finance")
+            <button disabled class="btn btn-success btn-sm" onclick="createManifest()">
+                <i class="bi bi-plus-circle-dotted"></i>
+                Manifest baru
+            </button>
+            @else
             <a class="btn btn-success btn-sm" onclick="createManifest()">
                 <i class="bi bi-plus-circle-dotted"></i>
                 Manifest baru
             </a>
+            @endif
         </div>
 
         <div class="col-lg-5" style="display: none;" id="add_barcode_tab">
