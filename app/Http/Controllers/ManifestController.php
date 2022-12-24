@@ -184,8 +184,18 @@ class ManifestController extends Controller
         // $invoice = Manifest::where('id', $id)->select('id', 'is_processed')->get();
     }
 
+    public function getM_id($id) {
+        $m_id = Manifest::where('id', $id)->select('m_id')->get();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data fetched!',
+            'data' => $m_id
+        ]);
+    }
+
     public function getBarcode($id) {
-        $barcode = Manifest::where('id', $id)->select('m_id', 'barcode')->get();
+        $barcode = Manifest::where('id', $id)->select('m_id')->get();
 
         return response()->json([
             'status' => 200,

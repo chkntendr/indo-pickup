@@ -67,7 +67,7 @@ $('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
     })
 
     $.ajax({
-        url: `/manifest/barcode/${id}`,
+        url: `/manifest/mid/${id}`,
         type: 'GET',
         success: function(response) {
             $('#barcode-manifest').val('')

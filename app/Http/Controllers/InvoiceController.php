@@ -36,9 +36,16 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        if ($request->ajax()) {
+            $invoice = new Invoice;
+            $invoice->mnf_id = $request->id;
+
+            return response()->json([
+                'status'    => 200,
+                'data'      => $invoice
+            ]);
+        }
     }
 
     // import function
