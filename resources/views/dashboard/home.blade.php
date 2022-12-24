@@ -185,7 +185,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Data Pickup</h5>

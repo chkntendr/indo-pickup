@@ -48,13 +48,19 @@ Route::post('/barang/post', [App\Http\Controllers\BarangController::class, 'crea
 Route::delete('/barang/delete/{id}', [App\Http\Controllers\BarangController::class, 'delete'])->name('deleteBarang');
 
 // Route Manifest
-Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, 'store'])->name('manifest');
+Route::get('/manifest', [App\Http\Controllers\ManifestController::class, 'index'])->name('manifest');
+Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, 'store'])->name('manifestStore');
 Route::get('/manifest/barcode/{id}', [App\Http\Controllers\ManifestController::class, 'getBarcode'])->name('getBarcode');
 Route::get('/manifest/data', [App\Http\Controllers\ManifestController::class, 'show'])->name('manifestData');
 Route::put('/manifest/update/{id}', [App\Http\Controllers\ManifestController::class, 'update'])->name('updateBarcode');
 Route::delete('/manifest/delete/{id}', [App\Http\Controllers\ManifestController::class, 'destroy'])->name('deleteManifest');
-Route::put('/manifest/invoice/{id}', [App\Http\Controllers\ManifestController::class, 'invoice'])->name('invoice');
 Route::get('/manifest/invoiceload', [App\Http\Controllers\ManifestController::class, 'loadInvoice'])->name('loadInvoice');
+
+// Route Invoice
+Route::get('/invoice', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoice');
+Route::get('/invoice/data', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoiceData');
+Route::post('/invoice/import', [App\Http\controllers\InvoiceController::class, 'import'])->name('import');
+
 
 // Route Client
 Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');

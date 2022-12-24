@@ -1,3 +1,19 @@
+// Token
+$(function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+        }
+    })
+})
+
+// Detail Pickup
+$('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
+    e.preventDefault();
+    var id = $(this).data('remote');
+    
+})
+
 // Invoice
 $('body').on('click', '#prosesInv[data-remote]', function(e) {
     e.preventDefault();
@@ -41,6 +57,7 @@ $('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
     $('#add_barcode_tab').toggle();
     $('#edit_barcode_tab').hide();
     var id = $(this).data('remote');
+    $('#id_manifest_upload').val(id);
     $('#mnf-id').val(id)
 
     $.ajaxSetup({
@@ -167,7 +184,75 @@ function moreTab() {
  * @Store function
  */
 
-// Upload excel
+// Upload manifest
+$(document).ready(function(e) {
+    var manifestTable = $('#manifestTable').DataTable();
+    var id_manifest = $('#id_manifest_upload').val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('cotent')
+        }
+    })
+
+    $('#upload-manifest-to-invoice').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var id = $('#mnf-id').val();
+        var completed = function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil di upload!',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+        var loading = function() {
+            Swal.fire({
+                title: 'Please Wait!',
+                html: 'Loading ...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            })
+        }
+        var error = function() {
+            Swal.fire({
+                title: 'Error!',
+                icon: 'error',
+                message: 'Import Gagal!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+        $.ajax({
+            url: `/invoice/import`,
+            type: "POST",
+            data: formData,
+            beforeSend: function() {
+                loading();
+            },
+            error: function() {
+                swal.close()
+                error();
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal.close();
+                    completed();
+                }
+                manifestTable.draw()
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        })
+    })
+})
+
+// Upload excel pickup
 $(document).ready(function(e) {
     var dokumenTable = $('#dokumenTable').DataTable();
     var kargoTable = $('#pickupTable').DataTable();
@@ -915,7 +1000,10 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
 // Edit barcode
 $('body').on('click', '#btn-edit-barcode[data-remote]', function(e) {
     e.preventDefault();
-    $('#edit_barcode_tab').toggle();
+    $('#edit_barcode_tab').show();
+    $('body').on('click', '#close-edit-barcode-tab', function(e) {
+        $('#edit_barcode_tab').hide();
+    })
     $('#add_barcode_tab').hide();
     var id = $(this).data('remote');
     $('#mnf-id').val(id)

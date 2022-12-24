@@ -12,15 +12,23 @@
         <div class="col-lg" id="manifest_table_col">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Manifest</h5>
+                    <h5 class="card-title">Invoice</h5>
                     <div id="table_data">
                         <div class="dataTable-container">
-                            <table class="table datatable dataTable-table" id="manifestTable" style="width: 100%">
+                            <table class="table datatable dataTable-table" id="invoiceTable" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Manifest ID</th>
-                                        <th>Opsi</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan</th>
+                                        <th>Resi</th>
+                                        <th>Koli</th>
+                                        <th>Kg</th>
+                                        <th>Harga</th>
+                                        <th>Packing</th>
+                                        <th>Total</th>
+                                        <th>Keterangan</th>
                                         <th>Proses</th>
                                     </tr>
                                 </thead>
@@ -101,22 +109,29 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
-        var table = $('#manifestTable').DataTable({
+        var table = $('#invoiceTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('manifestData') }}",
+            ajax: "{{ route('invoiceData') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'm_id', name: 'total' },
+                { data: 'mnf_id', name: 'manifest_id' },
+                { data: 'uploaded_at', name: 'tanggal' },
+                { data: 'tujuan', name: 'tujuan', rended: $.fn.dataTable.render.text('pcs')},
+                { data: 'barcode', name: 'barcode' },
+                { data: 'koli', name: 'koli',  render: function (data, type, row) {
+                    return data +' '+ "pcs";
+                }},
+                { data: 'berat', name: 'berat', render: function(data, type, row) {
+                    return data +' '+ "KG";
+                }},
+                { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+                { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+                { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+                { data: 'keterangan', name: 'keterangan' },
                 {
                     data: 'action',
                     name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'proses',
-                    name: 'proses',
                     orderable: true,
                     searchable: true,
                 }

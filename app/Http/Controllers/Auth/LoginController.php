@@ -24,7 +24,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user) {
         if ($user->roles == "Finance") {
-            return redirect()->route('report');
+            return redirect()->route('invoice');
         }
 
         return redirect('/home ');

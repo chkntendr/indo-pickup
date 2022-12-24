@@ -18,7 +18,7 @@ class ManifestController extends Controller
      */
     public function index()
     {
-        //
+        return view('manifest.manifest');
     }
 
     /**
