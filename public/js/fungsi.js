@@ -27,7 +27,7 @@ $('body').on('click', '#prosesInv[data-remote]', function(e) {
     })
 
     $.ajax({
-        url: `/manifest/invoice/${id}`,
+        url: `/manifest/cek/${id}`,
         type: 'put',
         data: { "is_processed": 1 },
         success: function(response) {
@@ -324,7 +324,6 @@ function roleSave() {
             "role": role
         },
         success: function(response) {
-            console.log(response)
             if (response.status == 200) {
                 Swal.fire({
                     icon: 'success',
@@ -372,7 +371,6 @@ function userSave() {
     var email = $('#email').val();
     var password = $('#password').val();
     var role = $('#role-select').val();
-    console.log(name, email, password)
 
     $.ajaxSetup({
         headers: {
@@ -546,7 +544,6 @@ function simpanPickup() {
         'berat': berat,
     }
 
-    console.log(data)
 
     $.ajaxSetup({
         headers: {
@@ -560,7 +557,6 @@ function simpanPickup() {
         data: data,
         dataType: "JSON",
         success: function(response) {
-            console.log(response)
             if(response.status == 200) {
                 Swal.fire({
                     type: 'success',
@@ -788,7 +784,6 @@ $('body').on('click', '#btn-delete-user[data-remote]', function (e) {
         }
     });
     var url = $(this).data('remote');
-    console.log(url)
     Swal.fire({
         title: "Data akan dihapus secara permanen!",
         text: "Lanjutkan?",
@@ -959,7 +954,6 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
         }
     });
     var url = $(this).data('remote');
-    console.log(url)
     Swal.fire({
         title: "Data akan dihapus secara permanen!",
         text: "Lanjutkan?",
@@ -1038,7 +1032,6 @@ $('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    console.log(url)
 
     $.ajax({
         url: url,
@@ -1046,7 +1039,6 @@ $('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
         cache: false,
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             $('#editPickup').modal('show')
             $('#driver-modal').val(response.data[0].driver)
             $('#pickup_id').val(response.data[0].id);
