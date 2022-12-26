@@ -20,11 +20,11 @@ $('body').on('click', '#prosesInv[data-remote]', function(e) {
     var id = $(this).data('remote');
     var table = $('#manifestTable').DataTable();
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    })
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // })
 
     $.ajax({
         url: `/manifest/cek/${id}`,
@@ -257,11 +257,11 @@ $(document).ready(function(e) {
 $(document).ready(function(e) {
     var dokumenTable = $('#dokumenTable').DataTable();
     var kargoTable = $('#pickupTable').DataTable();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    // })
     
     $('#upload-excel-to-database').submit(function(e) {
         e.preventDefault();
@@ -311,11 +311,11 @@ function roleSave() {
     var table = $('#roleTable').DataTable();
     var role = $('#role').val();
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    })
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // })
 
     $.ajax({
         url: '/roles/store',
@@ -342,11 +342,11 @@ function roleSave() {
 function createManifest() {
     var table = $('#manifestTable').DataTable();    
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    });
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // });
 
     $.ajax({
         url: '/manifest/store',
@@ -373,11 +373,11 @@ function userSave() {
     var password = $('#password').val();
     var role = $('#role-select').val();
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    });
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // });
 
     $.ajax({
         url: '/users/post',
@@ -412,11 +412,11 @@ function clientSave() {
         'client': $('#clientInput').val()
     }
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    });
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // });
 
     $.ajax({
         url: '/client/post',
@@ -445,11 +445,11 @@ function barangSave() {
         'tipe': $('#tipeInput').val()
     }
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    });
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // });
 
     $.ajax({
         url: '/barang/post',
@@ -486,11 +486,11 @@ function driverSave() {
         'nama': $('#driverInput').val()
     }
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    });
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // });
 
     $.ajax({
         url: '/driver/post',
@@ -546,11 +546,11 @@ function simpanPickup() {
     }
 
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    });
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+    //     }
+    // });
 
     $.ajax({
         url: '/home/post',

@@ -13,6 +13,7 @@ class Invoice extends Model
     use HasFactory;
     protected $table = "invoice";
     protected $fillable = [
+        'id',
         'mnf_id',
         'uploaded_at',
         'total',
