@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Manifest;
 
 class Invoice extends Model
 {
@@ -22,4 +25,8 @@ class Invoice extends Model
         'total_kiriman',
         'keterangan',
     ];
+
+    public function manifest(): BelongsTo {
+        return $this->BelongsTo(Manifest::class, 'mnf_id', 'id');
+    }
 }

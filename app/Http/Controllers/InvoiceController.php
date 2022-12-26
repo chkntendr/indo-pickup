@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manifest;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use App\Imports\InvoiceImport;
@@ -55,29 +56,34 @@ class InvoiceController extends Controller
         ]);
 
         if($files = $request->file('file')) {
-            $import = new InvoiceImport;
+            $import = new InvoiceImport($request->mnf_id);
             $upload = Excel::import($import, $request->file('file')->store('files'));
 
             return response()->json([
                 'status'    => 200,
                 'message'   => 'Data berhasil diimport!',
-                'data'      => $upload
+                'data'      => [$import]
             ]);
         }
     }
 
     public function show(Request $request) {
         if ($request->ajax()) {
-            $data = Invoice::latest()->get();
+            $data = Invoice::with('manifest');
 
-            return Datatables::of($data)
+            return DataTables::eloquent($data)
                             ->addIndexColumn()
+                            ->addColumn('manifest', function(Invoice $invoice) {
+                                return $invoice->manifest->map(function($manifest){
+                                    return $manifest->id;
+                                });
+                            })
                             ->addColumn('action', function($data) {
                                 $actionBtn = '<a onclick="editPickup()" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
                                 <a type="button" id="btn-delete-barang" data-remote="/barang/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
                                 return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action', 'manifest'])
                             ->make(true);
         }
     }

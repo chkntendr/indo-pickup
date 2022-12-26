@@ -8,12 +8,19 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class InvoiceImport implements ToModel, WithStartRow
 {
+    protected $mnf_id;
+
+    public function __construct($mnf_id) {
+        $this->mnf_id = $mnf_id;
+    }
+
     public function startRow(): int {
         return 2;
     }
 
     public function model(array $row) {
         return new Invoice([
+            'mnf_id'        => $this->mnf_id,
             'tujuan'        => $row[0],
             'barcode'       => $row[1],
             'koli'          => $row[2],

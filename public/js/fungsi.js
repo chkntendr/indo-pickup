@@ -197,6 +197,7 @@ $(document).ready(function(e) {
     $('#upload-manifest-to-invoice').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
+        formData.append('mnf_id', $('#id_manifest_upload').val())
         var id = $('#mnf-id').val();
         var completed = function() {
             Swal.fire({

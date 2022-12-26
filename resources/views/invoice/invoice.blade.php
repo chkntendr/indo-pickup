@@ -114,8 +114,9 @@
             serverSide: true,
             ajax: "{{ route('invoiceData') }}",
             columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'mnf_id', name: 'manifest_id' },
+                // { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'manifest', name: 'manifest.m_id' },
+                { data: 'manifest', name: 'manifest.m_id' },
                 { data: 'uploaded_at', name: 'tanggal' },
                 { data: 'tujuan', name: 'tujuan', rended: $.fn.dataTable.render.text('pcs')},
                 { data: 'barcode', name: 'barcode' },

@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" readonly id="mnf-id" hidden>
-                            <input type="text" id="id_manifest_upload" hidden>
+                            <input type="text" id="id_manifest_upload">
                             <label for="file">Pilih File</label>
                             <input class="form-control" type="file" name="file" id="file" placeholder="Masukan File...">
                         </div>
