@@ -104,10 +104,26 @@
     </li><!-- End Components Nav -->
     @elseif(Auth::user()->roles == "Finance")
     <li class="nav-item">
-        <a class="nav-link {{ (request()->segment(1) == 'report') ? '' : 'collapsed'}}" href="{{ route('report') }}">
-            <i class="bi bi-journals"></i>
+        <a class="nav-link {{ (request()->segment(1) == 'report') ? '' : 'collapsed'}}" href="{{ route('report') }}" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
+            <i class="ri-booklet-fill"></i>
             <span>Report</span>
+            <i class="bi bi-chevron-down ms-auto"></i>
         </a>
+
+        <ul id="report-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <li class="nav-item">
+                <a href="{{ route('manifest') }}">
+                    <i class="bi bi-circle"></i>
+                    <span>Manifest</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('invoice') }}">
+                    <i class="bi bi-circle"></i>
+                    <span>Invoice</span>
+                </a>
+            </li>
+        </ul>
     </li><!-- End Report Nav -->
     @endif
 </ul>
