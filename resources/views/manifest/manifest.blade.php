@@ -20,6 +20,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Manifest ID</th>
+                                        <th>Total</th>
                                         <th>Opsi</th>
                                         <th>Proses</th>
                                     </tr>
@@ -107,7 +108,8 @@
             ajax: "{{ route('manifestData') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'm_id', name: 'total' },
+                { data: 'm_id', name: 'm_id' },
+                { data: 'total', name: 'total' },
                 {
                     data: 'action',
                     name: 'action',

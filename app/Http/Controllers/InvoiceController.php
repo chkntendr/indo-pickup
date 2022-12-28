@@ -59,25 +59,30 @@ class InvoiceController extends Controller
             $import = new InvoiceImport($request->mnf_id);
             $upload = Excel::import($import, $request->file('file')->store('files'));
 
+            $count = Invoice::where('mnf_id', $request->mnf_id)->count();
+            $manifest = Manifest::find($request->mnf_id);
+            $manifest->total = $count;
+            $manifest->save();
+
             return response()->json([
                 'status'    => 200,
                 'message'   => 'Data berhasil diimport!',
-                'data'      => [$import]
+                'data'      => $manifest
             ]);
         }
     }
 
     public function show(Request $request) {
         if ($request->ajax()) {
-            $data = Invoice::with('manifest');
+            $data = Invoice::latest()->get();
 
-            return DataTables::eloquent($data)
+            return DataTables::of($data)
                             ->addIndexColumn()
-                            ->addColumn('manifest', function(Invoice $invoice) {
-                                return $invoice->manifest->map(function($manifest){
-                                    return $manifest->id;
-                                });
-                            })
+                            // ->addColumn('manifest', function(Manifest $invoice) {
+                            //     return $invoice->invoice->map(function($manifest){
+                            //         return $invoice;
+                            //     })->implode('<br>');
+                            // })
                             ->addColumn('action', function($data) {
                                 $actionBtn = '<a onclick="editPickup()" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
                                 <a type="button" id="btn-delete-barang" data-remote="/barang/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';

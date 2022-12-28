@@ -22,6 +22,6 @@ class Manifest extends Model
     ];
 
     public function invoice(): hasOne {
-        return $this->hasOne(Invoice::class, 'id', 'mnf_id');
+        return $this->hasOne(Invoice::class, 'mnf_id', 'mnf_id');
     }
 }

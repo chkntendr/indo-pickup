@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Manifest;
+use App\Models\Invoice;
 use App\Import\ManifestImport;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Carbon\Carbon;
@@ -139,11 +140,13 @@ class ManifestController extends Controller
      */
     public function destroy($id) {
         Manifest::where('id', $id)->delete();
+        Invoice::where('mnf_id', $id)->delete();
 
         return response()->json([
             'success' => true,
             'message' => 'Data berahasil dihapus'
         ]);
+
     }
 
     public function upload(Request $request) {
