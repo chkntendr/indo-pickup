@@ -29,65 +29,29 @@
             </div>
         </div>
 
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Client Baru</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable datatable-table" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>Kode Client</th>
-                                    <th>Client</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" id="kode_client" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="clientInput" class="form-control form-control-sm"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form>
+                            <div class="form-group">
+                                <label for="kode_client">Kode Client</label>
+                                <input type="text" id="kode_client" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group">
+                                <label for="clientInput">Nama Client</label>
+                                <input type="text" id="clientInput" class="form-control form-control-sm">
+                            </div>
+                        </form>
                         <div class="form-group">
                             <button class="btn btn-success btn-sm" onclick="clientSave()">
-                                <i class="bi bi-save"></i>
+                                <i class="ri-save-3-line"></i>
                                 Simpan
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal --}}
-    <div class="modal fade" id="create-client" tabindex="-1" aria-labelledby="create-client" aria-hidden="true">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="create-user-title">Tambah Pengguna</h5>
-                    <button id="close-modal-user" class="btn-close" data-dismiss="modal" aria-label="close"></button>
-                </div>
-
-                <form action="{{ route('clientPost') }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama" class="control-label">Kode Klien</label>
-                            <input type="text" name="kode_client" class="form-control" required>
-                        </div>
-    
-                        <div class="form-group">
-                            <label for="client" class="control-label">Nama Klien</label>
-                            <input type="text" name="client" id="client" class="form-control">
-                        </div>
-                    </div>
-    
-                    <div class="modal-footer">
-                        <button class="btn btn-sm btn-secondary" id="close-modal-client">Tutup</button>
-                        <button class="btn btn-sm btn-success">Simpan</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

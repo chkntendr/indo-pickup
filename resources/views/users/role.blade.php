@@ -9,19 +9,17 @@
                 <div class="card-body">
                     <h5 class="card-title">Roles</h5>
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                        <div class="dataTable-container">
-                            <table class="table datatable datatable-table" id="roleTable" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Role</th>
-                                        <th>Dibuat</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
+                        <table class="table datatable datatable-table" id="roleTable" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Role</th>
+                                    <th>Dibuat</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -32,21 +30,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Role Baru</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable datatable-table" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>Role</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" id="role" class="form-control form-control-sm"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <input type="text" id="role" class="form-control form-control-sm">
+                            </div>
+                        </form>
                         <div class="form-group">
                             <button class="btn btn-success btn-sm" onclick="roleSave()">
-                                <i class="bi bi-save"></i>
+                                <i class="ri-save-3-line"></i>
                                 Simpan
                             </button>
                         </div>

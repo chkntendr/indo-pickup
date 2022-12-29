@@ -49,7 +49,7 @@
                         </div>
                         <div class="form-group my-2">
                             <button class="btn btn-success btn-sm" onclick="userSave()">
-                                <i class="bi bi-save"></i>
+                                <i class="ri-save-3-line"></i>
                                 Simpan
                             </button>
                         </div>

@@ -109,7 +109,11 @@ class RoleController extends Controller
 
                                 return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->addColumn('formatedDate', function($data) {
+                                $formatedDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-m-Y H:i:s');
+                                return $formatedDate;
+                            })
+                            ->rawColumns(['action', 'formatedDate'])
                             ->make(true);
         }
     }

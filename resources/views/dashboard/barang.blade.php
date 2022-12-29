@@ -32,21 +32,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Tipe Baru</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable dataTable-table">
-                            <thead>
-                                <tr>
-                                    <th>Barang</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" id="tipeInput" class="form-control form-control-sm"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form>
+                            <div class="form-group">
+                                <label for="tipeInput">Barang</label>
+                                <input type="text" id="tipeInput" class="form-control form-control-sm">
+                            </div>
+                        </form>
                         <div class="form-group">
                             <button class="btn btn-success btn-sm" onclick="barangSave()">
-                                <i class="bi bi-save"></i>
+                                <i class="ri-save-3-line"></i>
                                 Simpan
                             </button>
                         </div>

@@ -33,12 +33,12 @@
             </div>
             @if (Auth::user()->roles == "Finance")
             <button disabled class="btn btn-success btn-sm" onclick="createManifest()">
-                <i class="bi bi-plus-circle-dotted"></i>
+                <i class="ri-add-circle-line"></i>
                 Manifest baru
             </button>
             @else
             <a class="btn btn-success btn-sm" onclick="createManifest()">
-                <i class="bi bi-plus-circle-dotted"></i>
+                <i class="ri-add-circle-line"></i>
                 Manifest baru
             </a>
             @endif

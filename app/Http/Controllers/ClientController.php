@@ -25,7 +25,11 @@ class ClientController extends Controller
                                 <a id="btn-delete-client" data-remote="/client/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
                                 return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->addColumn('formatedDate', function($data) {
+                                $formatedDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-m-Y H:i:s');
+                                return $formatedDate;
+                            })
+                            ->rawColumns(['action', 'formatedDate'])
                             ->make(true);
         }
     }

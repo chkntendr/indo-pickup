@@ -163,7 +163,12 @@ $(function() {
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
             { data: 'roles', name: 'role' },
-            { data: 'created_at', name: 'tanggal' },
+            {
+                data: 'formatedDate',
+                name: 'formatedDate',
+                orderable: true,
+                searchable: true
+            },
             {
                 data: 'action',
                 name: 'action',
@@ -186,7 +191,12 @@ $(function() {
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'kode_client', name: 'kode_client' },
             { data: 'client', name: 'client' },
-            { data: 'created_at', name: 'tanggal' },
+            {
+                data: 'formatedDate',
+                name: 'formatedDate',
+                orderable: true,
+                searchable: true
+            },
             {
                 data: 'action',
                 name: 'action',
@@ -229,7 +239,12 @@ $(function() {
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'role', name: 'role' },
-            { data: 'created_at', name: 'tanggal' },
+            {
+                data: 'formatedDate',
+                name: 'formatedDate',
+                orderable: true,
+                searchable: true
+            },
             {
                 data: 'action',
                 name: 'action',

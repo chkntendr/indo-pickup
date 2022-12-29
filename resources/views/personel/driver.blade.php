@@ -28,49 +28,19 @@
                 <div class="card-body">
                     <h5 class="card-title">Driver Baru</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable datatable-table">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" id="driverInput" class="form-control form-control-sm"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form>
+                            <div class="form-group">
+                                <label for="driverInput">Nama</label>
+                                <input type="text" id="driverInput" class="form-control form-control-sm">
+                            </div>
+                        </form>
                         <div class="form-group">
                             <button class="btn btn-success btn-sm" onclick="driverSave()">
-                                <i class="bi bi-save"></i>
+                                <i class="ri-save-3-line"></i>
                                 Simpan
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal --}}
-    <div class="modal fade" id="modal-create" tabindex="-1" aria-labelledby="createDriver" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Driver Baru</h5>
-                    <button type="button" id="close-modal" class="btn-close" aria-label="Close"></button>
-                </div>
-    
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nama" class="control-label">Nama</label>
-                        <input type="text" class="form-control" id="nama" name="nama">
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal" id="close-modal">Tutup</button>
-                    <button class="btn btn-primary" id="driverStore">Simpan</button>
                 </div>
             </div>
         </div>

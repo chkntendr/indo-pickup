@@ -5,11 +5,11 @@
 <section class="section">
     <div class="my-2">
         <button onclick="inputForm()" class="btn btn-sm btn-primary">
-            <i class="bi bi-file-earmark-plus"></i>
+            <i class="ri-file-add-line"></i>
             Baru
         </button>
         <button onclick="moreTab()" class="btn btn-sm btn-warning">
-            <i class="bi bi-three-dots-vertical"></i>
+            <i class="ri-more-2-fill"></i>
             Lainnya
         </button>
     </div>
@@ -23,7 +23,7 @@
                             @csrf
                             <input class="form-control" type="file" name="file">
                             <button type="submit" class="btn btn-sm btn-success my-2">
-                                <i class="bi bi-cloud-upload"></i>
+                                <i class="ri-upload-cloud-2-line"></i>
                                 Upload
                             </button>
                         </form>
@@ -54,7 +54,7 @@
                                 </div>
                             </form>
                             <button class="btn btn-sm btn-primary">
-                                <i class="bi bi-cloud-download"></i>
+                                <i class="ri-download-cloud-2-line"></i>
                                 Download
                             </button>
                         </div>
@@ -116,7 +116,7 @@
                             </table>
                             <div class="form-group">
                                 <button onclick="simpanPickup()" class="btn btn-success btn-sm" type="button">
-                                    <i class="bi bi-save"></i>
+                                    <i class="ri-save-3-line"></i>
                                     Simpan
                                 </button>
                             </div>
