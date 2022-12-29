@@ -19,7 +19,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Manifest ID</th>
+                                        <th>Manifest</th>
                                         <th>Tanggal</th>
                                         <th>Tujuan</th>
                                         <th>Resi</th>
@@ -96,35 +96,3 @@
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $(function() {
-        var table = $('#invoiceTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('invoiceData') }}",
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'mnf_id', name: 'mnf_id' },
-                { data: 'uploaded_at', name: 'tanggal' },
-                { data: 'tujuan', name: 'tujuan' },
-                { data: 'barcode', name: 'barcode' },
-                { data: 'koli', name: 'koli',  render: function (data, type, row) {
-                    return data +' '+ "pcs";
-                }},
-                { data: 'berat', name: 'berat', render: function(data, type, row) {
-                    return data +' '+ "KG";
-                }},
-                { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-                { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-                { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-                { data: 'keterangan', name: 'keterangan' },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true,
-                }
-            ]
-        })
-    })
-</script>

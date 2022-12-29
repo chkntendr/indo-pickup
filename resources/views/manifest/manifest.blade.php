@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" readonly id="mnf-id" hidden>
-                            <input type="text" id="id_manifest_upload">
+                            <input type="text" id="id_manifest_upload" hidden>
                             <label for="file">Pilih File</label>
                             <input class="form-control" type="file" name="file" id="file" placeholder="Masukan File...">
                         </div>
@@ -100,29 +100,3 @@
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $(function() {
-        var table = $('#manifestTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('manifestData') }}",
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'm_id', name: 'm_id' },
-                { data: 'total', name: 'total' },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'proses',
-                    name: 'proses',
-                    orderable: true,
-                    searchable: true,
-                }
-            ]
-        })
-    })
-</script>

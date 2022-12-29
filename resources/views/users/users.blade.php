@@ -64,25 +64,3 @@
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $(function() {
-        var table = $('#userTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('dataUsers') }}",
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'name', name: 'name' },
-                { data: 'email', name: 'email' },
-                { data: 'roles', name: 'role' },
-                { data: 'created_at', name: 'tanggal' },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-            ]
-        })
-    })
-</script>

@@ -78,14 +78,14 @@ class InvoiceController extends Controller
 
             return DataTables::of($data)
                             ->addIndexColumn()
-                            // ->addColumn('manifest', function(Manifest $invoice) {
-                            //     return $invoice->invoice->map(function($manifest){
+                            // ->addColumn('manifest', function(Invoice $invoice) {
+                            //     return $invoice->manifest->map(function($manifest){
                             //         return $invoice;
                             //     })->implode('<br>');
                             // })
                             ->addColumn('action', function($data) {
                                 $actionBtn = '<a onclick="editPickup()" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-barang" data-remote="/barang/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                <a type="button" id="btn-delete-barang" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
                                 return $actionBtn;
                             })
                             ->rawColumns(['action', 'manifest'])
@@ -99,8 +99,7 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invoice $invoice)
-    {
+    public function edit(Invoice $invoice) {
         //
     }
 

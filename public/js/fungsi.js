@@ -7,6 +7,239 @@ $(function(e) {
     })
 })
 
+/**
+ * @DataTable
+ */
+// Invoice Table
+$(function() {
+    var table = $('#invoiceTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/invoice/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'mnf_id', name: 'mnf_id' },
+            { data: 'uploaded_at', name: 'tanggal' },
+            { data: 'tujuan', name: 'tujuan' },
+            { data: 'barcode', name: 'barcode' },
+            { data: 'koli', name: 'koli',  render: function (data, type, row) {
+                return data +' '+ "pcs";
+            }},
+            { data: 'berat', name: 'berat', render: function(data, type, row) {
+                return data +' '+ "KG";
+            }},
+            { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+            { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+            { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+            { data: 'keterangan', name: 'keterangan' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true,
+            }
+        ]
+    })
+})
+
+// Manifest Table
+$(function() {
+    var table = $('#manifestTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/manifest/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'm_id', name: 'm_id' },
+            { data: 'total', name: 'total' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'proses',
+                name: 'proses',
+                orderable: true,
+                searchable: true,
+            }
+        ]
+    })
+})
+
+// Pickup Table
+$(function() {
+    var table = $('#pickupTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/home/kargo'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'tipe', name: 'tipe' },
+            { data: 'driver', name: 'driver' },
+            { data: 'client', name: 'client' },
+            { data: 'tanggal', name: 'tanggal' },
+            { data: 'dalam_kota', name: 'dalam_kota' },
+            { data: 'luar_kota', name: 'luar_kota' },
+            { data: 'jumlah', name: 'jumlah' },
+            { data: 'berat', name: 'berat' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
+$(function() {
+    var table = $('#dokumenTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/home/dokumen'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'tipe', name: 'tipe' },
+            { data: 'driver', name: 'driver' },
+            { data: 'client', name: 'client' },
+            { data: 'tanggal', name: 'tanggal' },
+            { data: 'tanggal_pic', name: 'tanggal_pic'},
+            { data: 'sp1', name: 'sp1' },
+            { data: 'sp2', name: 'sp2' },
+            { data: 'sp3', name: 'sp3' },
+            { data: 'jumlah', name: 'jumlah' },
+            { data: 'berat', name: 'berat' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
+// Barang Table
+$(function() {
+    var table = $('#barangTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/barang/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'barang', name: 'barang' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
+// Users table
+$(function() {
+    var table = $('#userTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/users/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'name', name: 'name' },
+            { data: 'email', name: 'email' },
+            { data: 'roles', name: 'role' },
+            { data: 'created_at', name: 'tanggal' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
+// Client Table
+$(function() {
+    var table = $('#clientTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/client/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'kode_client', name: 'kode_client' },
+            { data: 'client', name: 'client' },
+            { data: 'created_at', name: 'tanggal' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
+// Driver Table
+$(function() {
+    var table = $('#driverTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/driver/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'name', name: 'name' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            }
+        ]
+    })
+})
+
+// Roles Table
+$(function() {
+    var table = $('#roleTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/roles/data'
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'role', name: 'role' },
+            { data: 'created_at', name: 'tanggal' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    })
+})
+
 // Detail Pickup
 $('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
     e.preventDefault();

@@ -21,7 +21,7 @@ class Manifest extends Model
         'timestamps'
     ];
 
-    public function invoice(): hasOne {
-        return $this->hasOne(Invoice::class, 'mnf_id', 'mnf_id');
+    public function invoice() {
+        return $this->hasOne(Invoice::class, 'mnf_id', 'id');
     }
 }
