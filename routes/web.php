@@ -53,6 +53,7 @@ Route::put('/manifest/cek/{id}', [App\Http\Controllers\ManifestController::class
 Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, 'store'])->name('manifestStore');
 Route::get('/manifest/barcode/{id}', [App\Http\Controllers\ManifestController::class, 'getBarcode'])->name('getBarcode');
 Route::get('/manifest/mid/{id}', [App\Http\Controllers\ManifestController::class, 'getM_id'])->name('getBarcode');
+Route::get('/manifest/detail/{id}', [App\Http\Controllers\ManifestController::class, 'detail'])->name('manifestDetail');
 Route::get('/manifest/data', [App\Http\Controllers\ManifestController::class, 'show'])->name('manifestData');
 Route::put('/manifest/update/{id}', [App\Http\Controllers\ManifestController::class, 'update'])->name('updateBarcode');
 Route::delete('/manifest/delete/{id}', [App\Http\Controllers\ManifestController::class, 'destroy'])->name('deleteManifest');

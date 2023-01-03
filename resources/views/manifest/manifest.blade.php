@@ -3,12 +3,42 @@
 @section('title', 'Report')
 @section('content')
 <section class="section">
-    <div class="row">
+    <div class="row" id="manifest_detail" style="display: none">
         <div class="col-lg">
-            
+            <div class="card">
+                <div class="card-body">
+                    <h5 id="card-title" class="card-title">Detail Manifest | <span></span></h5>
+                    <div class="dataTable-container">
+                        <table class="table datatable dataTable-table" id="detailManifestTable" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Tujuan</th>
+                                    <th>Resi</th>
+                                    <th>Koli</th>
+                                    <th>Kg</th>
+                                    <th>Harga</th>
+                                    <th>Packing</th>
+                                    <th>Total</th>
+                                    <th>Keterangan</th>
+                                    <th>Proses</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-primary" id="backButtonManifest">
+                        <i class="ri-arrow-go-back-line"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="manifest_tab">
         <div class="col-lg" id="manifest_table_col">
             <div class="card">
                 <div class="card-body">

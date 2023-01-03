@@ -255,6 +255,59 @@ $(function() {
     })
 })
 
+// Detail manifest
+$('body').on('click', '#btn-detail-manifest[data-remote]', function(e) {
+    e.preventDefault()
+    var id = $(this).data('remote');
+    $.ajax({
+        url: `/manifest/mid/${id}`,
+        type: 'GET',
+        success: function(response) {
+            $('#card-title span').text(response.data[0].m_id);
+        }
+    })
+    $('#manifest_detail').show()
+    // Detail Manifest Table
+    $(function() {
+        var table = $('#detailManifestTable').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: `/manifest/detail/${id}`
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'uploaded_at', name: 'tanggal' },
+                { data: 'tujuan', name: 'tujuan' },
+                { data: 'barcode', name: 'barcode' },
+                { data: 'koli', name: 'koli',  render: function (data, type, row) {
+                    return data +' '+ "pcs";
+                }},
+                { data: 'berat', name: 'berat', render: function(data, type, row) {
+                    return data +' '+ "KG";
+                }},
+                { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+                { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+                { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+                { data: 'keterangan', name: 'keterangan' },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true,
+                }
+            ]
+        })
+    })
+    $('#manifest_tab').hide()
+
+    $('body').on('click', '#backButtonManifest', function(e) {
+        $('#manifest_detail').hide()
+        $('#manifest_tab').show()
+    })
+})
+
 // Detail Pickup
 $('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
     e.preventDefault();
@@ -267,12 +320,6 @@ $('body').on('click', '#prosesInv[data-remote]', function(e) {
     e.preventDefault();
     var id = $(this).data('remote');
     var table = $('#manifestTable').DataTable();
-
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // })
 
     $.ajax({
         url: `/manifest/cek/${id}`,
@@ -308,12 +355,6 @@ $('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
     $('#id_manifest_upload').val(id);
     $('#mnf-id').val(id)
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    })
-
     $.ajax({
         url: `/manifest/mid/${id}`,
         type: 'GET',
@@ -328,13 +369,6 @@ function saveBarcode() {
     var barcode = $('#barcode_manifest').val();
     var table   = $('#manifestTable').DataTable();
     var id      = $('#mnf-id').val();
-
-    
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    })
 
     $.ajax({
         url: `/manifest/update/${id}`,
@@ -361,12 +395,6 @@ function updateBarcode() {
     var barcode = $('#barcode_manifest_edit').val();
     var table   = $('#manifestTable').DataTable();
     var id      = $('#mnf-id').val();
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    })
 
     Swal.fire({
         title: "Data akan di update!",
@@ -436,11 +464,6 @@ function moreTab() {
 $(document).ready(function(e) {
     var manifestTable = $('#manifestTable').DataTable();
     var id_manifest = $('#id_manifest_upload').val();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('cotent')
-        }
-    })
 
     $('#upload-manifest-to-invoice').submit(function(e) {
         e.preventDefault();
@@ -505,11 +528,6 @@ $(document).ready(function(e) {
 $(document).ready(function(e) {
     var dokumenTable = $('#dokumenTable').DataTable();
     var kargoTable = $('#pickupTable').DataTable();
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     }
-    // })
     
     $('#upload-excel-to-database').submit(function(e) {
         e.preventDefault();
@@ -559,12 +577,6 @@ function roleSave() {
     var table = $('#roleTable').DataTable();
     var role = $('#role').val();
 
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // })
-
     $.ajax({
         url: '/roles/store',
         type: 'post',
@@ -590,12 +602,6 @@ function roleSave() {
 function createManifest() {
     var table = $('#manifestTable').DataTable();    
 
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // });
-
     $.ajax({
         url: '/manifest/store',
         type: 'get',
@@ -620,12 +626,6 @@ function userSave() {
     var email = $('#email').val();
     var password = $('#password').val();
     var role = $('#role-select').val();
-
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // });
 
     $.ajax({
         url: '/users/post',
@@ -660,12 +660,6 @@ function clientSave() {
         'client': $('#clientInput').val()
     }
 
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // });
-
     $.ajax({
         url: '/client/post',
         type: 'POST',
@@ -692,12 +686,6 @@ function barangSave() {
     var data = {
         'tipe': $('#tipeInput').val()
     }
-
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // });
 
     $.ajax({
         url: '/barang/post',
@@ -733,12 +721,6 @@ function driverSave() {
     var data = {
         'nama': $('#driverInput').val()
     }
-
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // });
 
     $.ajax({
         url: '/driver/post',
@@ -793,13 +775,6 @@ function simpanPickup() {
         'berat': berat,
     }
 
-
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-    //     }
-    // });
-
     $.ajax({
         url: '/home/post',
         type: 'POST',
@@ -841,9 +816,6 @@ $('document').ready(function () {
     $('#role-select').select2({
         placeholde: "Pilih Role",
         ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: '/roles/select2',
             dataType: 'JSON',
             delay: 250,
@@ -866,9 +838,6 @@ $('document').ready(function () {
     $('#driver').select2({
         placeholder: "Pilih Driver",
         ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: '/driver/select2',
             dataType: 'JSON',
             delay: 250,
@@ -892,9 +861,6 @@ $('document').ready(function () {
     $('#tipe').select2({
         placeholder: "Pilih Tipe",
         ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: '/barang/select2',
             dataType: 'JSON',
             delay: 250,
@@ -918,9 +884,6 @@ $('document').ready(function () {
     $('#client').select2({
         placeholder: "Pilih Client",
         ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: '/client/select2',
             dataType: 'JSON',
             delay: 250,
@@ -945,11 +908,6 @@ $('document').ready(function () {
 // Delete role
 $('body').on('click', '#btn-delete-role[data-remote]', function(e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
     var url = $(this).data('remote');
 
     Swal.fire({
@@ -986,11 +944,6 @@ $('body').on('click', '#btn-delete-role[data-remote]', function(e) {
 // Delete manifest
 $('body').on('click', '#btn-delete-manifest[data-remote]', function(e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
     var url = $(this).data('remote');
 
     Swal.fire({
@@ -1027,11 +980,6 @@ $('body').on('click', '#btn-delete-manifest[data-remote]', function(e) {
 // Delete user
 $('body').on('click', '#btn-delete-user[data-remote]', function (e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
     var url = $(this).data('remote');
     Swal.fire({
         title: "Data akan dihapus secara permanen!",
@@ -1068,12 +1016,6 @@ $('body').on('click', '#btn-delete-user[data-remote]', function (e) {
 // Delete Barang
 $('body').on('click', '#btn-delete-barang[data-remote]', function (e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
     var url = $(this).data('remote');
     
     Swal.fire({
@@ -1111,11 +1053,6 @@ $('body').on('click', '#btn-delete-barang[data-remote]', function (e) {
 // Delete Client
 $('body').on('click', '#btn-delete-client[data-remote]', function (e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
     var url = $(this).data('remote');
     
@@ -1154,12 +1091,6 @@ $('body').on('click', '#btn-delete-client[data-remote]', function (e) {
 // Delete Driver
 $('body').on('click', '#btn-delete-driver[data-remote]', function (e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
     var url = $(this).data('remote');
     
     Swal.fire({
@@ -1196,12 +1127,7 @@ $('body').on('click', '#btn-delete-driver[data-remote]', function (e) {
 
 // Delete Pickup
 $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
-    e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    e.preventDefault()
     var url = $(this).data('remote');
     Swal.fire({
         title: "Data akan dihapus secara permanen!",
@@ -1276,12 +1202,6 @@ $('body').on('click', '#btn-edit-barcode[data-remote]', function(e) {
     var id = $(this).data('remote');
     $('#mnf-id').val(id)
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-        }
-    })
-
     $.ajax({
         url: `/manifest/barcode/${id}`,
         type: 'GET',
@@ -1300,12 +1220,6 @@ $('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
     })
     e.preventDefault();
     var url = $(this).data('remote');
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
     $.ajax({
         url: url,
