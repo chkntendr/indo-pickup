@@ -39,52 +39,51 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-5" style="display: none;" id="add_barcode_tab">
+    </div>
+    <div class="row">
+        <div class="col-lg" id="edit-barcode-detail" style="display: none">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Upload Manifest</h5>
-                    <form enctype="multipart/form-data" id="upload-manifest-to-invoice">
-                        <div class="form-group">
-                            <label for="manifest-id">ID Manifest</label>
-                            <input type="text" readonly class="form-control form-control-sm" id="manifest-id">
+                    <div class="card-title">Edit Data <div id="barcodeSpan"></div></div>
+                    <form class="row g-3">
+                        <div class="col-md">
+                            <label for="date">Tanggal</label>
+                            <input type="date" class="form-control form-control-sm" id="editDateInvoice">
                         </div>
-                        <div class="form-group">
-                            <input type="text" readonly id="mnf-id" hidden>
-                            <input type="text" id="id_manifest_upload">
-                            <label for="file">Pilih File</label>
-                            <input class="form-control" type="file" name="file" id="file" placeholder="Masukan File...">
+                        <div class="col-md">
+                            <label for="destination">Tujuan</label>
+                            <input type="text" class="form-control form-control-sm" id="editDestinationInvoice">
                         </div>
-                        <button type="submit" class="btn btn-success btn-sm my-2">
-                            <i class="ri-upload-cloud-2-line"></i>
-                            Upload
-                        </button>
+                        <div class="col-md">
+                            <label for="qty">Koli</label>
+                            <input type="text" class="form-control form-control-sm" id="editQtyInvoice">
+                        </div>
+                        <div class="col-md">
+                            <label for="weight">Berat</label>
+                            <input type="text" class="form-control form-control-sm" id="editWeightInvoice">
+                        </div>
+                        <div class="col-md">
+                            <label for="price">Harga</label>
+                            <input type="text" class="form-control form-control-sm" id="editPriveInvoice">
+                        </div>
+                        <div class="col-md">
+                            <label for="packing">Packing</label>
+                            <input type="text" class="form-control form-control-sm" id="editPackingInvoice">
+                        </div>
+                        <div class="col-md">
+                            <label for="total">Total</label>
+                            <input type="text" class="form-control form-control-sm" id="editTotalInvoice" readonly>
+                        </div>
+                        <div class="col-md">
+                            <label for="description">Keterangan</label>
+                            <input type="text" class="form-control form-control-sm" id="editDescriptionInvoice">
+                        </div>
                     </form>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-lg-5" style="display: none;" id="edit_barcode_tab">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Barcode</h5>
-                    <form>
-                        <div class="form-group">
-                            <label for="manifest-id-edit">ID Manifest</label>
-                            <input type="text" readonly class="form-control form-control-sm" id="manifest-id-edit">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" readonly id="mnf-id" hidden>
-                            <label for="barcode_manifest_edit">Edit barcode</label>
-                            <textarea class="form-control form-control-sm" name="" id="barcode_manifest_edit" cols="20" rows="7"></textarea>
-                        </div>
-                    </form>
-                    <button id="save-barcode" onclick="updateBarcode()" class="btn btn-success btn-sm">
-                        <i class="ri-save-3-line"></i>
-                        Perbarui
-                    </button>
-                    <button id="close-edit-barcode-tab" class="btn btn-gray btn-sm">
-                        Tutup
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-primary" id="backButtonInvoice">
+                        <i class="ri-arrow-go-back-line"></i>
+                        Back
                     </button>
                 </div>
             </div>

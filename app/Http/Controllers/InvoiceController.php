@@ -80,15 +80,15 @@ class InvoiceController extends Controller
                             ->addIndexColumn()
                             // ->addColumn('manifest', function(Invoice $invoice) {
                             //     return $invoice->manifest->map(function($manifest){
-                            //         return $invoice;
+                            //         return $invoice->m_id;
                             //     })->implode('<br>');
                             // })
                             ->addColumn('action', function($data) {
-                                $actionBtn = '<a onclick="editPickup()" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-barang" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                $actionBtn = '<a id="btn-edit-barInvoice" type="button" data-remote="'.$data->id.'" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a type="button" id="btn-delete-barInvoice" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
                                 return $actionBtn;
                             })
-                            ->rawColumns(['action', 'manifest'])
+                            ->rawColumns(['action'])
                             ->make(true);
         }
     }
@@ -99,8 +99,15 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invoice $invoice) {
-        //
+    public function edit(Invoice $invoice, Request $request, $id) {
+        if ($request->ajax()) {
+            $invoice = Invoice::find($id);
+
+            return response()->json([
+                "status"    => 200,
+                "data"      => $invoice
+            ]);
+        }
     }
 
     /**

@@ -1240,6 +1240,31 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
  * @Edit function
  */
 
+// Edit invoice barcode
+$('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
+    e.preventDefault();
+    var span = document.getElementById('barcodeSpan');
+    var id = $(this).data('remote');
+    $('#manifest_table_col').hide();
+    $('#edit-barcode-detail').show();
+    $.ajax({
+        url: `/invoice/edit/${id}`,
+        type: 'GET',
+        success: function(response) {
+            if (response.status == 200) {
+                var barcode = response.data.barcode
+                span.innerHTML(`<span>${barcode}</span>`)
+            }
+        }
+    })
+
+    $('body').on('click', '#backButtonInvoice', function(e) {
+        e.preventDefault()
+        $('#manifest_table_col').show();
+        $('#edit-barcode-detail').hide();
+    })
+})
+
 // Edit barcode
 $('body').on('click', '#btn-edit-barcode[data-remote]', function(e) {
     e.preventDefault();

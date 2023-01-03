@@ -27,7 +27,7 @@ class Invoice extends Model
         'keterangan',
     ];
 
-    public function manifest() {
-        return $this->BelongsTo(Manifest::class, 'mnf_id', 'id');
+    public function manifest(): BelongsTo {
+        return $this->BelongsTo(Manifest::class, 'id', 'mnf_id');
     }
 }

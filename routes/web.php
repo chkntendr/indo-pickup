@@ -61,6 +61,7 @@ Route::get('/manifest/invoiceload', [App\Http\Controllers\ManifestController::cl
 // Route Invoice
 Route::get('/invoice', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoice');
 // Route::post('/invoice/store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('storeID');
+Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('edit');
 Route::get('/invoice/data', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoiceData');
 Route::post('/invoice/import', [App\Http\controllers\InvoiceController::class, 'import'])->name('import');
 
