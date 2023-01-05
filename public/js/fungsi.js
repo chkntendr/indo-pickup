@@ -1172,6 +1172,95 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
     e.preventDefault();
     var id = $(this).data('remote');
     $('#manifest_edit_invoice').toggle();
+    $('#manifest_detail').hide()
+    $.ajax({
+        url: `/invoice/edit/${id}`,
+        type: 'GET',
+        success: function(response) {
+            $('#idManifest').val(id)
+            $('#manifest_tujuan').val(response.data.tujuan)
+            $('#manifest_resi').val(response.data.barcode)
+            $('#manifest_koli').val(response.data.koli)
+            $('#manifest_berat').val(response.data.berat)
+            $('#manifest_harga').val(response.data.harga)
+            $('#manifest_packing').val(response.data.packing)
+            $('#manifest_total').val(response.data.total_kiriman)
+            $('#manifest_keterangan').val(response.data.keterangan)
+        }
+    })
+
+    $('body').on('click', '#simpan_manifest_baru', function(e) {
+        e.preventDefault()
+        var data_edit = {
+            'tujuan'    : $('#manifest_tujuan').val(),
+            'resi'      : $('#manifest_resi').val(),
+            'koli'      : $('#manifest_koli').val(),
+            'berat'      : $('#manifest_berat').val(),
+            'harga'      : $('#manifest_harga').val(),
+            'packing'      : $('#manifest_packing').val(),
+            'total'      : $('#manifest_total').val(),
+            'keterangan'      : $('#manifest_keterangan').val(),
+        }
+        var completed = function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil disimpan!',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+        var loading = function() {
+            Swal.fire({
+                title: 'Please Wait!',
+                html: 'Loading ...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            })
+        }
+        var error = function() {
+            Swal.fire({
+                title: 'Error!',
+                icon: 'error',
+                message: 'Import Gagal!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+        var id = $('#idManifest').val()
+        
+        $.ajax({
+            url: `/invoice/save/${id}`,
+            type: "PUT",
+            data: data_edit,
+            beforeSend: function() {
+                loading();
+                console.log(data_edit)
+            },
+            error: function() {
+                swal.close()
+                error();
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal.close();
+                    completed();
+                    console.log(response)
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        })
+    })
+
+    $('body').on('click', '#backToDetail', function(e) {
+        e.preventDefault()
+        $('#manifest_edit_invoice').hide();
+        $('#manifest_detail').show()
+    })
 })
 
 // Edit barcode

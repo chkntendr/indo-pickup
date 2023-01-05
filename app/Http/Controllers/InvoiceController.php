@@ -132,4 +132,25 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    public function save($id, Request $request) {
+        if ($request->ajax()) {
+            $invoice = Invoice::find($id);
+
+            $invoice->tujuan            = $request->tujuan;
+            $invoice->barcode           = $request->resi;
+            $invoice->koli              = $request->koli;
+            $invoice->berat             = $request->berat;
+            $invoice->harga             = $request->harga;
+            $invoice->packing           = $request->packing;
+            $invoice->total_kiriman     = $request->total;
+            $invoice->keterangan        = $request->keterangan;
+            $invoice->save();
+
+            return response()->json([
+                "status"    => 200,
+                "data"      => $invoice
+            ]);
+        }
+    }
 }
