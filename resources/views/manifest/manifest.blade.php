@@ -4,7 +4,17 @@
 @section('content')
 <section class="section">
     <div class="row" id="manifest_detail" style="display: none">
-        <div class="col-lg">
+        <div class="col-md-4" id="manifest_edit_invoice" style="display: none">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <form action="">
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
             <div class="card">
                 <div class="card-body">
                     <h5 id="card-title" class="card-title">Detail Manifest | <span></span></h5>
@@ -61,17 +71,10 @@
                     </div>
                 </div>
             </div>
-            @if (Auth::user()->roles == "Finance")
             <button disabled class="btn btn-success btn-sm" onclick="createManifest()">
                 <i class="ri-add-circle-line"></i>
                 Manifest baru
             </button>
-            @else
-            <a class="btn btn-success btn-sm" onclick="createManifest()">
-                <i class="ri-add-circle-line"></i>
-                Manifest baru
-            </a>
-            @endif
         </div>
 
         <div class="col-lg-5" style="display: none;" id="add_barcode_tab">
@@ -94,32 +97,6 @@
                             Upload
                         </button>
                     </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-5" style="display: none;" id="edit_barcode_tab">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Barcode</h5>
-                    <form>
-                        <div class="form-group">
-                            <label for="manifest-id-edit">ID Manifest</label>
-                            <input type="text" readonly class="form-control form-control-sm" id="manifest-id-edit">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" readonly id="mnf-id" hidden>
-                            <label for="barcode_manifest_edit">Edit barcode</label>
-                            <textarea class="form-control form-control-sm" name="" id="barcode_manifest_edit" cols="20" rows="7"></textarea>
-                        </div>
-                    </form>
-                    <button id="save-barcode" onclick="updateBarcode()" class="btn btn-success btn-sm">
-                        <i class="ri-save-3-line"></i>
-                        Perbarui
-                    </button>
-                    <button id="close-edit-barcode-tab" class="btn btn-gray btn-sm">
-                        Tutup
-                    </button>
                 </div>
             </div>
         </div>

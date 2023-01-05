@@ -350,7 +350,6 @@ $('body').on('click', '#prosesInv[data-remote]', function(e) {
 $('body').on('click', '#btn-manifest-barcode[data-remote]', function(e) {
     e.preventDefault();
     $('#add_barcode_tab').toggle();
-    $('#edit_barcode_tab').hide();
     var id = $(this).data('remote');
     $('#id_manifest_upload').val(id);
     $('#mnf-id').val(id)
@@ -512,6 +511,8 @@ $(document).ready(function(e) {
             },
             success: function(response) {
                 if (response.status == 200) {
+                    $('#add_barcode_tab').hide()
+                    $("#upload-manifest-to-invoice")[0].reset();
                     swal.close();
                     completed();
                 }
@@ -1169,26 +1170,8 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
 // Edit invoice barcode
 $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
     e.preventDefault();
-    var span = document.getElementById('barcodeSpan');
     var id = $(this).data('remote');
-    $('#manifest_table_col').hide();
-    $('#edit-barcode-detail').show();
-    $.ajax({
-        url: `/invoice/edit/${id}`,
-        type: 'GET',
-        success: function(response) {
-            if (response.status == 200) {
-                var barcode = response.data.barcode
-                span.innerHTML(`<span>${barcode}</span>`)
-            }
-        }
-    })
-
-    $('body').on('click', '#backButtonInvoice', function(e) {
-        e.preventDefault()
-        $('#manifest_table_col').show();
-        $('#edit-barcode-detail').hide();
-    })
+    $('#manifest_edit_invoice').toggle();
 })
 
 // Edit barcode
