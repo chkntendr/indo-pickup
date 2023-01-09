@@ -64,6 +64,7 @@ Route::get('/invoice', [App\Http\Controllers\InvoiceController::class, 'index'])
 // Route::post('/invoice/store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('storeID');
 Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('edit');
 Route::get('/invoice/data', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoiceData');
+Route::get('/invoice/sumTotal', [App\Http\Controllers\InvoiceController::class, 'sumTotal'])->name('invoiceSum');
 Route::put('/invoice/save/{id}', [App\Http\Controllers\InvoiceController::class, 'save'])->name('invoiceSave');
 Route::post('/invoice/import', [App\Http\controllers\InvoiceController::class, 'import'])->name('import');
 

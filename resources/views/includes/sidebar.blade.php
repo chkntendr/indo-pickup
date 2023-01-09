@@ -9,27 +9,18 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-        <a class="nav-link {{ (request()->segment(1) == 'report') ? '' : 'collapsed'}}" href="{{ route('report') }}" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ (request()->segment(1) == 'manifest') ? '' : 'collapsed'}}" href="{{ route('manifest') }}">
             <i class="ri-booklet-fill"></i>
-            <span>Report</span>
-            <i class="bi bi-chevron-down ms-auto"></i>
+            <span>Manifest</span>
         </a>
-
-        <ul id="report-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li class="nav-item">
-                <a href="{{ route('manifest') }}">
-                    <i class="ri-arrow-right-s-line"></i>
-                    <span>Manifest</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('invoice') }}">
-                    <i class="ri-arrow-right-s-line"></i>
-                    <span>Invoice</span>
-                </a>
-            </li>
-        </ul>
     </li><!-- End Report Nav -->
+
+    <li class="nav-item">
+        <a href="{{ route('invoice') }}" class="nav-link {{ (request()->segment(1) == 'invoice') ? '' : 'collapsed' }}">
+            <i class="ri-money-dollar-box-line"></i>
+            <span>Invoice</span>
+        </a>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link {{ (request()->segment(1) == 'driver') ? '' : 'collapsed'}}" href="{{ route('driver') }}">
@@ -77,6 +68,13 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
+        <a class="nav-link {{ (request()->segment(1) == 'manifest') ? '' : 'collapsed'}}" href="{{ route('manifest') }}">
+            <i class="ri-booklet-fill"></i>
+            <span>Manifest</span>
+        </a>
+    </li><!-- End Report Nav -->
+
+    <li class="nav-item">
         <a class="nav-link {{ (request()->segment(1) == 'driver') ? '' : 'collapsed'}}" href="{{ route('driver') }}">
             <i class="bi bi-car-front-fill"></i>
             <span>Driver</span>
@@ -104,26 +102,10 @@
     </li><!-- End Components Nav -->
     @elseif(Auth::user()->roles == "Finance")
     <li class="nav-item">
-        <a class="nav-link {{ (request()->segment(1) == 'report') ? '' : 'collapsed'}}" href="{{ route('report') }}" data-bs-target="#report-nav" data-bs-toggle="collapse" href="#">
-            <i class="ri-booklet-fill"></i>
-            <span>Report</span>
-            <i class="bi bi-chevron-down ms-auto"></i>
+        <a href="{{ route('invoice') }}" class="nav-link {{ (request()->segment(1) == 'invoice') ? '' : 'collapsed' }}">
+            <i class="ri-money-dollar-box-line"></i>
+            <span>Invoice</span>
         </a>
-
-        <ul id="report-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li class="nav-item">
-                <a href="{{ route('manifest') }}">
-                    <i class="bi bi-circle"></i>
-                    <span>Manifest</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('invoice') }}">
-                    <i class="bi bi-circle"></i>
-                    <span>Invoice</span>
-                </a>
-            </li>
-        </ul>
-    </li><!-- End Report Nav -->
+    </li>
     @endif
 </ul>

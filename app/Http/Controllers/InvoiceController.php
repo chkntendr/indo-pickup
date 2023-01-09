@@ -78,11 +78,6 @@ class InvoiceController extends Controller
 
             return DataTables::of($data)
                             ->addIndexColumn()
-                            // ->addColumn('manifest', function(Invoice $invoice) {
-                            //     return $invoice->manifest->map(function($manifest){
-                            //         return $invoice->m_id;
-                            //     })->implode('<br>');
-                            // })
                             ->addColumn('action', function($data) {
                                 $actionBtn = '<a id="btn-edit-barInvoice" type="button" data-remote="'.$data->id.'" class="edit ri-edit-box-line" style="color: orange"></a>
                                 <a type="button" id="btn-delete-barInvoice" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
@@ -117,8 +112,7 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
-    {
+    public function update(Request $request, Invoice $invoice) {
         //
     }
 
@@ -128,29 +122,34 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invoice $invoice)
-    {
+    public function destroy(Invoice $invoice) {
         //
     }
 
     public function save($id, Request $request) {
-        if ($request->ajax()) {
-            $invoice = Invoice::find($id);
+        $invoice = Invoice::find($id);
+        $invoice->tujuan            = $request->tujuan;
+        $invoice->barcode           = $request->resi;
+        $invoice->koli              = $request->koli;
+        $invoice->berat             = $request->berat;
+        $invoice->harga             = $request->harga;
+        $invoice->packing           = $request->packing;
+        $invoice->total_kiriman     = $request->total;
+        $invoice->keterangan        = $request->keterangan;
+        $invoice->save();
 
-            $invoice->tujuan            = $request->tujuan;
-            $invoice->barcode           = $request->resi;
-            $invoice->koli              = $request->koli;
-            $invoice->berat             = $request->berat;
-            $invoice->harga             = $request->harga;
-            $invoice->packing           = $request->packing;
-            $invoice->total_kiriman     = $request->total;
-            $invoice->keterangan        = $request->keterangan;
-            $invoice->save();
+        return response()->json([
+            "status"    => 200,
+            "data"      => $invoice
+        ]);
+    }
 
-            return response()->json([
-                "status"    => 200,
-                "data"      => $invoice
-            ]);
-        }
+    public function sumTotal() {
+        $invoice = Invoice::sum('total_kiriman');
+
+        return response()->json([
+            "status"    => 200,
+            "data"      => $invoice
+        ]);
     }
 }

@@ -10,6 +10,17 @@ $(function(e) {
 /**
  * @DataTable
  */
+// Detail pickup table
+$(function() {
+    var detail_pickup_table = $('#detail_pickup_table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/manifest/data'
+        }
+    })
+})
+
 // Invoice Table
 $(function() {
     var table = $('#invoiceTable').DataTable({
@@ -81,6 +92,7 @@ $(function() {
             url: '/home/kargo'
         },
         columns: [
+            { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false },
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'tipe', name: 'tipe' },
             { data: 'driver', name: 'driver' },
@@ -108,6 +120,7 @@ $(function() {
             url: '/home/dokumen'
         },
         columns: [
+            { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false },
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'tipe', name: 'tipe' },
             { data: 'driver', name: 'driver' },
@@ -312,10 +325,41 @@ $('body').on('click', '#btn-detail-manifest[data-remote]', function(e) {
 $('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
     e.preventDefault();
     var id = $(this).data('remote');
+    $('#detail-pickup').toggle();
+    $('#data-pickup').hide();
+    $('#actionButton').hide();
+
+    $('body').on('click', '#backToHome', function(e) {
+        e.preventDefault()
+        $('#detail-pickup').hide()
+        $('#data-pickup').show();
+        $('#actionButton').show();
+    })
     
+    $('body').on('click', '#option_detail_button', function(e) {
+        $('#option_detail_pickup').toggle();
+        $('#id_pickup').val(id)
+    })
 })
 
 // Invoice
+$(function() {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'IDR',
+    })
+    $.ajax({
+        url: '/invoice/sumTotal',
+        type: 'GET',
+        success: function(response) {
+            if (response.status == 200) {
+                console.log(response)
+                $('#totalSum').text(formatter.format(response.data));
+            }
+        }
+    })
+})
+
 $('body').on('click', '#prosesInv[data-remote]', function(e) {
     e.preventDefault();
     var id = $(this).data('remote');
@@ -790,6 +834,8 @@ function simpanPickup() {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                $('#inputForm').hide();
+                $('#kargo').hide();
                 tableKargo.draw();
                 tableDokumen.draw();
             }
@@ -1171,8 +1217,9 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
 $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
     e.preventDefault();
     var id = $(this).data('remote');
-    $('#manifest_edit_invoice').toggle();
-    $('#manifest_detail').hide()
+    $('#edit_invoice').toggle();
+    $('#invoice_detail').hide();
+    $('#widget_card').hide();
     $.ajax({
         url: `/invoice/edit/${id}`,
         type: 'GET',
@@ -1191,16 +1238,19 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
 
     $('body').on('click', '#simpan_manifest_baru', function(e) {
         e.preventDefault()
+        var InvoiceTable = $('#invoiceTable').DataTable();
         var data_edit = {
             'tujuan'    : $('#manifest_tujuan').val(),
             'resi'      : $('#manifest_resi').val(),
             'koli'      : $('#manifest_koli').val(),
-            'berat'      : $('#manifest_berat').val(),
-            'harga'      : $('#manifest_harga').val(),
-            'packing'      : $('#manifest_packing').val(),
-            'total'      : $('#manifest_total').val(),
-            'keterangan'      : $('#manifest_keterangan').val(),
+            'berat'     : $('#manifest_berat').val(),
+            'harga'     : $('#manifest_harga').val(),
+            'packing'   : $('#manifest_packing').val(),
+            'total'     : $('#manifest_total').val(),
+            'keterangan': $('#manifest_keterangan').val(),
         }
+        console.log(data_edit)
+        
         var completed = function() {
             Swal.fire({
                 icon: 'success',
@@ -1234,10 +1284,11 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
         $.ajax({
             url: `/invoice/save/${id}`,
             type: "PUT",
+            dataType: 'json',
+            cache: false,
             data: data_edit,
             beforeSend: function() {
                 loading();
-                console.log(data_edit)
             },
             error: function() {
                 swal.close()
@@ -1248,18 +1299,20 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
                     swal.close();
                     completed();
                     console.log(response)
+                    $('#edit_invoice').hide();
+                    $('#invoice_detail').show();
+                    $('#widget_card').show();
+                    InvoiceTable.draw();
                 }
             },
-            cache: false,
-            contentType: false,
-            processData: false,
         })
     })
 
     $('body').on('click', '#backToDetail', function(e) {
         e.preventDefault()
-        $('#manifest_edit_invoice').hide();
-        $('#manifest_detail').show()
+        $('#edit_invoice').hide();
+        $('#invoice_detail').show();
+        $('#widget_card').show();
     })
 })
 

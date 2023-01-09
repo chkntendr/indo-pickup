@@ -64,14 +64,15 @@ class HomeController extends Controller
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
-                            $actionBtn = '
-                            <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail ri-search-line"></a>
-                            <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
-                            <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                $actionBtn = '
+                                <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail ri-search-line"></a>
+                                <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
-                            return $actionBtn;
+                                return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->addColumn('checkbox', '<input type="checkbox" name="pickup_checkbox[]" class="pickup_checkbox" value="{{$id}}" />')
+                            ->rawColumns(['action', 'checkbox'])
                             ->make(true);
         }
     }
@@ -90,7 +91,8 @@ class HomeController extends Controller
 
                                 return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->addColumn('checkbox', '<input type="checkbox" name="pickup_checkbox[]" class="pickup_checkbox" value="{{$id}}" />')
+                            ->rawColumns(['action', 'checkbox'])
                             ->make(true);
         }
     }

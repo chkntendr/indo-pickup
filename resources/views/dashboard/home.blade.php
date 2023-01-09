@@ -1,9 +1,57 @@
 @extends('layouts.app')
-<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 @section('title', 'Dashboard')
 @section('content')
-<section class="section">
-    <div class="my-2">
+<section class="section dashboard">
+    <div class="row" id="detail-pickup" style="display: none">
+        <div class="col-lg">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Detail</h3>
+                    <div class="dataTable-container">
+                        <table class="table datatable dataTable-table" id="detail_pickup_table" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Resi</th>
+                                    <th>Tujuan</th>
+                                    <th>Berat</th>
+                                    <th>Koli</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-primary" id="backToHome">
+                        <i class="ri-arrow-go-back-line"></i>
+                        Back
+                    </button>
+                    <button class="btn btn-sm btn-success" id="option_detail_button">
+                        <i class="ri-more-2-fill"></i>
+                        Options
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" style="display: none" id="option_detail_pickup">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Options</h3>
+                    <form id="upload_detail_manifest" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="text" id="id_pickup">
+                            <label for="file">Pilih file</label>
+                            <input type="file" name="file" id="file" class="form-control form-control-sm">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-2" id="actionButton">
         <button onclick="inputForm()" class="btn btn-sm btn-primary">
             <i class="ri-file-add-line"></i>
             Baru
@@ -11,6 +59,9 @@
         <button onclick="moreTab()" class="btn btn-sm btn-warning">
             <i class="ri-more-2-fill"></i>
             Lainnya
+        </button>
+        <button id="create-invoice" class="btn btn-sm btn-success">
+            Invoice
         </button>
     </div>
     <div class="row" style="display: none" id="moreTab">
@@ -184,7 +235,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="data-pickup">
         <div class="col-lg">
             <div class="card">
                 <div class="card-body">
@@ -204,6 +255,7 @@
                                     <table class="table datatable dataTable-table" id="dokumenTable" style="width: 100%">
                                         <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="check_all_dokumen" id="check_all_dokumen"></th>
                                                 <th width="5%">No</th>
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
@@ -229,6 +281,7 @@
                                     <table class="table datatable dataTable-table" id="pickupTable" style="width: 100%">
                                         <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="check_all_kargo" id="check_all_kargo"></th>
                                                 <th>No</th>
                                                 <th>Tipe</th>
                                                 <th>Driver</th>

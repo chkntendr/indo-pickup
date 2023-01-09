@@ -2,76 +2,7 @@
 
 @section('title', 'Report')
 @section('content')
-    <section class="section">
-        <div class="row" id="manifest_edit_invoice" style="display: none;">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Edit Manifest</h5>
-                        <form class="row g-3">
-                            <input type="text" hidden id="idManifest">
-                            <div class="col-md-6">
-                                <label for="manifest_tujuan" class="form-label">Tujuan</label>
-                                <input type="text" class="form-control" id="manifest_tujuan">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="manifest_resi" class="form-label">Barcode</label>
-                                <input type="text" class="form-control" id="manifest_resi">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="manifest_koli" class="form-label">Koli</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="manifest_koli">
-                                    <span class="input-group-text" id="inputGroupPrepend">QTY</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="manifest_berat" class="form-label">Berat</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="manifest_berat">
-                                    <span class="input-group-text" id="inputGroupPrepend">KG</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="manifest_harga" class="form-label">Harga</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="manifest_harga">
-                                    <span class="input-group-text" id="inputGroupPrepend">Rp</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="manifest_packing" class="form-label">Packing</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="manifest_packing">
-                                    <span class="input-group-text" id="inputGroupPrepend">Rp</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="manifest_total" class="form-label">Total</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="manifest_total">
-                                    <span class="input-group-text" id="inputGroupPrepend">Rp</span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="manifest_keterangan" class="form-label">Keterangan</label>
-                                <textarea id="manifest_keterangan" class="form-control" cols="30" rows="10"></textarea>
-                            </div>
-                            <div>
-                                <button id="simpan_manifest_baru" class="btn btn-sm btn-success">
-                                    <i class="ri-save-3-line"></i>
-                                    Simpan
-                                </button>
-                                <button class="btn btn-sm btn-secondary" id="backToDetail">
-                                    <i class="ri-arrow-go-back-line"></i>
-                                    Kembali
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="section dashboard">
         <div class="row" id="manifest_detail" style="display: none">
             <div class="col-lg">
                 <div class="card">
@@ -167,15 +98,3 @@
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $('document').ready(function () {
-        $('input').keyup(function () {
-        var harga = parseInt($('#manifest_harga').val());
-        var packing = parseInt($('#manifest_packing').val());
-
-        var total = harga + packing
-
-        $('#manifest_total').val(total)
-        })
-    })
-</script>
