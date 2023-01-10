@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pickup;
 use App\Models\Client;
 use App\Models\Driver;
+use App\Models\Invoice;
 use App\Imports\ImportPickup;
 use App\Exports\PickupExport;
 use DataTables;
@@ -65,9 +66,9 @@ class HomeController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
                                 $actionBtn = '
-                                <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail ri-search-line"></a>
+                                <a id="btn-detail-pickup" data-remote="'.$data->id.'" type="button" class="detail ri-search-line"></a>
                                 <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                <a type="button" id="btn-delete-pickup" data-remote="'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
                                 return $actionBtn;
                             })
@@ -85,7 +86,7 @@ class HomeController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function($data) {
                                 $actionBtn = '
-                                <a id="btn-detail-pickup" data-remote="/home/detail/'.$data->id.'" type="button" class="detail ri-search-line"></a>
+                                <a id="btn-detail-pickup" data-remote="'.$data->id.'" type="button" class="detail ri-search-line"></a>
                                 <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
                                 <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
@@ -127,6 +128,7 @@ class HomeController extends Controller
 
     public function delete($id) {
         Pickup::where('id', $id)->delete();
+        Invoice::where('mnf_id', $id)->delete();
 
         return response()->json([
             'success' => true,

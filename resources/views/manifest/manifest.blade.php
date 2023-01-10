@@ -80,8 +80,7 @@
                                 <input type="text" readonly id="mnf-id" hidden>
                                 <input type="text" id="id_manifest_upload" hidden>
                                 <label for="file">Pilih File</label>
-                                <input class="form-control" type="file" name="file" id="file"
-                                    placeholder="Masukan File...">
+                                <input class="form-control" type="file" name="file" id="file" placeholder="Masukan File...">
                             </div>
                             <button type="submit" class="btn btn-success btn-sm my-2">
                                 <i class="ri-upload-cloud-2-line"></i>

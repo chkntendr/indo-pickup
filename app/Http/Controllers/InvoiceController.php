@@ -56,25 +56,19 @@ class InvoiceController extends Controller
         ]);
 
         if($files = $request->file('file')) {
-            $import = new InvoiceImport($request->mnf_id);
+            $import = new InvoiceImport($request->id_pickup);
             $upload = Excel::import($import, $request->file('file')->store('files'));
-
-            $count = Invoice::where('mnf_id', $request->mnf_id)->count();
-            $manifest = Manifest::find($request->mnf_id);
-            $manifest->total = $count;
-            $manifest->save();
 
             return response()->json([
                 'status'    => 200,
                 'message'   => 'Data berhasil diimport!',
-                'data'      => $manifest
             ]);
         }
     }
 
-    public function show(Request $request) {
+    public function show($id, Request $request) {
         if ($request->ajax()) {
-            $data = Invoice::latest()->get();
+            $data = Invoice::where('mnf_id', $id)->get();
 
             return DataTables::of($data)
                             ->addIndexColumn()

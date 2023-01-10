@@ -8,10 +8,10 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class InvoiceImport implements ToModel, WithStartRow
 {
-    protected $mnf_id;
+    protected $id_pickup;
 
-    public function __construct($mnf_id) {
-        $this->mnf_id = $mnf_id;
+    public function __construct($id_pickup) {
+        $this->id_pickup = $id_pickup;
     }
 
     public function startRow(): int {
@@ -20,7 +20,7 @@ class InvoiceImport implements ToModel, WithStartRow
 
     public function model(array $row) {
         return new Invoice([
-            'mnf_id'        => $this->mnf_id,
+            'mnf_id'        => $this->id_pickup,
             'tujuan'        => $row[0],
             'barcode'       => $row[1],
             'koli'          => $row[2],

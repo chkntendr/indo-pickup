@@ -6,54 +6,88 @@ $(function(e) {
         }
     })
 })
+// Detail Pickup
+$('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
+    e.preventDefault();
+    var id = $(this).data('remote');
+    $('#detail-pickup').toggle();
+    $('#data-pickup').hide();
+    $('#actionButton').hide();
+    
+    $('body').on('click', '#option_detail_button', function() {
+        $('#option_detail_pickup').toggle();
+        $('#id_pickup').val(id)
+    })
+
+    $('body').on('click', '#backToHome', function() {
+        $('#detail-pickup').hide()
+        $('#data-pickup').show();
+        $('#actionButton').show();
+    })    
+})
 
 /**
  * @DataTable
  */
 // Detail pickup table
-$(function() {
+$('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
+    e.preventDefault()
+    var id = $(this).data('remote');
     var detail_pickup_table = $('#detail_pickup_table').DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         ajax: {
-            url: '/manifest/data'
-        }
+            url: `/invoice/data/${id}`
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'barcode', name: 'barcode' },
+            { data: 'tujuan', name: 'tujuan' },
+            { data: 'berat', name: 'berat', render: function(data) {
+                return data +' '+ "KG";
+            } },
+            { data: 'koli', name: 'koli', render: function(data) {
+                return data +' '+ "Pcs";
+            } },
+            { data: 'keterangan', name: 'keterangan' }
+        ]
     })
 })
 
 // Invoice Table
-$(function() {
-    var table = $('#invoiceTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: '/invoice/data'
-        },
-        columns: [
-            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'mnf_id', name: 'mnf_id' },
-            { data: 'uploaded_at', name: 'tanggal' },
-            { data: 'tujuan', name: 'tujuan' },
-            { data: 'barcode', name: 'barcode' },
-            { data: 'koli', name: 'koli',  render: function (data, type, row) {
-                return data +' '+ "pcs";
-            }},
-            { data: 'berat', name: 'berat', render: function(data, type, row) {
-                return data +' '+ "KG";
-            }},
-            { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-            { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-            { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-            { data: 'keterangan', name: 'keterangan' },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: true,
-                searchable: true,
-            }
-        ]
-    })
-})
+// $(function() {
+//     var table = $('#invoiceTable').DataTable({
+//         processing: true,
+//         serverSide: true,
+//         ajax: {
+//             url: '/invoice/data'
+//         },
+//         columns: [
+//             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+//             { data: 'mnf_id', name: 'mnf_id' },
+//             { data: 'uploaded_at', name: 'tanggal' },
+//             { data: 'tujuan', name: 'tujuan' },
+//             { data: 'barcode', name: 'barcode' },
+//             { data: 'koli', name: 'koli',  render: function (data, type, row) {
+//                 return data +' '+ "pcs";
+//             }},
+//             { data: 'berat', name: 'berat', render: function(data, type, row) {
+//                 return data +' '+ "KG";
+//             }},
+//             { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+//             { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+//             { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
+//             { data: 'keterangan', name: 'keterangan' },
+//             {
+//                 data: 'action',
+//                 name: 'action',
+//                 orderable: true,
+//                 searchable: true,
+//             }
+//         ]
+//     })
+// })
 
 // Manifest Table
 $(function() {
@@ -321,27 +355,6 @@ $('body').on('click', '#btn-detail-manifest[data-remote]', function(e) {
     })
 })
 
-// Detail Pickup
-$('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
-    e.preventDefault();
-    var id = $(this).data('remote');
-    $('#detail-pickup').toggle();
-    $('#data-pickup').hide();
-    $('#actionButton').hide();
-
-    $('body').on('click', '#backToHome', function(e) {
-        e.preventDefault()
-        $('#detail-pickup').hide()
-        $('#data-pickup').show();
-        $('#actionButton').show();
-    })
-    
-    $('body').on('click', '#option_detail_button', function(e) {
-        $('#option_detail_pickup').toggle();
-        $('#id_pickup').val(id)
-    })
-})
-
 // Invoice
 $(function() {
     const formatter = new Intl.NumberFormat('en-US', {
@@ -505,14 +518,14 @@ function moreTab() {
 
 // Upload manifest
 $(document).ready(function(e) {
-    var manifestTable = $('#manifestTable').DataTable();
+    var detail_pickup_table = $('#detail_pickup_table').DataTable();
     var id_manifest = $('#id_manifest_upload').val();
 
-    $('#upload-manifest-to-invoice').submit(function(e) {
+    $('#upload_detail_manifest').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
-        formData.append('mnf_id', $('#id_manifest_upload').val())
-        var id = $('#mnf-id').val();
+        formData.append('id_pickup', $('#id_pickup').val())
+        var id = $('#id_pickup').val();
         var completed = function() {
             Swal.fire({
                 icon: 'success',
@@ -554,13 +567,12 @@ $(document).ready(function(e) {
                 error();
             },
             success: function(response) {
-                if (response.status == 200) {
-                    $('#add_barcode_tab').hide()
-                    $("#upload-manifest-to-invoice")[0].reset();
+                if (response.status == 200) {                    
+                    $("#upload_detail_manifest")[0].reset();
                     swal.close();
                     completed();
                 }
-                manifestTable.draw()
+                detail_pickup_table.draw()
             },
             cache: false,
             contentType: false,
@@ -1175,7 +1187,7 @@ $('body').on('click', '#btn-delete-driver[data-remote]', function (e) {
 // Delete Pickup
 $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
     e.preventDefault()
-    var url = $(this).data('remote');
+    var id = $(this).data('remote');
     Swal.fire({
         title: "Data akan dihapus secara permanen!",
         text: "Lanjutkan?",
@@ -1186,7 +1198,7 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
     }).then((result) => {
         if(result.isConfirmed) {
             $.ajax({
-                url: url,
+                url: `/home/delete/${id}`,
                 type: "DELETE",
                 dataType: "json",
                 data: {

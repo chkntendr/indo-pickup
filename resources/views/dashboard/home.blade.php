@@ -40,12 +40,16 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Options</h3>
-                    <form id="upload_detail_manifest" method="post" enctype="multipart/form-data">
+                    <form id="upload_detail_manifest" enctype="multipart/form-data">
                         <div class="form-group">
-                            <input type="text" id="id_pickup">
+                            <input type="text" id="id_pickup" hidden>
                             <label for="file">Pilih file</label>
                             <input type="file" name="file" id="file" class="form-control form-control-sm">
                         </div>
+                        <button type="submit" class="btn btn-sm btn-success my-2">
+                            <i class="ri-upload-cloud-2-line"></i>
+                            Upload
+                        </button>
                     </form>
                 </div>
             </div>
