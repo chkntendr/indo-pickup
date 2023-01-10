@@ -139,11 +139,49 @@ class InvoiceController extends Controller
     }
 
     public function sumTotal() {
-        $invoice = Invoice::sum('total_kiriman');
+        $invoice = Invoice::where('is_added', true)->sum('total_kiriman');
 
         return response()->json([
             "status"    => 200,
             "data"      => $invoice
+        ]);
+    }
+
+    public function cekAdded(Request $request) {
+        if($request->ajax()) {
+            $invoice = Invoice::where('is_added', true)->get();
+
+            return DataTables::of($invoice)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($data) {
+                                $actionBtn = '<a id="btn-edit-barInvoice" type="button" data-remote="'.$data->id.'" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a type="button" id="btn-delete-barInvoice" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                return $actionBtn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
+    }
+
+    public function invoiceMake(Request $request) {
+        $id_array = $request->id;
+        $invoice = Invoice::whereIn('mnf_id', $id_array)
+                            ->update([
+                                'is_added' => true
+                            ]);
+
+        return response()->json([
+            "status"    => 200,
+            "data"      => $invoice
+        ]);
+    }
+
+    public function cekid(Request $request) {
+        $id_array = $request->id;
+        $invoice = Invoice::whereIn('mnf_id', $id_array)->get();
+
+        return response()->json([
+            $invoice
         ]);
     }
 }

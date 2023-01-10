@@ -23,6 +23,7 @@ Auth::routes();
 
 // Route Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/getid', [App\Http\Controllers\HomeController::class, 'getid'])->name('homeGetID');
 Route::get('/home/edit/{id}', [App\Http\Controllers\HomeController::class, 'show'])->name('editPickup');
 Route::put('/home/pickup/update/{id}', [App\Http\Controllers\HomeController::class, 'editSave'])->name('editSave');
 Route::get('/home/kargo', [App\Http\Controllers\HomeController::class, 'getKargo'])->name('homeKargo');
@@ -63,8 +64,11 @@ Route::get('/manifest/invoiceload', [App\Http\Controllers\ManifestController::cl
 Route::get('/invoice', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoice');
 // Route::post('/invoice/store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('storeID');
 Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('edit');
+Route::get('/invoice/cekid', [App\Http\Controllers\InvoiceController::class, 'cekid'])->name('invoiceCekID');
 Route::get('/invoice/data/{id}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoiceData');
+Route::get('/invoice/data', [App\Http\Controllers\InvoiceController::class, 'cekAdded'])->name('invoiceCek');
 Route::get('/invoice/sumTotal', [App\Http\Controllers\InvoiceController::class, 'sumTotal'])->name('invoiceSum');
+Route::put('/invoice/make', [App\Http\Controllers\InvoiceController::class, 'invoiceMake'])->name('invoiceMake');
 Route::put('/invoice/save/{id}', [App\Http\Controllers\InvoiceController::class, 'save'])->name('invoiceSave');
 Route::post('/invoice/import', [App\Http\controllers\InvoiceController::class, 'import'])->name('import');
 

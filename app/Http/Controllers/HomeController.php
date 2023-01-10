@@ -52,7 +52,7 @@ class HomeController extends Controller
         $pickup = Pickup::where('id', $id)->get();
 
         return response()->json([
-            'success'   => true,
+            'status'    => 200,
             'message'   => 'Detail',
             'data'      => $pickup
         ]);
@@ -60,7 +60,6 @@ class HomeController extends Controller
 
     public function getKargo(Request $request) {
         if ($request->ajax()) {
-
             $data = Pickup::latest()->where('tipe', "Kargo")->get();
             return Datatables::of($data)
                             ->addIndexColumn()
@@ -180,6 +179,14 @@ class HomeController extends Controller
             'success'   => true,
             'message'   => 'Data berhasil diperbaharui!',
             'data'      => $pickup
+        ]);
+    }
+
+    public function getid() {
+        $id = Pickup::select('id')->get();
+
+        return response()->json([
+            'data'  => $id
         ]);
     }
 }

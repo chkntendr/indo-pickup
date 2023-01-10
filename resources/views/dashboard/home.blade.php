@@ -3,11 +3,13 @@
 @section('title', 'Dashboard')
 @section('content')
 <section class="section dashboard">
-    <div class="row" id="detail-pickup" style="display: none">
+    {{-- Detail Pickup Kargo --}}
+    <div class="row" id="detail-pickup-kargo" style="display: none">
         <div class="col-lg">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Detail</h3>
+                    <input type="text" id="tipe_detail" hidden>
                     <div class="dataTable-container">
                         <table class="table datatable dataTable-table" id="detail_pickup_table" style="width: 100%;">
                             <thead>
@@ -55,19 +57,79 @@
             </div>
         </div>
     </div>
+
+    {{-- Detail Pickup Dokumen --}}
+    <div class="row" id="detail-pickup-dokumen" style="display: none">
+        <div class="col-lg">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Detail</h3>
+                    <input type="text" id="tipe_detail" hidden>
+                    <div class="dataTable-container">
+                        <table class="table datatable dataTable-table" id="detail_pickup_table" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Resi</th>
+                                    <th>Tujuan</th>
+                                    <th></th>
+                                    <th>Koli</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-primary" id="backToHome">
+                        <i class="ri-arrow-go-back-line"></i>
+                        Back
+                    </button>
+                    <button class="btn btn-sm btn-success" id="option_detail_button">
+                        <i class="ri-more-2-fill"></i>
+                        Options
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" style="display: none" id="option_detail_pickup">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Options</h3>
+                    <form id="upload_detail_manifest" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="text" id="id_pickup" hidden>
+                            <label for="file">Pilih file</label>
+                            <input type="file" name="file" id="file" class="form-control form-control-sm">
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-success my-2">
+                            <i class="ri-upload-cloud-2-line"></i>
+                            Upload
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Action Button --}}
     <div class="my-2" id="actionButton">
         <button onclick="inputForm()" class="btn btn-sm btn-primary">
             <i class="ri-file-add-line"></i>
             Baru
         </button>
+        <button id="create-invoice" onclick="createInvoice()" class="btn btn-sm btn-success">
+            Invoice
+        </button>
         <button onclick="moreTab()" class="btn btn-sm btn-warning">
             <i class="ri-more-2-fill"></i>
             Lainnya
         </button>
-        <button id="create-invoice" class="btn btn-sm btn-success">
-            Invoice
-        </button>
     </div>
+
+    {{-- More Tab --}}
     <div class="row" style="display: none" id="moreTab">
         <div class="col-lg-7">
             <div class="card" style="height: 190px">
@@ -118,6 +180,8 @@
             </div>
         </div>
     </div>
+
+    {{-- Form --}}
     <div class="row" style="display: none" id="inputForm">
         <div class="col-lg-8">
             <div class="card">
@@ -239,6 +303,8 @@
             </div>
         </div>
     </div>
+
+    {{-- Data Pickup --}}
     <div class="row" id="data-pickup">
         <div class="col-lg">
             <div class="card">
@@ -286,6 +352,7 @@
                                         <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="check_all_kargo" id="check_all_kargo"></th>
+                                                {{-- <th>Status</th> --}}
                                                 <th>No</th>
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
