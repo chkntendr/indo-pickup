@@ -35,21 +35,45 @@ $(function(e) {
     getTotalInvoice();
 })
 
-$(function() {
-    $.ajax({
-        url: '/home/getid',
-        type: 'GET',
-        success: function(response) {
-            for (let i = 0; i < response.data.length; i++) {
-                pickup_id = response.data[i].id
-                var id = {pickup_id}
-                // var pickup_id = []
-                // pickup_id.push(id);
+// Invoice done
+function invoiceDone() {
+    var loading = function() {
+        Swal.fire({
+            title: 'Tunggu Sebentar ya!',
+            html: 'Karena sesungguhnya Tuhan bersama orang yang sabar!',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            timer: 5000,
+            willOpen: () => {
+                Swal.showLoading();
             }
+        })
+    }
+    
+    var error = function() {
+        Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            message: 'Aduh ada yang error nih, coba lagi nanti ya!',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+    Swal.fire({
+        title: 'Udah yakin nih?',
+        text: 'Mau lanjut?',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Ngga deh',
+        confirmButtonText: 'Yakin donggg!',
+    }).then((result) => {
+        if(result.isConfirmed) {
+            var id = $('#btn-invoice-done').data(remote)
             console.log(id)
         }
     })
-})
+}
 
 // Create invoice
 function createInvoice() {
@@ -69,6 +93,14 @@ function createInvoice() {
             title: 'Error!',
             icon: 'error',
             message: 'Import Gagal!',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+    var success = function() {
+        Swal.fire({
+            title: 'Invoice berhasil dibuat!',
+            icon: 'success',
             showConfirmButton: false,
             timer: 1500
         })
@@ -103,6 +135,7 @@ function createInvoice() {
                 success: function(response) {
                     if (response.status == 200) {
                         swal.close()
+                        success()
                         console.log(response)
                     }
                 }
@@ -190,30 +223,16 @@ $(function() {
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'mnf_id', name: 'mnf_id', render: function(data)
-            {
-                return "MNF-"+data
-            },
-            searchable: true,
-            },
-            { data: 'uploaded_at', name: 'tanggal' },
-            { data: 'tujuan', name: 'tujuan' },
-            { data: 'barcode', name: 'barcode' },
-            { data: 'koli', name: 'koli',  render: function (data, type, row) {
-                return data +' '+ "pcs";
-            }},
-            { data: 'berat', name: 'berat', render: function(data, type, row) {
-                return data +' '+ "KG";
-            }},
-            { data: 'harga', name: 'harga', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-            { data: 'packing', name: 'packing', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-            { data: 'total_kiriman', name: 'total_kiriman', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )},
-            { data: 'keterangan', name: 'keterangan' },
+            { data: 'tipe', name: 'tipe' },
+            { data: 'client', name: 'client' },
+            { data: 'date_done', name: 'date_done' },
+            { data: 'jumlah', name: 'jumlah' },
+            { data: 'berat', name: 'berat' },
             {
                 data: 'action',
                 name: 'action',
                 orderable: true,
-                searchable: true,
+                searchable: true
             }
         ]
     })
@@ -251,22 +270,38 @@ $(function() {
 $(function() {
     var table = $('#pickupTable').DataTable({
         processing: true,
+        destroy: true,
         serverSide: true,
         ajax: {
-            url: '/home/kargo'
+            url: '/home/kargo',
         },
         columns: [
             { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false },
-            // { data: 'status', name: 'status' },
-            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            // { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'tipe', name: 'tipe' },
             { data: 'driver', name: 'driver' },
             { data: 'client', name: 'client' },
             { data: 'tanggal', name: 'tanggal' },
-            { data: 'dalam_kota', name: 'dalam_kota' },
-            { data: 'luar_kota', name: 'luar_kota' },
-            { data: 'jumlah', name: 'jumlah' },
-            { data: 'berat', name: 'berat' },
+            { data: 'dalam_kota', name: 'dalam_kota', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'luar_kota', name: 'luar_kota', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'jumlah', name: 'jumlah', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'berat', name: 'berat', render: function(data)
+                {
+                    return data+' '+"KG"
+                }
+            },
             {
                 data: 'action',
                 name: 'action',
@@ -286,17 +321,37 @@ $(function() {
         },
         columns: [
             { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false },
-            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            // { data: 'DT_RowIndex', name: 'DT_RowIndex' },
             { data: 'tipe', name: 'tipe' },
             { data: 'driver', name: 'driver' },
             { data: 'client', name: 'client' },
             { data: 'tanggal', name: 'tanggal' },
             { data: 'tanggal_pic', name: 'tanggal_pic'},
-            { data: 'sp1', name: 'sp1' },
-            { data: 'sp2', name: 'sp2' },
-            { data: 'sp3', name: 'sp3' },
-            { data: 'jumlah', name: 'jumlah' },
-            { data: 'berat', name: 'berat' },
+            { data: 'sp1', name: 'sp1', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'sp2', name: 'sp2', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'sp3', name: 'sp3', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'jumlah', name: 'jumlah', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            { data: 'berat', name: 'berat', render: function(data)
+                {
+                    return data+' '+"KG"
+                }
+            },
             {
                 data: 'action',
                 name: 'action',

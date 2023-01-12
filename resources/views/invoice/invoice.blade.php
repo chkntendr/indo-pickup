@@ -111,20 +111,15 @@
                         <h5 class="card-title">Invoice</h5>
                         <div id="table_data">
                             <div class="dataTable-container">
-                                <table class="table datatable dataTable-table" id="invoiceTable" style="width: 100%;">
+                                <table class="table datatable dataTable-table" id="invoiceTable" style="width: 100%; text-overflow: ellipsis; white-space: nowrap;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Manifest</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Resi</th>
-                                            <th>Koli</th>
-                                            <th>Kg</th>
-                                            <th>Harga</th>
-                                            <th>Packing</th>
-                                            <th>Total</th>
-                                            <th>Keterangan</th>
+                                            <th>Tipe</th>
+                                            <th>Client</th>
+                                            <th>Tanggal Invoice</th>
+                                            <th>Jumlah</th>
+                                            <th>Berat</th>
                                             <th>Proses</th>
                                         </tr>
                                     </thead>

@@ -4,12 +4,12 @@
 @section('content')
 <section class="section">
     <div class="row">
-        <div class="col-lg">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Users</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable datatable-table" width="100%" id="userTable">
+                        <table class="table datatable datatable-table" style="width: 100%; text-overflow: ellipsis; white-space: nowrap;" id="userTable">
                             <thead>
                                 <tr>
                                     <th>#</th>

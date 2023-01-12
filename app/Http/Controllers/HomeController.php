@@ -60,7 +60,7 @@ class HomeController extends Controller
 
     public function getKargo(Request $request) {
         if ($request->ajax()) {
-            $data = Pickup::latest()->where('tipe', "Kargo")->get();
+            $data       = Pickup::latest()->where('tipe', "Kargo")->get();
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('action', function($data){
@@ -71,7 +71,15 @@ class HomeController extends Controller
 
                                 return $actionBtn;
                             })
-                            ->addColumn('checkbox', '<input type="checkbox" name="pickup_checkbox[]" class="pickup_checkbox" value="{{$id}}" />')
+                            ->addColumn('checkbox', function($data) {
+                                if ($data->is_added == true) {
+                                    $checkbox = '<input type="checkbox" name="pickup_checkbox[]" disabled class="pickup_checkbox" value="{{$id}}" />';
+                                    return $checkbox;
+                                } else {
+                                    $checkbox = '<input type="checkbox" name="pickup_checkbox[]" class="pickup_checkbox" value="{{$id}}" />';
+                                    return $checkbox;
+                                }
+                            })
                             ->rawColumns(['action', 'checkbox'])
                             ->make(true);
         }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Manifest;
+use App\Models\Pickup;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use App\Imports\InvoiceImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 use DataTables;
 
 class InvoiceController extends Controller
@@ -149,13 +151,16 @@ class InvoiceController extends Controller
 
     public function cekAdded(Request $request) {
         if($request->ajax()) {
-            $invoice = Invoice::where('is_added', true)->get();
+            $data = Pickup::where('is_added', true)->get();
 
-            return DataTables::of($invoice)
+            return DataTables::of($data)
                             ->addIndexColumn()
-                            ->addColumn('action', function($data) {
-                                $actionBtn = '<a id="btn-edit-barInvoice" type="button" data-remote="'.$data->id.'" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-barInvoice" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                            ->addColumn('action', function($data){
+                                $actionBtn = '
+                                <a id="btn-detail-pickup" data-remote="'.$data->id.'" type="button" class="detail ri-search-line"></a>
+                                <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
+                                <a type="button" id="btn-invoice-done" onclick="invoiceDone()" data-remote="'.$data->id.'" style="color: green" class="ri-exchange-funds-fill"></a>';
+
                                 return $actionBtn;
                             })
                             ->rawColumns(['action'])
@@ -164,24 +169,15 @@ class InvoiceController extends Controller
     }
 
     public function invoiceMake(Request $request) {
-        $id_array = $request->id;
-        $invoice = Invoice::whereIn('mnf_id', $id_array)
+        $id_array   = $request->id;
+        $invoice    = Pickup::whereIn('id', $id_array)
                             ->update([
-                                'is_added' => true
+                                'is_added' => true,
                             ]);
 
         return response()->json([
             "status"    => 200,
             "data"      => $invoice
-        ]);
-    }
-
-    public function cekid(Request $request) {
-        $id_array = $request->id;
-        $invoice = Invoice::whereIn('mnf_id', $id_array)->get();
-
-        return response()->json([
-            $invoice
         ]);
     }
 }

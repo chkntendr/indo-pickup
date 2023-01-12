@@ -7,12 +7,12 @@
         
     </div>
     <div class="row">
-        <div class="col-lg">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Clients</h5>
                     <div class="dataTable-container">
-                        <table class="table datatable datatable-table" id="clientTable" style="width: 100%">
+                        <table class="table datatable datatable-table" id="clientTable" style="width: 100%; text-overflow: ellipsis; white-space: nowrap;">
                             <thead>
                                 <tr>
                                     <th>No</th>

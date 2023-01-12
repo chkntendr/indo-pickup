@@ -322,11 +322,11 @@
                         <div class="tab-pane fade active show" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
                             <div id="table_data">
                                 <div class="dataTable-container">
-                                    <table class="table datatable dataTable-table" id="dokumenTable" style="width: 100%">
+                                    <table class="table datatable dataTable-table" id="dokumenTable" style="width: 100%; text-overflow: ellipsis; white-space: nowrap;">
                                         <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="check_all_dokumen" id="check_all_dokumen"></th>
-                                                <th width="5%">No</th>
+                                                {{-- <th width="5%">No</th> --}}
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
                                                 <th>Client</th>
@@ -348,12 +348,11 @@
                         <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div id="table_data">
                                 <div class="dataTable-container">
-                                    <table class="table datatable dataTable-table" id="pickupTable" style="width: 100%">
+                                    <table class="table datatable dataTable-table" id="pickupTable" style="width: 100%; text-overflow: ellipsis; white-space: nowrap;">
                                         <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="check_all_kargo" id="check_all_kargo"></th>
-                                                {{-- <th>Status</th> --}}
-                                                <th>No</th>
+                                                {{-- <th>No</th> --}}
                                                 <th>Tipe</th>
                                                 <th>Driver</th>
                                                 <th>Client</th>

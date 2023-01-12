@@ -8,12 +8,12 @@
         </a>
     </li><!-- End Dashboard Nav -->
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ (request()->segment(1) == 'manifest') ? '' : 'collapsed'}}" href="{{ route('manifest') }}">
             <i class="ri-booklet-fill"></i>
             <span>Manifest</span>
         </a>
-    </li><!-- End Report Nav -->
+    </li><!-- End Report Nav --> --}}
 
     <li class="nav-item">
         <a href="{{ route('invoice') }}" class="nav-link {{ (request()->segment(1) == 'invoice') ? '' : 'collapsed' }}">
@@ -67,12 +67,12 @@
         </a>
     </li><!-- End Dashboard Nav -->
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ (request()->segment(1) == 'manifest') ? '' : 'collapsed'}}" href="{{ route('manifest') }}">
             <i class="ri-booklet-fill"></i>
             <span>Manifest</span>
         </a>
-    </li><!-- End Report Nav -->
+    </li><!-- End Report Nav --> --}}
 
     <li class="nav-item">
         <a class="nav-link {{ (request()->segment(1) == 'driver') ? '' : 'collapsed'}}" href="{{ route('driver') }}">

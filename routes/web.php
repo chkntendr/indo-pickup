@@ -49,7 +49,7 @@ Route::post('/barang/post', [App\Http\Controllers\BarangController::class, 'crea
 Route::delete('/barang/delete/{id}', [App\Http\Controllers\BarangController::class, 'delete'])->name('deleteBarang');
 
 // Route Manifest
-Route::get('/manifest', [App\Http\Controllers\ManifestController::class, 'index'])->name('manifest');
+// Route::get('/manifest', [App\Http\Controllers\ManifestController::class, 'index'])->name('manifest');
 Route::put('/manifest/cek/{id}', [App\Http\Controllers\ManifestController::class, 'invoice'])->name('manifestInvoiceCek');
 Route::get('/manifest/store', [App\Http\Controllers\ManifestController::class, 'store'])->name('manifestStore');
 Route::get('/manifest/barcode/{id}', [App\Http\Controllers\ManifestController::class, 'getBarcode'])->name('getBarcode');
@@ -64,7 +64,6 @@ Route::get('/manifest/invoiceload', [App\Http\Controllers\ManifestController::cl
 Route::get('/invoice', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoice');
 // Route::post('/invoice/store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('storeID');
 Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('edit');
-Route::get('/invoice/cekid', [App\Http\Controllers\InvoiceController::class, 'cekid'])->name('invoiceCekID');
 Route::get('/invoice/data/{id}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoiceData');
 Route::get('/invoice/data', [App\Http\Controllers\InvoiceController::class, 'cekAdded'])->name('invoiceCek');
 Route::get('/invoice/sumTotal', [App\Http\Controllers\InvoiceController::class, 'sumTotal'])->name('invoiceSum');
