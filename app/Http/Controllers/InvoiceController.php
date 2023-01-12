@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Manifest;
+use App\Models\ManifestData;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use App\Models\Pickup;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
@@ -151,7 +153,7 @@ class InvoiceController extends Controller
 
     public function cekAdded(Request $request) {
         if($request->ajax()) {
-            $data = Pickup::where('is_added', true)->get();
+            $data = Manifest::latest()->get();
 
             return DataTables::of($data)
                             ->addIndexColumn()
@@ -163,21 +165,66 @@ class InvoiceController extends Controller
 
                                 return $actionBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action', 'date_done'])
                             ->make(true);
         }
     }
 
     public function invoiceMake(Request $request) {
         $id_array   = $request->id;
-        $invoice    = Pickup::whereIn('id', $id_array)
-                            ->update([
-                                'is_added' => true,
-                            ]);
+        $pickup_data    = Pickup::select('id', 'tipe', 'client', 'jumlah', 'berat')
+                                ->whereIn('id', $id_array)
+                                ->get();
 
         return response()->json([
             "status"    => 200,
-            "data"      => $invoice
+            "data"      => $pickup_data
         ]);
     }
+
+    public function manifestMake(Request $request) {
+        $current_date_time = Carbon::now()->toDateTimeString();
+        $id = IdGenerator::generate(['table' => 'manifest', 'field' => 'manifest_id', 'length' => 8, 'prefix' => 'MNF-']);
+        $id_array     = $request->id;
+        $tipe_array   = $request->tipe[0];
+        $client_array = $request->client[0];
+        
+        $manifest               = new Manifest;
+        $manifest->manifest_id  = $id;
+        $manifest->tipe         = $tipe_array;
+        $manifest->client       = $client_array;
+        $manifest->done_date    = $current_date_time;
+        $manifest->total        = count($id_array);
+        $manifest->save();
+
+        return response()->json([
+            "status"    => 200,
+            "data"      => $manifest
+        ]);
+    }
+
+    public function createManifestData(Request $request) {
+        for ($i=0; $i < $request->tipe ; $i++) { 
+            $tipe = $request->tipe[$i];
+        }
+        $manifest_id    = $request->id;
+        // $tipe           = $request->tipe;
+        $client         = $request->client;
+        $jumlah         = $request->jumlah;
+        $berat          = $request->berat;
+
+        $manifest_data  = new ManifestData;
+        $manifest_data->manifest_id = $manifest_id;
+        $manifest_data->tipe        = $tipe;
+        $manifest_data->client      = $client;
+        $manifest_data->jumlah      = $jumlah;
+        $manifest_data->berat       = $berat;
+        $manifest_data->save();
+
+        return response()->json([
+            "status"      => 200,
+            "data"        => $manifest_data
+        ]);
+    }
+
 }

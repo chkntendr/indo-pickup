@@ -77,6 +77,7 @@ function invoiceDone() {
 
 // Create invoice
 function createInvoice() {
+    var pickupTable = $('#pickupTable').DataTable()
     var loading = function() {
         Swal.fire({
             title: 'Please Wait!',
@@ -137,7 +138,51 @@ function createInvoice() {
                         swal.close()
                         success()
                         console.log(response)
+                        var id = []
+                        var tipe = []
+                        var client = []
+                        var jumlah = []
+                        var berat = []
+                        for (let i = 0; i < response.data.length; i++) {
+                            const pickup_id     = response.data[i].id
+                            const pickup_tipe   = response.data[i].tipe
+                            const pickup_client = response.data[i].client
+                            const pickup_jumlah = response.data[i].jumlah
+                            const pickup_berat  = response.data[i].berat
+                            id.push(pickup_id)
+                            tipe.push(pickup_tipe)
+                            client.push(pickup_client)
+                            jumlah.push(pickup_jumlah)
+                            berat.push(pickup_berat)
+                        }
+                        $.ajax({
+                            url: '/invoice/manifestMake',
+                            type: 'post',
+                            data: {
+                                "id" : id,
+                                "tipe": tipe,
+                                "client" :client
+                            },
+                            success: function(response){
+                                var mnf_id = response.data.id
+                                $.ajax({
+                                    url: '/invoice/manifest_data',
+                                    type: 'post',
+                                    data: {
+                                        "id": mnf_id,
+                                        "tipe": tipe,
+                                        "client": client,
+                                        "jumlah": jumlah,
+                                        "berat": berat
+                                    },
+                                    success: function(response) {
+                                        console.log(response)
+                                    }
+                                })
+                            }
+                        })
                     }
+                    pickupTable.draw();
                 }
             })
         }
@@ -223,11 +268,11 @@ $(function() {
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'manifest_id', name: 'manifest_id' },
             { data: 'tipe', name: 'tipe' },
             { data: 'client', name: 'client' },
-            { data: 'date_done', name: 'date_done' },
-            { data: 'jumlah', name: 'jumlah' },
-            { data: 'berat', name: 'berat' },
+            { data: 'done_date', name: 'done_date' },
+            { data: 'total', name: 'total' },
             {
                 data: 'action',
                 name: 'action',

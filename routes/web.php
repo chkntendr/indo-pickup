@@ -67,9 +67,11 @@ Route::get('/invoice/edit/{id}', [App\Http\Controllers\InvoiceController::class,
 Route::get('/invoice/data/{id}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoiceData');
 Route::get('/invoice/data', [App\Http\Controllers\InvoiceController::class, 'cekAdded'])->name('invoiceCek');
 Route::get('/invoice/sumTotal', [App\Http\Controllers\InvoiceController::class, 'sumTotal'])->name('invoiceSum');
+Route::post('/invoice/manifestMake', [App\Http\Controllers\InvoiceController::class, 'manifestMake'])->name('manifestMake');
 Route::put('/invoice/make', [App\Http\Controllers\InvoiceController::class, 'invoiceMake'])->name('invoiceMake');
 Route::put('/invoice/save/{id}', [App\Http\Controllers\InvoiceController::class, 'save'])->name('invoiceSave');
 Route::post('/invoice/import', [App\Http\controllers\InvoiceController::class, 'import'])->name('import');
+Route::post('/invoice/manifest_data', [App\Http\controllers\InvoiceController::class, 'createManifestData'])->name('manifest_data');
 
 
 // Route Client

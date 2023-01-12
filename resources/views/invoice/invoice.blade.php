@@ -115,11 +115,11 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Manifest ID</th>
                                             <th>Tipe</th>
                                             <th>Client</th>
                                             <th>Tanggal Invoice</th>
-                                            <th>Jumlah</th>
-                                            <th>Berat</th>
+                                            <th>Total</th>
                                             <th>Proses</th>
                                         </tr>
                                     </thead>

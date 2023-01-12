@@ -3,23 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Invoice;
 
-class Manifest extends Model
+class ManifestData extends Model
 {
     use HasFactory;
-    
-    protected $table = "manifest";
+    protected $table = "manifest_data";
     protected $fillable = [
         'id',
         'manifest_id',
         'tipe',
         'client',
-        'done_date',
-        'total',
+        'jumlah',
+        'berat',
         'timestamps'
     ];
 }

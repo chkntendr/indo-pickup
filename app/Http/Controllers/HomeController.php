@@ -73,10 +73,10 @@ class HomeController extends Controller
                             })
                             ->addColumn('checkbox', function($data) {
                                 if ($data->is_added == true) {
-                                    $checkbox = '<input type="checkbox" name="pickup_checkbox[]" disabled class="pickup_checkbox" value="{{$id}}" />';
+                                    $checkbox = '<input type="checkbox" name="pickup_checkbox[]" disabled class="pickup_checkbox" value="'.$data->id.'" />';
                                     return $checkbox;
                                 } else {
-                                    $checkbox = '<input type="checkbox" name="pickup_checkbox[]" class="pickup_checkbox" value="{{$id}}" />';
+                                    $checkbox = '<input type="checkbox" name="pickup_checkbox[]" class="pickup_checkbox" value="'.$data->id.'" />';
                                     return $checkbox;
                                 }
                             })

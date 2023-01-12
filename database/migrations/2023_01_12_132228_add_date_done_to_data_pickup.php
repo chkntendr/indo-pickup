@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('invoice', function (Blueprint $table) {
-            $table->date('date_done')->after('uploaded_at')->nullable();
+        Schema::table('data_pickup', function (Blueprint $table) {
+            $table->datetime('date_done')->nullable()->after('tanggal_pic');
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('invoice', function (Blueprint $table) {
+        Schema::table('data_pickup', function (Blueprint $table) {
             //
         });
     }
