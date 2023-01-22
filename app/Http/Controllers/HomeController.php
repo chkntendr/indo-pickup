@@ -95,7 +95,7 @@ class HomeController extends Controller
                                 $actionBtn = '
                                 <a id="btn-detail-pickup" data-remote="'.$data->id.'" type="button" class="detail ri-search-line"></a>
                                 <a id="btn-edit-pickup" data-remote="/home/edit/'.$data->id.'" type="button" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-pickup" data-remote="/home/delete/'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
+                                <a type="button" id="btn-delete-pickup" data-remote="'.$data->id.'" style="color: red" class="delete ri-delete-bin-5-line"></a>';
 
                                 return $actionBtn;
                             })
@@ -118,6 +118,7 @@ class HomeController extends Controller
         $pickup->luar_kota  = $request->lk;
         $pickup->dalam_kota = $request->dk;
         $pickup->jumlah     = $request->jumlah;
+        $pickup->koli       = $request->koli;
         $pickup->description= $request->description;
         $pickup->berat      = $request->berat;
         $pickup->driver     = $request->driver;
@@ -177,6 +178,7 @@ class HomeController extends Controller
         $pickup->luar_kota  = $request->lk;
         $pickup->dalam_kota = $request->dk;
         $pickup->jumlah     = $request->jumlah;
+        $pickup->koli       = $request->koli;
         $pickup->description= $request->description;
         $pickup->berat      = $request->berat;
         $pickup->driver     = $request->driver;

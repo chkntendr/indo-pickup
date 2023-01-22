@@ -11,5 +11,5 @@ class Pickup extends Model
 
     protected $table = "data_pickup";
 
-    protected $fillable = ['tipe', 'client', 'luar_kota', 'dalam_kota', 'sp1', 'sp2', 'sp3', 'jumlah', 'berat', 'driver', 'tanggal', 'tanggal_pic', 'description'];
+    protected $fillable = ['tipe', 'client', 'luar_kota', 'dalam_kota', 'sp1', 'sp2', 'sp3', 'jumlah', 'koli', 'berat', 'driver', 'tanggal', 'tanggal_pic', 'description'];
 }

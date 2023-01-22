@@ -76,12 +76,12 @@ class InvoiceController extends Controller
 
             return DataTables::of($data)
                             ->addIndexColumn()
-                            ->addColumn('action', function($data) {
-                                $actionBtn = '<a id="btn-edit-barInvoice" type="button" data-remote="'.$data->id.'" class="edit ri-edit-box-line" style="color: orange"></a>
-                                <a type="button" id="btn-delete-barInvoice" data-remote="/invoice/delete/'.$data->id.'" type="button" style="color: red" class="delete ri-delete-bin-5-line"></a>';
-                                return $actionBtn;
+                            ->addColumn('process', function($data) {
+                                $processBtn = '<a id="btn-edit-resi" type="button" data-remote="'.$data->id.'" class="edit ri-edit-box-line" style="color: orange"></a>
+                                               <a id="btn-delete-resi" type="button" data-remote="'.$data->id.'" class="delete ri-delete-bin-5-line" style="color: red"></a>';
+                                return $processBtn;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['process'])
                             ->make(true);
         }
     }
@@ -204,14 +204,26 @@ class InvoiceController extends Controller
     }
 
     public function createManifestData(Request $request) {
-        for ($i=0; $i < $request->tipe ; $i++) { 
+        for ($i=0; $i < count($request->tipe) ; $i++) { 
             $tipe = $request->tipe[$i];
+        };
+
+        for ($i=0; $i < count($request->client) ; $i++) {
+            $client = $request->client[$i];
         }
+
+        for ($i=0; $i < count($request->jumlah) ; $i++) { 
+            $jumlah = $request->jumlah[$i];
+        }
+
+        for ($i=0; $i < count($request->berat) ; $i++) { 
+            $berat = $request->berat[$i];
+        }
+
         $manifest_id    = $request->id;
-        // $tipe           = $request->tipe;
-        $client         = $request->client;
-        $jumlah         = $request->jumlah;
-        $berat          = $request->berat;
+        $data = [
+            $tipe, $client, $jumlah, $berat, $manifest_id
+        ];
 
         $manifest_data  = new ManifestData;
         $manifest_data->manifest_id = $manifest_id;

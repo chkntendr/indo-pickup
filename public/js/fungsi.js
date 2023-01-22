@@ -165,6 +165,14 @@ function createInvoice() {
                             },
                             success: function(response){
                                 var mnf_id = response.data.id
+                                var payload = {
+                                    "id": mnf_id,
+                                    "tipe": tipe,
+                                    "client": client,
+                                    "jumlah": jumlah,
+                                    "berat": berat
+                                }
+                                console.log(payload)
                                 $.ajax({
                                     url: '/invoice/manifest_data',
                                     type: 'post',
@@ -176,7 +184,7 @@ function createInvoice() {
                                         "berat": berat
                                     },
                                     success: function(response) {
-                                        console.log(response)
+                                        
                                     }
                                 })
                             }
@@ -226,13 +234,17 @@ $('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
     $('body').on('click', '#option_detail_button', function() {
         $('#option_detail_pickup').toggle();
         $('#id_pickup').val(id)
-    })   
+    })
+    $('body').on('click', '#option_detail_button_document', function() {
+        $('#option_detail_pickup_document').toggle();
+        $('#id_pickup_document').val(id);
+    })
 })
 
 /**
  * @DataTable
  */
-// Detail pickup table
+// Detail pickup table kargo
 $('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
     e.preventDefault()
     var id = $(this).data('remote');
@@ -253,7 +265,39 @@ $('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
             { data: 'koli', name: 'koli', render: function(data) {
                 return data +' '+ "Pcs";
             } },
-            { data: 'keterangan', name: 'keterangan' }
+            { data: 'keterangan', name: 'keterangan' },
+            {
+                data: 'process',
+                name: 'process',
+                searchable: false,
+                orderable: false
+            }
+        ]
+    })
+})
+
+// Detail pickup document
+$('body').on('click', '#btn-detail-pickup[data-remote]', function(e) {
+    e.preventDefault()
+    var id = $(this).data('remote');
+    var detail_pickup_table = $('#detail_pickup_table_document').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: `/invoice/data/${id}`
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'barcode', name: 'barcode' },
+            { data: 'tujuan', name: 'tujuan' },
+            { data: 'keterangan', name: 'keterangan' },
+            {
+                data: 'process',
+                name: 'process',
+                searchable: false,
+                orderable: false
+            }
         ]
     })
 })
@@ -338,6 +382,12 @@ $(function() {
                 }
             },
             { data: 'jumlah', name: 'jumlah', render: function(data)
+                {
+                    return data+' '+"pcs"
+                }
+            },
+            {
+                data: 'koli', name: 'jumlah', render: function(data)
                 {
                     return data+' '+"pcs"
                 }
@@ -729,7 +779,7 @@ function moreTab() {
  * @Store function
  */
 
-// Upload manifest
+// Upload manifest kargo
 $(document).ready(function(e) {
     var detail_pickup_table = $('#detail_pickup_table').DataTable();
 
@@ -783,8 +833,71 @@ $(document).ready(function(e) {
                     $("#upload_detail_manifest")[0].reset();
                     swal.close();
                     completed();
+                    detail_pickup_table.draw()
                 }
-                detail_pickup_table.draw()
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        })
+    })
+})
+
+$(document).ready(function(e) {
+    var detail_pickup_table = $('#detail_pickup_table').DataTable();
+
+    $('#upload_detail_manifest_document').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        formData.append('id_pickup', $('#id_pickup_document').val())
+        var id = $('#id_pickup_document').val();
+        var completed = function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil di upload!',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+        var loading = function() {
+            Swal.fire({
+                title: 'Please Wait!',
+                html: 'Loading ...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            })
+        }
+        var error = function() {
+            Swal.fire({
+                title: 'Error!',
+                icon: 'error',
+                message: 'Import Gagal!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+        $.ajax({
+            url: `/invoice/import`,
+            type: "POST",
+            data: formData,
+            beforeSend: function() {
+                loading();
+            },
+            error: function() {
+                swal.close()
+                error();
+            },
+            success: function(response) {
+                if (response.status == 200) {                    
+                    $("#upload_detail_manifest_document")[0].reset();
+                    swal.close();
+                    completed();
+                    detail_pickup_table.draw()
+                }
             },
             cache: false,
             contentType: false,
@@ -1020,6 +1133,7 @@ function simpanPickup() {
     var beratKargo      = $('#beratKargo').val()
     var jumlahDokumen   = $('#jumlahDokumen').val()
     var jumlahKargo     = $('#jumlahKargo').val()
+    var koliKargo       = $('#koliKargo').val()
 
     if (checkTipe === "Dokumen") {
         var total = jumlahDokumen
@@ -1040,6 +1154,7 @@ function simpanPickup() {
         'dk':       $('#dk').val(),
         'lk':       $('#lk').val(),
         'jumlah': total,
+        'koli': koliKargo,
         'description': $('#description').val(),
         'berat': berat,
     }
@@ -1438,11 +1553,11 @@ $('body').on('click', '#btn-delete-pickup[data-remote]', function (e) {
  */
 
 // Edit invoice barcode
-$('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
+$('body').on('click', '#btn-edit-resi[data-remote]', function(e) {
     e.preventDefault();
     var id = $(this).data('remote');
     $('#edit_invoice').toggle();
-    $('#invoice_detail').hide();
+    $('#detail-pickup-kargo').hide();
     $('#widget_card').hide();
     $.ajax({
         url: `/invoice/edit/${id}`,
@@ -1462,7 +1577,7 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
 
     $('body').on('click', '#simpan_manifest_baru', function(e) {
         e.preventDefault()
-        var InvoiceTable = $('#invoiceTable').DataTable();
+        var InvoiceTable = $('#detail_pickup_table').DataTable();
         var data_edit = {
             'tujuan'    : $('#manifest_tujuan').val(),
             'resi'      : $('#manifest_resi').val(),
@@ -1523,7 +1638,7 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
                     completed();
                     console.log(response)
                     $('#edit_invoice').hide();
-                    $('#invoice_detail').show();
+                    $('#detail-pickup-kargo').show();
                     $('#widget_card').show();
                     InvoiceTable.draw();
                     getTotalInvoice();
@@ -1535,7 +1650,7 @@ $('body').on('click', '#btn-edit-barInvoice[data-remote]', function(e) {
     $('body').on('click', '#backToDetail', function(e) {
         e.preventDefault()
         $('#edit_invoice').hide();
-        $('#invoice_detail').show();
+        $('#detail-pickup-kargo').show();
         $('#widget_card').show();
     })
 })
@@ -1595,6 +1710,7 @@ $('body').on('click', '#btn-edit-pickup[data-remote]', function(e) {
                 $('#description-modal').val(response.data[0].description)
                 $('#lk-modal').val(response.data[0].luar_kota)
                 $('#dk-modal').val(response.data[0].dalam_kota)
+                $('#koli-modal').val(response.data[0].koli)
             }
             $('#berat-modal').val(response.data[0].berat)
         }

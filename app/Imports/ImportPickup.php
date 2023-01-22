@@ -23,19 +23,20 @@ class ImportPickup implements ToModel, WithStartRow
 
     public function model(array $row) {
         return new Pickup([
-            'tipe'      => $row[0],
-            'client'    => $row[1],
-            'luar_kota' => $row[2],
-            'dalam_kota'=> $row[3],
-            'sp1'       => $row[4],
-            'sp2'       => $row[5],
-            'sp3'       => $row[6],
-            'jumlah'    => $row[2] + $row[3] + $row[4] + $row[5] + $row[6],
-            'berat'     => $row[7],
-            'tanggal_pic' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format('y-m-d'),
-            'tanggal'   => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9])->format('y-m-d'),
-            'driver'    => $row[10],
-            'description' => $row[11]
+            'tipe'        => $row[0],
+            'client'      => $row[1],
+            'luar_kota'   => $row[2],
+            'dalam_kota'  => $row[3],
+            'sp1'         => $row[4],
+            'sp2'         => $row[5],
+            'sp3'         => $row[6],
+            'jumlah'      => $row[2] + $row[3] + $row[4] + $row[5] + $row[6],
+            'koli'        => $row[7],
+            'berat'       => $row[8],
+            'tanggal_pic' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9])->format('y-m-d'),
+            'tanggal'     => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('y-m-d'),
+            'driver'      => $row[11],
+            'description' => $row[12]
         ]);
     }
 }

@@ -3,6 +3,77 @@
 @section('title', 'Dashboard')
 @section('content')
 <section class="section dashboard">
+    {{-- Edit --}}
+    <div class="row" id="edit_invoice" style="display: none;">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Edit Manifest</h5>
+                    <form class="row g-3">
+                        <input type="text" hidden id="idManifest">
+                        <div class="col-md-6">
+                            <label for="manifest_tujuan" class="form-label">Tujuan</label>
+                            <input type="text" class="form-control" id="manifest_tujuan">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="manifest_resi" class="form-label">Barcode</label>
+                            <input type="text" class="form-control" id="manifest_resi">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="manifest_koli" class="form-label">Koli</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="manifest_koli">
+                                <span class="input-group-text" id="inputGroupPrepend">QTY</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="manifest_berat" class="form-label">Berat</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control harga" id="manifest_berat">
+                                <span class="input-group-text" id="inputGroupPrepend">KG</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="manifest_harga" class="form-label">Harga</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control harga" id="manifest_harga">
+                                <span class="input-group-text" id="inputGroupPrepend">Rp</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="manifest_packing" class="form-label">Packing</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control harga" id="manifest_packing">
+                                <span class="input-group-text" id="inputGroupPrepend">Rp</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="manifest_total" class="form-label">Total</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="manifest_total">
+                                <span class="input-group-text" id="inputGroupPrepend">Rp</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="manifest_keterangan" class="form-label">Keterangan</label>
+                            <textarea id="manifest_keterangan" class="form-control" cols="30" rows="10"></textarea>
+                        </div>
+                        <div>
+                            <button id="simpan_manifest_baru" class="btn btn-sm btn-success">
+                                <i class="ri-save-3-line"></i>
+                                Simpan
+                            </button>
+                            <button class="btn btn-sm btn-secondary" id="backToDetail">
+                                <i class="ri-arrow-go-back-line"></i>
+                                Kembali
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Detail Pickup Kargo --}}
     <div class="row" id="detail-pickup-kargo" style="display: none">
         <div class="col-lg">
@@ -20,6 +91,7 @@
                                     <th>Berat</th>
                                     <th>Koli</th>
                                     <th>Keterangan</th>
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -66,14 +138,12 @@
                     <h3 class="card-title">Detail</h3>
                     <input type="text" id="tipe_detail" hidden>
                     <div class="dataTable-container">
-                        <table class="table datatable dataTable-table" id="detail_pickup_table" style="width: 100%;">
+                        <table class="table datatable dataTable-table" id="detail_pickup_table_document" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Resi</th>
                                     <th>Tujuan</th>
-                                    <th></th>
-                                    <th>Koli</th>
                                     <th>Keterangan</th>
                                     <th>Status</th>
                                 </tr>
@@ -87,20 +157,20 @@
                         <i class="ri-arrow-go-back-line"></i>
                         Back
                     </button>
-                    <button class="btn btn-sm btn-success" id="option_detail_button">
+                    <button class="btn btn-sm btn-success" id="option_detail_button_document">
                         <i class="ri-more-2-fill"></i>
                         Options
                     </button>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4" style="display: none" id="option_detail_pickup">
+        <div class="col-lg-4" style="display: none" id="option_detail_pickup_document">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Options</h3>
-                    <form id="upload_detail_manifest" enctype="multipart/form-data">
+                    <form id="upload_detail_manifest_document" enctype="multipart/form-data">
                         <div class="form-group">
-                            <input type="text" id="id_pickup" hidden>
+                            <input type="text" id="id_pickup_document" hidden>
                             <label for="file">Pilih file</label>
                             <input type="file" name="file" id="file" class="form-control form-control-sm">
                         </div>
@@ -255,6 +325,7 @@
                                     <th>Dalam</th>
                                     <th>Luar</th>
                                     <th>Jumlah</th>
+                                    <th>Koli</th>
                                     <th>Berat</th>
                                 </tr>
                             </thead>
@@ -263,6 +334,7 @@
                                     <td><input type="text" id="dk" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="lk" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="jumlahKargo" class="form-control form-control-sm"></td>
+                                    <td><input type="text" id="koliKargo" class="form-control form-control-sm"></td>
                                     <td><input type="text" id="beratKargo" class="form-control form-control-sm"></td>
                                 </tr>
                             </tbody>
@@ -360,6 +432,7 @@
                                                 <th>Dalam</th>
                                                 <th>Luar</th>
                                                 <th>Jumlah</th>
+                                                <th>Koli</th>
                                                 <th>Berat</th>
                                                 <th>Opsi</th>
                                             </tr>
@@ -421,6 +494,10 @@
                             <label for="dk-modal" class="control-label">Dalam Kota</label>
                             <input type="text" id="dk-modal" class="form-control form-control-sm">
                         </div>
+                        <div class="form-group">
+                            <label for="koli-modal" class="control-lable">Koli</label>
+                            <input type="text" id="koli-modal" class="form-control form-control-sm">
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -448,6 +525,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
+    $('document').ready(function() {
+        $('.harga').keyup(function() {
+            var berat = parseInt($('#manifest_berat').val())
+            var harga = parseInt($('#manifest_harga').val());
+            var packing = parseInt($('#manifest_packing').val());
+
+            var total = (berat * harga) + packing
+
+            $('#manifest_total').val(total)
+        })
+    })
+
     $('document').ready(function () {
         $('input').keyup(function () {
         var sp1 = parseInt($('#sp1').val());
